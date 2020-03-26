@@ -1,0 +1,12 @@
+{
+  "name": "tracer",
+  "version": "1.0.0",
+  "description": "An opentracing implemenation for Foxx microservices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["foxx", "arangodb", "opentracing"],
+  "author": "Aditya Mukhopadhyay",
+  "license": "MIT"
+}
