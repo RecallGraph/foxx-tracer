@@ -1,5 +1,5 @@
 import * as opentracing from '../index';
-import MockSpan from './mock_span';
+import MockSpan from './foxx_span';
 
 /**
  * OpenTracing Context implementation designed for use in

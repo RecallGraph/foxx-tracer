@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { DebugInfo, MockSpan } from './mock_span';
+import { DebugInfo, MockSpan } from './foxx_span';
 
 /**
  * Index a collection of reported MockSpans in a way that's easy to run unit

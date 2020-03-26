@@ -2,8 +2,8 @@
 
 import * as opentracing from '../index';
 import Reference from '../reference';
-import MockContext from './mock_context';
-import MockTracer from './mock_tracer';
+import MockContext from './foxx_context';
+import MockTracer from './foxx_tracer';
 
 interface Log {
     fields: { [key: string]: any };
