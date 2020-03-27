@@ -1,17 +1,13 @@
 import * as opentracing from 'opentracing';
 import FoxxSpan from './foxx_span';
 
-/**
- * OpenTracing Context implementation designed for use in
- * unit tests.
- */
 export class FoxxContext extends opentracing.SpanContext {
 
     //------------------------------------------------------------------------//
     // FoxxContext-specific
     //------------------------------------------------------------------------//
 
-    private _span: FoxxSpan;
+    private readonly _span: FoxxSpan;
 
     constructor(span: FoxxSpan) {
         super();
@@ -22,6 +18,14 @@ export class FoxxContext extends opentracing.SpanContext {
 
     span(): FoxxSpan {
         return this._span;
+    }
+
+    toTraceId(): string {
+        return "";
+    }
+
+    toSpanId(): string {
+        return "";
     }
 }
 

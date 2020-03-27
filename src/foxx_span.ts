@@ -22,12 +22,12 @@ export interface DebugInfo {
 export class FoxxSpan extends opentracing.Span {
 
     private _operationName: string;
-    private _tags: { [key: string]: any };
+    private readonly _tags: { [key: string]: any };
     private _logs: Log[];
     _finishMs: number;
-    private _foxxTracer: FoxxTracer;
-    private _uuid: string;
-    private _startMs: number;
+    private readonly _foxxTracer: FoxxTracer;
+    private readonly _uuid: string;
+    private readonly _startMs: number;
     _startStack?: string;
 
     //------------------------------------------------------------------------//
@@ -37,7 +37,7 @@ export class FoxxSpan extends opentracing.Span {
     constructor(tracer: FoxxTracer) {
         super();
         this._foxxTracer = tracer;
-        this._uuid = this._generateUUID();
+        this._uuid = FoxxSpan._generateUUID();
         this._startMs = Date.now();
         this._finishMs = 0;
         this._operationName = '';
@@ -94,9 +94,10 @@ export class FoxxSpan extends opentracing.Span {
     addReference(ref: opentracing.Reference): void {
     }
 
-    private _generateUUID(): string {
+    private static _generateUUID(): string {
         const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+
         return `${p0}${p1}`;
     }
 

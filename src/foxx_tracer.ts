@@ -1,19 +1,11 @@
-// TODO: Move foxx-tracer to its own NPM package once it is complete and tested.
 import * as opentracing from 'opentracing';
 import FoxxContext from './foxx_context';
 import FoxxReport from './foxx_report';
 import FoxxSpan from './foxx_span';
 
-/**
- * OpenTracing Tracer implementation designed for use in unit tests.
- */
 export class FoxxTracer extends opentracing.Tracer {
 
     private _spans: FoxxSpan[];
-
-    //------------------------------------------------------------------------//
-    // OpenTracing implementation
-    //------------------------------------------------------------------------//
 
     /**
      * Return the buffered data in a format convenient for making unit test

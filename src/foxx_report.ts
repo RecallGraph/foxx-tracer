@@ -8,8 +8,8 @@ import {DebugInfo, FoxxSpan} from './foxx_span';
 export class FoxxReport {
 
     spans: FoxxSpan[];
-    private spansByUUID: { [uuid: string]: FoxxSpan };
-    private spansByTag: { [key: string]: { [value: string]: FoxxSpan[] } };
+    private readonly spansByUUID: { [uuid: string]: FoxxSpan };
+    private readonly spansByTag: { [key: string]: { [value: string]: FoxxSpan[] } };
     private debugSpans: DebugInfo[];
     private unfinishedSpans: FoxxSpan[];
 
