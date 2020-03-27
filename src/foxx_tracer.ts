@@ -1,22 +1,29 @@
-
-// TODO: Move mock-tracer to its own NPM package once it is complete and tested.
-import * as opentracing from '../index';
-import MockContext from './foxx_context';
-import MockReport from './foxx_report';
-import MockSpan from './foxx_span';
+// TODO: Move foxx-tracer to its own NPM package once it is complete and tested.
+import * as opentracing from 'opentracing';
+import FoxxContext from './foxx_context';
+import FoxxReport from './foxx_report';
+import FoxxSpan from './foxx_span';
 
 /**
  * OpenTracing Tracer implementation designed for use in unit tests.
  */
-export class MockTracer extends opentracing.Tracer {
+export class FoxxTracer extends opentracing.Tracer {
 
-    private _spans: MockSpan[];
+    private _spans: FoxxSpan[];
 
     //------------------------------------------------------------------------//
     // OpenTracing implementation
     //------------------------------------------------------------------------//
 
-    protected _startSpan(name: string, fields: opentracing.SpanOptions): MockSpan {
+    /**
+     * Return the buffered data in a format convenient for making unit test
+     * assertions.
+     */
+    report(): FoxxReport {
+        return new FoxxReport(this._spans);
+    }
+
+    protected _startSpan(name: string, fields: opentracing.SpanOptions): FoxxSpan {
         // _allocSpan is given it's own method so that derived classes can
         // allocate any type of object they want, but not have to duplicate
         // the other common logic in startSpan().
@@ -35,16 +42,12 @@ export class MockTracer extends opentracing.Tracer {
         return span;
     }
 
-    protected _inject(span: MockContext, format: any, carrier: any): never {
-        throw new Error('NOT YET IMPLEMENTED');
-    }
-
     protected _extract(format: any, carrier: any): never {
         throw new Error('NOT YET IMPLEMENTED');
     }
 
     //------------------------------------------------------------------------//
-    // MockTracer-specific
+    // FoxxTracer-specific
     //------------------------------------------------------------------------//
 
     constructor() {
@@ -52,8 +55,8 @@ export class MockTracer extends opentracing.Tracer {
         this._spans = [];
     }
 
-    private _allocSpan(): MockSpan {
-        return new MockSpan(this);
+    protected _inject(span: FoxxContext, format: any, carrier: any): never {
+        throw new Error('NOT YET IMPLEMENTED');
     }
 
     /**
@@ -63,13 +66,9 @@ export class MockTracer extends opentracing.Tracer {
         this._spans = [];
     }
 
-    /**
-     * Return the buffered data in a format convenient for making unit test
-     * assertions.
-     */
-    report(): MockReport {
-        return new MockReport(this._spans);
+    private _allocSpan(): FoxxSpan {
+        return new FoxxSpan(this);
     }
 }
 
-export default MockTracer;
+export default FoxxTracer;

@@ -1,9 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import * as opentracing from '../index';
-import Reference from '../reference';
-import MockContext from './foxx_context';
-import MockTracer from './foxx_tracer';
+import * as opentracing from 'opentracing';
+import FoxxContext from './foxx_context';
+import FoxxTracer from './foxx_tracer';
 
 interface Log {
     fields: { [key: string]: any };
@@ -20,13 +19,13 @@ export interface DebugInfo {
 /**
  * OpenTracing Span implementation designed for use in unit tests.
  */
-export class MockSpan extends opentracing.Span {
+export class FoxxSpan extends opentracing.Span {
 
     private _operationName: string;
     private _tags: { [key: string]: any };
     private _logs: Log[];
     _finishMs: number;
-    private _mockTracer: MockTracer;
+    private _foxxTracer: FoxxTracer;
     private _uuid: string;
     private _startMs: number;
     _startStack?: string;
@@ -35,8 +34,15 @@ export class MockSpan extends opentracing.Span {
     // OpenTracing implementation
     //------------------------------------------------------------------------//
 
-    protected _context(): MockContext {
-        return new MockContext(this);
+    constructor(tracer: FoxxTracer) {
+        super();
+        this._foxxTracer = tracer;
+        this._uuid = this._generateUUID();
+        this._startMs = Date.now();
+        this._finishMs = 0;
+        this._operationName = '';
+        this._tags = {};
+        this._logs = [];
     }
 
     protected _setOperationName(name: string): void {
@@ -62,18 +68,11 @@ export class MockSpan extends opentracing.Span {
     }
 
     //------------------------------------------------------------------------//
-    // MockSpan-specific
+    // FoxxSpan-specific
     //------------------------------------------------------------------------//
 
-    constructor(tracer: MockTracer) {
-        super();
-        this._mockTracer = tracer;
-        this._uuid = this._generateUUID();
-        this._startMs = Date.now();
-        this._finishMs = 0;
-        this._operationName = '';
-        this._tags = {};
-        this._logs = [];
+    tracer(): opentracing.Tracer {
+        return this._foxxTracer;
     }
 
     uuid(): string {
@@ -92,8 +91,7 @@ export class MockSpan extends opentracing.Span {
         return this._tags;
     }
 
-    tracer(): opentracing.Tracer {
-        return this._mockTracer;
+    addReference(ref: opentracing.Reference): void {
     }
 
     private _generateUUID(): string {
@@ -102,7 +100,8 @@ export class MockSpan extends opentracing.Span {
         return `${p0}${p1}`;
     }
 
-    addReference(ref: Reference): void {
+    protected _context(): FoxxContext {
+        return new FoxxContext(this);
     }
 
     /**
@@ -110,9 +109,9 @@ export class MockSpan extends opentracing.Span {
      */
     debug(): DebugInfo {
         const obj: DebugInfo = {
-            uuid      : this._uuid,
-            operation : this._operationName,
-            millis    : [this._finishMs - this._startMs, this._startMs, this._finishMs]
+            uuid: this._uuid,
+            operation: this._operationName,
+            millis: [this._finishMs - this._startMs, this._startMs, this._finishMs]
         };
         if (Object.keys(this._tags).length) {
             obj.tags = this._tags;
@@ -121,4 +120,4 @@ export class MockSpan extends opentracing.Span {
     }
 }
 
-export default MockSpan;
+export default FoxxSpan;

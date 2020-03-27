@@ -1,19 +1,19 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { DebugInfo, MockSpan } from './foxx_span';
+import {DebugInfo, FoxxSpan} from './foxx_span';
 
 /**
- * Index a collection of reported MockSpans in a way that's easy to run unit
+ * Index a collection of reported FoxxSpans in a way that's easy to run unit
  * test assertions against.
  */
-export class MockReport {
+export class FoxxReport {
 
-    spans: MockSpan[];
-    private spansByUUID: { [uuid: string]: MockSpan };
-    private spansByTag: { [key: string]: { [value: string]: MockSpan[] } };
+    spans: FoxxSpan[];
+    private spansByUUID: { [uuid: string]: FoxxSpan };
+    private spansByTag: { [key: string]: { [value: string]: FoxxSpan[] } };
     private debugSpans: DebugInfo[];
-    private unfinishedSpans: MockSpan[];
+    private unfinishedSpans: FoxxSpan[];
 
-    constructor(spans: MockSpan[]) {
+    constructor(spans: FoxxSpan[]) {
         this.spans = spans;
         this.spansByUUID = {};
         this.spansByTag = {};
@@ -40,7 +40,7 @@ export class MockReport {
         });
     }
 
-    firstSpanWithTagValue(key: string, val: any): MockSpan | null {
+    firstSpanWithTagValue(key: string, val: any): FoxxSpan | null {
         const m = this.spansByTag[key];
         if (!m) {
             return null;
@@ -53,4 +53,4 @@ export class MockReport {
     }
 }
 
-export default MockReport;
+export default FoxxReport;

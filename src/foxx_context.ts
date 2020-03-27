@@ -1,28 +1,28 @@
-import * as opentracing from '../index';
-import MockSpan from './foxx_span';
+import * as opentracing from 'opentracing';
+import FoxxSpan from './foxx_span';
 
 /**
  * OpenTracing Context implementation designed for use in
  * unit tests.
  */
-export class MockContext extends opentracing.SpanContext {
+export class FoxxContext extends opentracing.SpanContext {
 
     //------------------------------------------------------------------------//
-    // MockContext-specific
+    // FoxxContext-specific
     //------------------------------------------------------------------------//
 
-    private _span: MockSpan;
+    private _span: FoxxSpan;
 
-    constructor(span: MockSpan) {
+    constructor(span: FoxxSpan) {
         super();
-        // Store a reference to the span itself since this is a mock tracer
+        // Store a reference to the span itself since this is a foxx tracer
         // intended to make debugging and unit testing easier.
         this._span = span;
     }
 
-    span(): MockSpan {
+    span(): FoxxSpan {
         return this._span;
     }
 }
 
-export default MockContext;
+export default FoxxContext;
