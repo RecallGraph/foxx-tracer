@@ -4,9 +4,9 @@ import FoxxReport from './foxx_report';
 import FoxxSpan from './foxx_span';
 
 export class FoxxTracer extends Tracer {
-
     private _spans: FoxxSpan[];
     private _currentContext: FoxxContext;
+    private readonly _uuid: string;
 
     /**
      * Return the buffered data in a format convenient for making unit test
@@ -27,6 +27,18 @@ export class FoxxTracer extends Tracer {
     constructor() {
         super();
         this._spans = [];
+        this._uuid = FoxxTracer._generateUUID();
+    }
+
+    static _generateUUID(): string {
+        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+
+        return `${p0}${p1}`;
+    }
+
+    uuid(): string {
+        return this._uuid;
     }
 
     protected _inject(span: FoxxContext, format: any, carrier: any): never {

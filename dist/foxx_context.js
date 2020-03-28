@@ -8,16 +8,17 @@ class FoxxContext extends opentracing.SpanContext {
         // Store a reference to the span itself since this is a foxx tracer
         // intended to make debugging and unit testing easier.
         this._span = span;
+        this._tracer = span.tracer();
     }
 
     span() {
         return this._span;
     }
     toTraceId() {
-        return '';
+        return this._tracer.uuid();
     }
     toSpanId() {
-        return '';
+        return this._span.uuid();
     }
 }
 exports.FoxxContext = FoxxContext;

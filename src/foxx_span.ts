@@ -1,6 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
-import * as opentracing from 'opentracing';
+import {Reference, REFERENCE_CHILD_OF, Span, Tracer} from 'opentracing';
 import FoxxContext from './foxx_context';
 import FoxxTracer from './foxx_tracer';
 
@@ -19,16 +17,17 @@ export interface DebugInfo {
 /**
  * OpenTracing Span implementation designed for use in unit tests.
  */
-export class FoxxSpan extends opentracing.Span {
-
+export class FoxxSpan extends Span {
     private _operationName: string;
     private readonly _tags: { [key: string]: any };
-    private _logs: Log[];
+    private readonly _logs: Log[];
+    private readonly _refs: Reference[];
     _finishMs: number;
     private readonly _foxxTracer: FoxxTracer;
     private readonly _uuid: string;
     private readonly _startMs: number;
     _startStack?: string;
+    private readonly _foxxContext: FoxxContext;
 
     //------------------------------------------------------------------------//
     // OpenTracing implementation
@@ -37,12 +36,14 @@ export class FoxxSpan extends opentracing.Span {
     constructor(tracer: FoxxTracer) {
         super();
         this._foxxTracer = tracer;
-        this._uuid = FoxxSpan._generateUUID();
+        this._uuid = FoxxTracer._generateUUID();
         this._startMs = Date.now();
         this._finishMs = 0;
         this._operationName = '';
         this._tags = {};
         this._logs = [];
+        this._refs = [];
+        this._foxxContext = new FoxxContext(this);
     }
 
     protected _setOperationName(name: string): void {
@@ -68,7 +69,7 @@ export class FoxxSpan extends opentracing.Span {
     // FoxxSpan-specific
     //------------------------------------------------------------------------//
 
-    tracer(): opentracing.Tracer {
+    tracer(): Tracer {
         return this._foxxTracer;
     }
 
@@ -95,18 +96,18 @@ export class FoxxSpan extends opentracing.Span {
         });
     }
 
-    addReference(ref: opentracing.Reference): void {
+    addReference(ref: Reference): void {
+        this._refs.push(ref);
     }
 
-    private static _generateUUID(): string {
-        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+    getParent(): FoxxContext {
+        const parent = this._refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
 
-        return `${p0}${p1}`;
+        return parent ? <FoxxContext>parent.referencedContext() : null;
     }
 
     protected _context(): FoxxContext {
-        return new FoxxContext(this);
+        return this._foxxContext;
     }
 
     /**
