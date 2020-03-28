@@ -6,6 +6,7 @@ import FoxxSpan from './foxx_span';
 export class FoxxTracer extends Tracer {
 
     private _spans: FoxxSpan[];
+    private _currentContext: FoxxContext;
 
     /**
      * Return the buffered data in a format convenient for making unit test
@@ -13,10 +14,6 @@ export class FoxxTracer extends Tracer {
      */
     report(): FoxxReport {
         return new FoxxReport(this._spans);
-    }
-
-    currentContext(): SpanContext {
-        return this._spans.length ? this._spans[this._spans.length - 1].context() : null
     }
 
     protected _extract(format: any, carrier: any): SpanContext {
@@ -69,6 +66,14 @@ export class FoxxTracer extends Tracer {
         // Capture the stack at the time the span started
         span._startStack = new Error().stack;
         return span;
+    }
+
+    get currentContext(): FoxxContext {
+        return this._currentContext;
+    }
+
+    set currentContext(value: FoxxContext) {
+        this._currentContext = value;
     }
 }
 

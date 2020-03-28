@@ -20,9 +20,6 @@ class FoxxTracer extends opentracing_1.Tracer {
     report() {
         return new foxx_report_1.default(this._spans);
     }
-    currentContext() {
-        return this._spans.length ? this._spans[this._spans.length - 1].context() : null;
-    }
     _extract(format, carrier) {
         throw new Error('NOT YET IMPLEMENTED');
     }
@@ -58,6 +55,14 @@ class FoxxTracer extends opentracing_1.Tracer {
         // Capture the stack at the time the span started
         span._startStack = new Error().stack;
         return span;
+    }
+
+    get currentContext() {
+        return this._currentContext;
+    }
+
+    set currentContext(value) {
+        this._currentContext = value;
     }
 }
 exports.FoxxTracer = FoxxTracer;
