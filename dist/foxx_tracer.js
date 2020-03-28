@@ -21,15 +21,10 @@ class FoxxTracer extends opentracing_1.Tracer {
         return new foxx_report_1.default(this._spans);
     }
     currentContext() {
-        return this._spans[this._spans.length - 1].context();
+        return this._spans.length ? this._spans[this._spans.length - 1].context() : null;
     }
     _extract(format, carrier) {
-        if ((carrier === opentracing_1.globalTracer()) || carrier === this) {
-            return this.currentContext();
-        }
-        else {
-            throw new Error('NOT YET IMPLEMENTED');
-        }
+        throw new Error('NOT YET IMPLEMENTED');
     }
     _inject(span, format, carrier) {
         throw new Error('NOT YET IMPLEMENTED');
