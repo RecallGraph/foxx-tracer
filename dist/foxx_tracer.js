@@ -20,35 +20,29 @@ class FoxxTracer extends opentracing_1.Tracer {
     report() {
         return new foxx_report_1.default(this._spans);
     }
-
     currentContext() {
         return this._spans[this._spans.length - 1].context();
     }
-
     _extract(format, carrier) {
-        if (carrier === this) {
+        if ((carrier === opentracing_1.globalTracer()) || carrier === this) {
             return this.currentContext();
         }
         else {
             throw new Error('NOT YET IMPLEMENTED');
         }
     }
-
     _inject(span, format, carrier) {
         throw new Error('NOT YET IMPLEMENTED');
     }
-
     /**
      * Discard any buffered data.
      */
     clear() {
         this._spans = [];
     }
-
     _allocSpan() {
         return new foxx_span_1.default(this);
     }
-
     _startSpan(name, fields) {
         // _allocSpan is given it's own method so that derived classes can
         // allocate any type of object they want, but not have to duplicate

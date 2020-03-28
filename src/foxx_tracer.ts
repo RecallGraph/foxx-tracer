@@ -1,4 +1,4 @@
-import {SpanContext, SpanOptions, Tracer} from "opentracing";
+import {globalTracer, SpanContext, SpanOptions, Tracer} from "opentracing";
 import FoxxContext from './foxx_context';
 import FoxxReport from './foxx_report';
 import FoxxSpan from './foxx_span';
@@ -20,7 +20,7 @@ export class FoxxTracer extends Tracer {
     }
 
     protected _extract(format: any, carrier: any): SpanContext {
-        if (carrier === this) {
+        if ((carrier === globalTracer()) || carrier === this) {
             return this.currentContext();
         } else {
             throw new Error('NOT YET IMPLEMENTED');
