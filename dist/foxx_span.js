@@ -21,9 +21,11 @@ class FoxxSpan extends opentracing.Span {
         this._tags = {};
         this._logs = [];
     }
+
     _setOperationName(name) {
         this._operationName = name;
     }
+
     _addTags(set) {
         const keys = Object.keys(set);
         for (const key of keys) {
@@ -31,11 +33,8 @@ class FoxxSpan extends opentracing.Span {
         }
     }
 
-    _log(fields, timestamp) {
-        this._logs.push({
-            fields,
-            timestamp
-        });
+    logs() {
+        return this._logs;
     }
 
     _finish(finishTime) {
@@ -48,7 +47,6 @@ class FoxxSpan extends opentracing.Span {
     tracer() {
         return this._foxxTracer;
     }
-
     uuid() {
         return this._uuid;
     }
@@ -65,6 +63,13 @@ class FoxxSpan extends opentracing.Span {
         return this._tags;
     }
 
+    _log(fields, timestamp) {
+        this._logs.push({
+            fields,
+            timestamp: timestamp || Date.now()
+        });
+    }
+
     addReference(ref) {
     }
 
@@ -77,7 +82,6 @@ class FoxxSpan extends opentracing.Span {
     _context() {
         return new foxx_context_1.default(this);
     }
-
     /**
      * Returns a simplified object better for console.log()'ing.
      */

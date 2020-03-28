@@ -56,11 +56,8 @@ export class FoxxSpan extends opentracing.Span {
         }
     }
 
-    protected _log(fields: { [key: string]: any }, timestamp?: number): void {
-        this._logs.push({
-            fields,
-            timestamp
-        });
+    logs(): Log[] {
+        return this._logs;
     }
 
     protected _finish(finishTime?: number): void {
@@ -89,6 +86,13 @@ export class FoxxSpan extends opentracing.Span {
 
     tags(): { [key: string]: any } {
         return this._tags;
+    }
+
+    protected _log(fields: { [key: string]: any }, timestamp?: number): void {
+        this._logs.push({
+            fields,
+            timestamp: timestamp || Date.now()
+        });
     }
 
     addReference(ref: opentracing.Reference): void {
