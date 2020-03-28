@@ -19,8 +19,12 @@ export class FoxxTracer extends Tracer {
         return this._spans[this._spans.length - 1].context()
     }
 
-    protected _extract(format: any, carrier: any): never {
-        throw new Error('NOT YET IMPLEMENTED');
+    protected _extract(format: any, carrier: any): SpanContext {
+        if (carrier === this) {
+            return this.currentContext();
+        } else {
+            throw new Error('NOT YET IMPLEMENTED');
+        }
     }
 
     //------------------------------------------------------------------------//

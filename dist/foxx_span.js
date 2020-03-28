@@ -21,17 +21,9 @@ class FoxxSpan extends opentracing.Span {
         this._tags = {};
         this._logs = [];
     }
-
-    static _generateUUID() {
-        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        return `${p0}${p1}`;
-    }
-
     _setOperationName(name) {
         this._operationName = name;
     }
-
     _addTags(set) {
         const keys = Object.keys(set);
         for (const key of keys) {
@@ -46,13 +38,12 @@ class FoxxSpan extends opentracing.Span {
         });
     }
 
-    //------------------------------------------------------------------------//
-    // FoxxSpan-specific
-
     _finish(finishTime) {
         this._finishMs = finishTime || Date.now();
     }
 
+    //------------------------------------------------------------------------//
+    // FoxxSpan-specific
     //------------------------------------------------------------------------//
     tracer() {
         return this._foxxTracer;
@@ -75,6 +66,12 @@ class FoxxSpan extends opentracing.Span {
     }
 
     addReference(ref) {
+    }
+
+    static _generateUUID() {
+        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        return `${p0}${p1}`;
     }
 
     _context() {

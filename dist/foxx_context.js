@@ -13,11 +13,9 @@ class FoxxContext extends opentracing.SpanContext {
     span() {
         return this._span;
     }
-
     toTraceId() {
         return '';
     }
-
     toSpanId() {
         return '';
     }

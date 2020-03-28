@@ -27,7 +27,6 @@ class FoxxReport {
             });
         });
     }
-
     firstSpanWithTagValue(key, val) {
         const m = this.spansByTag[key];
         if (!m) {
