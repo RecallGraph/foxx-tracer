@@ -60,6 +60,11 @@ export class FoxxTracer extends Tracer {
                 span.addReference(ref);
             }
         }
+        if (fields.tags) {
+            for (const tagKey in fields.tags) {
+                span.setTag(tagKey, fields.tags[tagKey])
+            }
+        }
 
         // Capture the stack at the time the span started
         span._startStack = new Error().stack;
