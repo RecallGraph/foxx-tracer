@@ -112,7 +112,6 @@ export class FoxxSpan extends Span {
 
     protected _finish(finishTime?: number): void {
         this._finishMs = finishTime || Date.now();
-        this._foxxTracer.currentContext = this.getParent();
     }
 
     protected _context(): SpanContext {

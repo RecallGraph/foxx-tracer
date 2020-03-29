@@ -31,29 +31,24 @@ class FoxxSpan extends opentracing_1.Span {
             this._tags[key] = set[key];
         }
     }
-
     logs() {
         return this._logs;
     }
-
     static _generateUUID() {
         const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         return `${p0}${p1}`;
     }
-
     getParent() {
         const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
         return parent ? parent.referencedContext() : null;
     }
-
     //------------------------------------------------------------------------//
     // FoxxSpan-specific
     //------------------------------------------------------------------------//
     tracer() {
         return this._foxxTracer;
     }
-
     uuid() {
         return this._uuid;
     }
@@ -66,27 +61,21 @@ class FoxxSpan extends opentracing_1.Span {
     tags() {
         return this._tags;
     }
-
     _log(fields, timestamp) {
         this._logs.push({
             fields,
             timestamp: timestamp || Date.now()
         });
     }
-
     addReference(ref) {
         this._refs.push(ref);
     }
-
     _finish(finishTime) {
         this._finishMs = finishTime || Date.now();
-        this._foxxTracer.currentContext = this.getParent();
     }
-
     _context() {
         return this._foxxContext;
     }
-
     /**
      * Returns a simplified object better for console.log()'ing.
      */
