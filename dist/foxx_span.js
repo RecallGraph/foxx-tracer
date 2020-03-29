@@ -88,6 +88,9 @@ class FoxxSpan extends opentracing_1.Span {
         if (Object.keys(this._tags).length) {
             obj.tags = this._tags;
         }
+        if (this._logs.length) {
+            obj.logs = this._logs;
+        }
         return obj;
     }
 }

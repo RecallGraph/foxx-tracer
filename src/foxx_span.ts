@@ -13,6 +13,7 @@ export interface DebugInfo {
     operation: string;
     millis: [number, number, number];
     tags?: { [key: string]: any };
+    logs?: Log[];
 }
 
 /**
@@ -127,9 +128,15 @@ export class FoxxSpan extends Span {
             operation: this._operationName,
             millis: [this._finishMs - this._startMs, this._startMs, this._finishMs]
         };
+
         if (Object.keys(this._tags).length) {
             obj.tags = this._tags;
         }
+
+        if (this._logs.length) {
+            obj.logs = this._logs;
+        }
+
         return obj;
     }
 }
