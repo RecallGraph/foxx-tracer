@@ -5,20 +5,16 @@ const opentracing = require('opentracing');
 class FoxxContext extends opentracing.SpanContext {
     constructor(span) {
         super();
-        // Store a reference to the span itself since this is a foxx tracer
-        // intended to make debugging and unit testing easier.
-        this._span = span;
-        this._tracer = span.tracer();
+        this._spanId = span.uuid();
+        const parent = span.getParent();
+        this._traceId = parent ? parent.toTraceId() : span.uuid();
     }
 
-    span() {
-        return this._span;
-    }
     toTraceId() {
-        return this._tracer.uuid();
+        return this._traceId;
     }
     toSpanId() {
-        return this._span.uuid();
+        return this._spanId;
     }
 }
 exports.FoxxContext = FoxxContext;

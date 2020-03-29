@@ -2,7 +2,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 const opentracing_1 = require('opentracing');
 const foxx_context_1 = require('./foxx_context');
-const foxx_tracer_1 = require('./foxx_tracer');
 
 /**
  * OpenTracing Span implementation designed for use in unit tests.
@@ -14,7 +13,7 @@ class FoxxSpan extends opentracing_1.Span {
     constructor(tracer) {
         super();
         this._foxxTracer = tracer;
-        this._uuid = foxx_tracer_1.default._generateUUID();
+        this._uuid = FoxxSpan._generateUUID();
         this._startMs = Date.now();
         this._finishMs = 0;
         this._operationName = '';
@@ -26,18 +25,29 @@ class FoxxSpan extends opentracing_1.Span {
     _setOperationName(name) {
         this._operationName = name;
     }
+
     _addTags(set) {
         const keys = Object.keys(set);
         for (const key of keys) {
             this._tags[key] = set[key];
         }
     }
+
     logs() {
         return this._logs;
     }
+
+    static _generateUUID() {
+        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        return `${p0}${p1}`;
+    }
+
     _finish(finishTime) {
         this._finishMs = finishTime || Date.now();
+        this._foxxTracer.currentContext = this.getParent();
     }
+
     //------------------------------------------------------------------------//
     // FoxxSpan-specific
     //------------------------------------------------------------------------//
@@ -56,27 +66,22 @@ class FoxxSpan extends opentracing_1.Span {
     tags() {
         return this._tags;
     }
-
     _log(fields, timestamp) {
         this._logs.push({
             fields,
             timestamp: timestamp || Date.now()
         });
     }
-
     addReference(ref) {
         this._refs.push(ref);
     }
-
     getParent() {
         const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
         return parent ? parent.referencedContext() : null;
     }
-
     _context() {
         return this._foxxContext;
     }
-
     /**
      * Returns a simplified object better for console.log()'ing.
      */

@@ -1,6 +1,5 @@
 import * as opentracing from 'opentracing';
 import FoxxSpan from './foxx_span';
-import FoxxTracer from "./foxx_tracer";
 
 export class FoxxContext extends opentracing.SpanContext {
 
@@ -8,27 +7,24 @@ export class FoxxContext extends opentracing.SpanContext {
     // FoxxContext-specific
     //------------------------------------------------------------------------//
 
-    private readonly _span: FoxxSpan;
-    private readonly _tracer: FoxxTracer;
+    private readonly _traceId: string;
+    private readonly _spanId: string;
 
     constructor(span: FoxxSpan) {
         super();
-        // Store a reference to the span itself since this is a foxx tracer
-        // intended to make debugging and unit testing easier.
-        this._span = span;
-        this._tracer = <FoxxTracer>span.tracer();
-    }
 
-    span(): FoxxSpan {
-        return this._span;
+        this._spanId = span.uuid();
+
+        const parent = span.getParent();
+        this._traceId = parent ? parent.toTraceId() : span.uuid();
     }
 
     toTraceId(): string {
-        return this._tracer.uuid();
+        return this._traceId;
     }
 
     toSpanId(): string {
-        return this._span.uuid();
+        return this._spanId;
     }
 }
 

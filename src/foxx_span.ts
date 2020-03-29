@@ -1,6 +1,7 @@
 import {Reference, REFERENCE_CHILD_OF, Span, Tracer} from 'opentracing';
 import FoxxContext from './foxx_context';
 import FoxxTracer from './foxx_tracer';
+import SpanContext from "opentracing/lib/span_context";
 
 interface Log {
     fields: { [key: string]: any };
@@ -36,7 +37,7 @@ export class FoxxSpan extends Span {
     constructor(tracer: FoxxTracer) {
         super();
         this._foxxTracer = tracer;
-        this._uuid = FoxxTracer._generateUUID();
+        this._uuid = FoxxSpan._generateUUID();
         this._startMs = Date.now();
         this._finishMs = 0;
         this._operationName = '';
@@ -61,8 +62,17 @@ export class FoxxSpan extends Span {
         return this._logs;
     }
 
-    protected _finish(finishTime?: number): void {
-        this._finishMs = finishTime || Date.now();
+    static _generateUUID(): string {
+        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+
+        return `${p0}${p1}`;
+    }
+
+    getParent(): SpanContext {
+        const parent = this._refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
+
+        return parent ? parent.referencedContext() : null;
     }
 
     //------------------------------------------------------------------------//
@@ -100,13 +110,12 @@ export class FoxxSpan extends Span {
         this._refs.push(ref);
     }
 
-    getParent(): FoxxContext {
-        const parent = this._refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
-
-        return parent ? <FoxxContext>parent.referencedContext() : null;
+    protected _finish(finishTime?: number): void {
+        this._finishMs = finishTime || Date.now();
+        this._foxxTracer.currentContext = this.getParent();
     }
 
-    protected _context(): FoxxContext {
+    protected _context(): SpanContext {
         return this._foxxContext;
     }
 

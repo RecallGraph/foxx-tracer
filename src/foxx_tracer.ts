@@ -5,8 +5,7 @@ import FoxxSpan from './foxx_span';
 
 export class FoxxTracer extends Tracer {
     private _spans: FoxxSpan[];
-    private _currentContext: FoxxContext;
-    private readonly _uuid: string;
+    private _currentContext: SpanContext;
 
     /**
      * Return the buffered data in a format convenient for making unit test
@@ -27,18 +26,6 @@ export class FoxxTracer extends Tracer {
     constructor() {
         super();
         this._spans = [];
-        this._uuid = FoxxTracer._generateUUID();
-    }
-
-    static _generateUUID(): string {
-        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-
-        return `${p0}${p1}`;
-    }
-
-    uuid(): string {
-        return this._uuid;
     }
 
     protected _inject(span: FoxxContext, format: any, carrier: any): never {
@@ -56,10 +43,15 @@ export class FoxxTracer extends Tracer {
         return new FoxxSpan(this);
     }
 
+    get currentContext(): SpanContext {
+        return this._currentContext;
+    }
+
+    set currentContext(value: SpanContext) {
+        this._currentContext = value;
+    }
+
     protected _startSpan(name: string, fields: SpanOptions): FoxxSpan {
-        // _allocSpan is given it's own method so that derived classes can
-        // allocate any type of object they want, but not have to duplicate
-        // the other common logic in startSpan().
         const span = this._allocSpan();
         span.setOperationName(name);
         this._spans.push(span);
@@ -77,15 +69,10 @@ export class FoxxTracer extends Tracer {
 
         // Capture the stack at the time the span started
         span._startStack = new Error().stack;
+
+        this._currentContext = span.context();
+
         return span;
-    }
-
-    get currentContext(): FoxxContext {
-        return this._currentContext;
-    }
-
-    set currentContext(value: FoxxContext) {
-        this._currentContext = value;
     }
 }
 
