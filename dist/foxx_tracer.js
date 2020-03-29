@@ -26,26 +26,21 @@ class FoxxTracer extends opentracing_1.Tracer {
     _inject(span, format, carrier) {
         throw new Error('NOT YET IMPLEMENTED');
     }
-
     /**
      * Discard any buffered data.
      */
     clear() {
         this._spans = [];
     }
-
     _allocSpan() {
         return new foxx_span_1.default(this);
     }
-
     get currentContext() {
         return this._currentContext;
     }
-
     set currentContext(value) {
         this._currentContext = value;
     }
-
     _startSpan(name, fields) {
         const span = this._allocSpan();
         span.setOperationName(name);

@@ -7,24 +7,22 @@ export class FoxxContext extends opentracing.SpanContext {
     // FoxxContext-specific
     //------------------------------------------------------------------------//
 
-    private readonly _traceId: string;
-    private readonly _spanId: string;
+    private readonly _span: FoxxSpan;
 
     constructor(span: FoxxSpan) {
         super();
 
-        this._spanId = span.uuid();
-
-        const parent = span.getParent();
-        this._traceId = parent ? parent.toTraceId() : span.uuid();
+        this._span = span;
     }
 
     toTraceId(): string {
-        return this._traceId;
+        const parent = this._span.getParent();
+
+        return parent ? parent.toTraceId() : this._span.uuid();
     }
 
     toSpanId(): string {
-        return this._spanId;
+        return this._span.uuid();
     }
 }
 
