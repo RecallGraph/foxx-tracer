@@ -25,7 +25,6 @@ class FoxxSpan extends opentracing_1.Span {
     _setOperationName(name) {
         this._operationName = name;
     }
-
     _addTags(set) {
         const keys = Object.keys(set);
         for (const key of keys) {
@@ -43,9 +42,9 @@ class FoxxSpan extends opentracing_1.Span {
         return `${p0}${p1}`;
     }
 
-    _finish(finishTime) {
-        this._finishMs = finishTime || Date.now();
-        this._foxxTracer.currentContext = this.getParent();
+    getParent() {
+        const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
+        return parent ? parent.referencedContext() : null;
     }
 
     //------------------------------------------------------------------------//
@@ -54,6 +53,7 @@ class FoxxSpan extends opentracing_1.Span {
     tracer() {
         return this._foxxTracer;
     }
+
     uuid() {
         return this._uuid;
     }
@@ -66,22 +66,27 @@ class FoxxSpan extends opentracing_1.Span {
     tags() {
         return this._tags;
     }
+
     _log(fields, timestamp) {
         this._logs.push({
             fields,
             timestamp: timestamp || Date.now()
         });
     }
+
     addReference(ref) {
         this._refs.push(ref);
     }
-    getParent() {
-        const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
-        return parent ? parent.referencedContext() : null;
+
+    _finish(finishTime) {
+        this._finishMs = finishTime || Date.now();
+        this._foxxTracer.currentContext = this.getParent();
     }
+
     _context() {
         return this._foxxContext;
     }
+
     /**
      * Returns a simplified object better for console.log()'ing.
      */
