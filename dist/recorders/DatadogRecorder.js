@@ -33,25 +33,25 @@ class DatadogRecorder {
         for (const key in tags) {
             record.meta[key] = JSON.stringify(tags[key]);
         }
-        record.metrics = {};
-        const logs = Object.assign({}, ...span.logs().map(log => log.fields));
-        for (const key in logs) {
-            record.metrics[key] = parseFloat(logs[key]);
-        }
+        // record.metrics = {};
+        // const logs = Object.assign({}, ...span.logs().map(log => log.fields));
+        //
+        // for (const key in logs) {
+        //     record.metrics[key] = parseFloat(logs[key]);
+        // }
         console.log(record);
         // noinspection JSIgnoredPromiseFromCall
         tasks.register({
             command: function (params) {
                 const request = require('@arangodb/request');
                 const { record, url } = params;
-                const response = request.put(url, {
+                request.put(url, {
                     json: true,
                     body: [[record]],
                     headers: {
                         'X-Datadog-Trace-Count': 1
                     }
                 });
-                console.log(response.body);
             },
             params: { record, url: this.ddURL }
         });
