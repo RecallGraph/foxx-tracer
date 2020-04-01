@@ -20,20 +20,28 @@ class FoxxSpan extends opentracing_1.Span {
         this._logs = [];
         this._refs = [];
     }
+
     static generateUUID() {
         const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         return `${p0}${p1}`;
     }
+
+    get startMs() {
+        return this._startMs;
+    }
+
     _setOperationName(name) {
         this._operationName = name;
     }
+
     _addTags(set) {
         const keys = Object.keys(set);
         for (const key of keys) {
             this._tags[key] = set[key];
         }
     }
+
     logs() {
         return this._logs;
     }

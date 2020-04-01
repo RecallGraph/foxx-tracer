@@ -55,6 +55,10 @@ export class FoxxSpan extends Span {
         return `${p0}${p1}`;
     }
 
+    get startMs(): number {
+        return this._startMs;
+    }
+
     protected _setOperationName(name: string): void {
         this._operationName = name;
     }
