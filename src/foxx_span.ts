@@ -2,6 +2,7 @@ import { Reference, REFERENCE_CHILD_OF, Span } from 'opentracing';
 import FoxxContext from './foxx_context';
 import FoxxTracer from './foxx_tracer';
 import SpanContext from "opentracing/lib/span_context";
+import { time } from "@arangodb";
 
 interface Log {
     fields: { [key: string]: any };
@@ -26,10 +27,10 @@ export class FoxxSpan extends Span {
     private readonly _tags: { [key: string]: any };
     private readonly _logs: Log[];
     private readonly _refs: Reference[];
-    _finishMs: number;
+    _finishS: number;
     private readonly _foxxTracer: FoxxTracer;
     private readonly _uuid: string;
-    private readonly _startMs: number;
+    private readonly _startS: number;
     private _foxxContext: FoxxContext;
 
     //------------------------------------------------------------------------//
@@ -40,8 +41,8 @@ export class FoxxSpan extends Span {
         super();
         this._foxxTracer = tracer;
         this._uuid = FoxxSpan.generateUUID();
-        this._startMs = Date.now();
-        this._finishMs = 0;
+        this._startS = time();
+        this._finishS = 0;
         this._operationName = '';
         this._tags = {};
         this._logs = [];
@@ -55,8 +56,8 @@ export class FoxxSpan extends Span {
         return `${p0}${p1}`;
     }
 
-    get startMs(): number {
-        return this._startMs;
+    get startS(): number {
+        return this._startS;
     }
 
     protected _setOperationName(name: string): void {
@@ -95,8 +96,8 @@ export class FoxxSpan extends Span {
         return this._operationName;
     }
 
-    durationMs(): number {
-        return this._finishMs - this._startMs;
+    durationS(): number {
+        return this._finishS - this._startS;
     }
 
     tags(): { [key: string]: any } {
@@ -114,15 +115,6 @@ export class FoxxSpan extends Span {
         this._refs.push(ref);
     }
 
-    protected _finish(finishTime?: number): void {
-        this._finishMs = finishTime || Date.now();
-        this._foxxTracer.recorder.record(this);
-    }
-
-    protected _context(): SpanContext {
-        return this._foxxContext;
-    }
-
     /**
      * Returns a simplified object better for console.log()'ing.
      */
@@ -131,7 +123,7 @@ export class FoxxSpan extends Span {
             traceId: this._foxxContext.toTraceId(),
             spanId: this._uuid,
             operation: this._operationName,
-            millis: [this._finishMs - this._startMs, this._startMs, this._finishMs]
+            millis: [this._finishS - this._startS, this._startS, this._finishS]
         };
 
         const parent = this.getParent();
@@ -148,6 +140,15 @@ export class FoxxSpan extends Span {
         }
 
         return obj;
+    }
+
+    protected _context(): SpanContext {
+        return this._foxxContext;
+    }
+
+    protected _finish(finishTime?: number): void {
+        this._finishS = finishTime || Date.now();
+        this._foxxTracer.recorder.record(this);
     }
 }
 

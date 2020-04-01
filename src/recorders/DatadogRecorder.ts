@@ -29,13 +29,14 @@ export default class DatadogRecorder implements Recorder {
     }
 
     record(span: FoxxSpan): void {
+        const tags = span.tags();
         const record: SpanRecord = {
-            duration: span.durationMs() * 1000,
+            duration: span.durationS() * 1e9,
             name: span.operationName(),
-            resource: span.tags().path,
+            resource: tags.path || span.operationName(),
             service: this.service,
             span_id: parseInt(span.uuid(), 16),
-            start: span.startMs * 1000,
+            start: span.startS * 1e9,
             trace_id: parseInt(span.context().toTraceId(), 16),
             type: 'db'
         };
@@ -45,7 +46,6 @@ export default class DatadogRecorder implements Recorder {
             record.parent_id = parseInt(parent.toSpanId(), 16);
         }
 
-        const tags = span.tags();
         const hasError = tags[ERROR];
         if (hasError) {
             record.error = 1;

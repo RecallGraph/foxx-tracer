@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const opentracing_1 = require("opentracing");
 const foxx_context_1 = require("./foxx_context");
+const _arangodb_1 = require("@arangodb");
 /**
  * OpenTracing Span implementation designed for use in unit tests.
  */
@@ -13,8 +14,8 @@ class FoxxSpan extends opentracing_1.Span {
         super();
         this._foxxTracer = tracer;
         this._uuid = FoxxSpan.generateUUID();
-        this._startMs = Date.now();
-        this._finishMs = 0;
+        this._startS = _arangodb_1.time();
+        this._finishS = 0;
         this._operationName = '';
         this._tags = {};
         this._logs = [];
@@ -25,8 +26,8 @@ class FoxxSpan extends opentracing_1.Span {
         const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         return `${p0}${p1}`;
     }
-    get startMs() {
-        return this._startMs;
+    get startS() {
+        return this._startS;
     }
     _setOperationName(name) {
         this._operationName = name;
@@ -55,8 +56,8 @@ class FoxxSpan extends opentracing_1.Span {
     operationName() {
         return this._operationName;
     }
-    durationMs() {
-        return this._finishMs - this._startMs;
+    durationS() {
+        return this._finishS - this._startS;
     }
     tags() {
         return this._tags;
@@ -70,13 +71,6 @@ class FoxxSpan extends opentracing_1.Span {
     addReference(ref) {
         this._refs.push(ref);
     }
-    _finish(finishTime) {
-        this._finishMs = finishTime || Date.now();
-        this._foxxTracer.recorder.record(this);
-    }
-    _context() {
-        return this._foxxContext;
-    }
     /**
      * Returns a simplified object better for console.log()'ing.
      */
@@ -85,7 +79,7 @@ class FoxxSpan extends opentracing_1.Span {
             traceId: this._foxxContext.toTraceId(),
             spanId: this._uuid,
             operation: this._operationName,
-            millis: [this._finishMs - this._startMs, this._startMs, this._finishMs]
+            millis: [this._finishS - this._startS, this._startS, this._finishS]
         };
         const parent = this.getParent();
         if (parent) {
@@ -98,6 +92,13 @@ class FoxxSpan extends opentracing_1.Span {
             obj.logs = this._logs;
         }
         return obj;
+    }
+    _context() {
+        return this._foxxContext;
+    }
+    _finish(finishTime) {
+        this._finishS = finishTime || Date.now();
+        this._foxxTracer.recorder.record(this);
     }
 }
 exports.FoxxSpan = FoxxSpan;
