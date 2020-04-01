@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "Recorder.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../src/recorders/Recorder.ts"
+  ],
+  "names": [],
+  "mappings": ""
+}

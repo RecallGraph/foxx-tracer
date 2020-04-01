@@ -4,23 +4,31 @@ const opentracing_1 = require('opentracing');
 const foxx_span_1 = require('./foxx_span');
 
 class FoxxTracer extends opentracing_1.Tracer {
-    constructor() {
+    constructor(recorder) {
         super();
+        this._recorder = recorder;
     }
 
     _extract(format, carrier) {
         throw new Error('NOT YET IMPLEMENTED');
     }
 
+    get recorder() {
+        return this._recorder;
+    }
+
     _inject(span, format, carrier) {
         throw new Error('NOT YET IMPLEMENTED');
     }
+
     _allocSpan() {
         return new foxx_span_1.default(this);
     }
+
     get currentContext() {
         return this._currentContext;
     }
+
     set currentContext(value) {
         this._currentContext = value;
     }
