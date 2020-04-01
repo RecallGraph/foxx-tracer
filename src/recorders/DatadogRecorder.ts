@@ -57,7 +57,7 @@ export default class DatadogRecorder implements Recorder {
         }
 
         record.metrics = {};
-        const logs = Object.assign({}, ...span.logs());
+        const logs = Object.assign({}, ...span.logs().map(log => log.fields));
 
         for (const key in logs) {
             record.metrics[key] = parseFloat(logs[key]);
