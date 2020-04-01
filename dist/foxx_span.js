@@ -79,7 +79,8 @@ class FoxxSpan extends opentracing_1.Span {
      */
     debug() {
         const obj = {
-            uuid: this._uuid,
+            traceId: this._foxxContext.toTraceId(),
+            spanId: this._uuid,
             operation: this._operationName,
             millis: [this._finishMs - this._startMs, this._startMs, this._finishMs]
         };

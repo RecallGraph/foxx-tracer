@@ -9,7 +9,8 @@ interface Log {
 }
 
 export interface DebugInfo {
-    uuid: string;
+    traceId: string;
+    spanId: string;
     operation: string;
     millis: [number, number, number];
     tags?: { [key: string]: any };
@@ -123,7 +124,8 @@ export class FoxxSpan extends Span {
      */
     debug(): DebugInfo {
         const obj: DebugInfo = {
-            uuid: this._uuid,
+            traceId: this._foxxContext.toTraceId(),
+            spanId: this._uuid,
             operation: this._operationName,
             millis: [this._finishMs - this._startMs, this._startMs, this._finishMs]
         };
