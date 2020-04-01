@@ -97,7 +97,7 @@ class FoxxSpan extends opentracing_1.Span {
         return this._foxxContext;
     }
     _finish(finishTime) {
-        this._finishS = finishTime || Date.now();
+        this._finishS = finishTime || _arangodb_1.time();
         this._foxxTracer.recorder.record(this);
     }
 }
