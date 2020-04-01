@@ -1,4 +1,4 @@
-import {SpanContext} from "opentracing";
+import { SpanContext } from "opentracing";
 
 export class FoxxContext extends SpanContext {
     private readonly traceId: string;

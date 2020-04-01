@@ -1,4 +1,4 @@
-import {SpanContext, SpanOptions, Tracer} from "opentracing";
+import { SpanContext, SpanOptions, Tracer } from "opentracing";
 import FoxxContext from './foxx_context';
 import FoxxSpan from './foxx_span';
 import Recorder from "./recorders/Recorder";

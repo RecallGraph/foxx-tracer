@@ -1,4 +1,4 @@
-import {Reference, REFERENCE_CHILD_OF, Span} from 'opentracing';
+import { Reference, REFERENCE_CHILD_OF, Span } from 'opentracing';
 import FoxxContext from './foxx_context';
 import FoxxTracer from './foxx_tracer';
 import SpanContext from "opentracing/lib/span_context";

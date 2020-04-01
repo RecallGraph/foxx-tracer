@@ -16,19 +16,15 @@ class FoxxTracer extends opentracing_1.Tracer {
     get recorder() {
         return this._recorder;
     }
-
     _inject(span, format, carrier) {
         throw new Error('NOT YET IMPLEMENTED');
     }
-
     _allocSpan() {
         return new foxx_span_1.default(this);
     }
-
     get currentContext() {
         return this._currentContext;
     }
-
     set currentContext(value) {
         this._currentContext = value;
     }

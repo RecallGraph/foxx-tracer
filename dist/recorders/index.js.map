@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../src/recorders/index.ts"
+  ],
+  "names": [],
+  "mappings": ";;AACA,uDAAgD;AAE7B,0BAFZ,yBAAe,CAEY"
+}
