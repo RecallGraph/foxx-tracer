@@ -81,10 +81,13 @@ class FoxxSpan extends opentracing_1.Span {
         const obj = {
             traceId: this._foxxContext.toTraceId(),
             spanId: this._uuid,
-            parentId: this.getParent() ? this.getParent().toSpanId() : null,
             operation: this._operationName,
             millis: [this._finishMs - this._startMs, this._startMs, this._finishMs]
         };
+        const parent = this.getParent();
+        if (parent) {
+            obj.parentId = this.getParent().toSpanId();
+        }
         if (Object.keys(this._tags).length) {
             obj.tags = this._tags;
         }
