@@ -14,7 +14,7 @@ class DatadogRecorder {
         const record = {
             duration: Math.floor(span.durationS() * 1e9),
             name: span.operationName(),
-            resource: tags.path || span.operationName(),
+            resource: span.operationName(),
             service: this.service,
             span_id: parseInt(span.uuid(), 16),
             start: Math.floor(span.startS * 1e9),
@@ -38,6 +38,7 @@ class DatadogRecorder {
         for (const key in logs) {
             record.metrics[key] = parseFloat(logs[key]);
         }
+        console.log(record);
         // noinspection JSIgnoredPromiseFromCall
         tasks.register({
             command: function (params) {
@@ -50,7 +51,7 @@ class DatadogRecorder {
                         'X-Datadog-Trace-Count': 1
                     }
                 });
-                console.log(response);
+                console.log(response.body);
             },
             params: { record, url: this.ddURL }
         });

@@ -33,7 +33,7 @@ export default class DatadogRecorder implements Recorder {
         const record: SpanRecord = {
             duration: Math.floor(span.durationS() * 1e9),
             name: span.operationName(),
-            resource: tags.path || span.operationName(),
+            resource: span.operationName(),
             service: this.service,
             span_id: parseInt(span.uuid(), 16),
             start: Math.floor(span.startS * 1e9),
@@ -62,6 +62,7 @@ export default class DatadogRecorder implements Recorder {
         for (const key in logs) {
             record.metrics[key] = parseFloat(logs[key]);
         }
+        console.log(record);
 
         // noinspection JSIgnoredPromiseFromCall
         tasks.register({
@@ -77,7 +78,7 @@ export default class DatadogRecorder implements Recorder {
                     }
                 });
 
-                console.log(response);
+                console.log(response.body);
             },
             params: { record, url: this.ddURL }
         });
