@@ -35,7 +35,7 @@ export default class DatadogRecorder implements Recorder {
             resource: span.tags().path,
             service: this.service,
             span_id: parseInt(span.uuid(), 16),
-            start: span.startMs,
+            start: span.startMs * 1000,
             trace_id: parseInt(span.context().toTraceId(), 16),
             type: 'db'
         };

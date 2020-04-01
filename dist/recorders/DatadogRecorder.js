@@ -16,7 +16,7 @@ class DatadogRecorder {
       resource: span.tags().path,
       service: this.service,
       span_id: parseInt(span.uuid(), 16),
-      start: span.startMs,
+      start: span.startMs * 1000,
       trace_id: parseInt(span.context().toTraceId(), 16),
       type: 'db'
     };
@@ -56,6 +56,5 @@ class DatadogRecorder {
     });
   }
 }
-
 exports.default = DatadogRecorder;
 //# sourceMappingURL=DatadogRecorder.js.map
