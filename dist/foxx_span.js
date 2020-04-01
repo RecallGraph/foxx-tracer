@@ -69,7 +69,7 @@ class FoxxSpan extends opentracing_1.Span {
     }
     _finish(finishTime) {
         this._finishMs = finishTime || Date.now();
-        console.log(this.debug());
+        this._foxxTracer.recorder.record(this);
     }
     _context() {
         return this._foxxContext;
