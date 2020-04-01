@@ -12,12 +12,12 @@ class DatadogRecorder {
     record(span) {
         const tags = span.tags();
         const record = {
-            duration: span.durationS() * 1e9,
+            duration: Math.floor(span.durationS() * 1e9),
             name: span.operationName(),
             resource: tags.path || span.operationName(),
             service: this.service,
             span_id: parseInt(span.uuid(), 16),
-            start: span.startS * 1e9,
+            start: Math.floor(span.startS * 1e9),
             trace_id: parseInt(span.context().toTraceId(), 16),
             type: 'db'
         };
