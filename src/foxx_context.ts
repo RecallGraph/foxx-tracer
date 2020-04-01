@@ -1,28 +1,22 @@
-import * as opentracing from 'opentracing';
-import FoxxSpan from './foxx_span';
+import {SpanContext} from "opentracing";
 
-export class FoxxContext extends opentracing.SpanContext {
+export class FoxxContext extends SpanContext {
+    private readonly traceId: string;
+    private readonly spanId: string;
 
-    //------------------------------------------------------------------------//
-    // FoxxContext-specific
-    //------------------------------------------------------------------------//
-
-    private readonly _span: FoxxSpan;
-
-    constructor(span: FoxxSpan) {
+    constructor(traceId: string, spanId: string) {
         super();
 
-        this._span = span;
+        this.traceId = traceId;
+        this.spanId = spanId;
     }
 
     toTraceId(): string {
-        const parent = this._span.getParent();
-
-        return parent ? parent.toTraceId() : this._span.uuid();
+        return this.traceId;
     }
 
     toSpanId(): string {
-        return this._span.uuid();
+        return this.spanId;
     }
 }
 

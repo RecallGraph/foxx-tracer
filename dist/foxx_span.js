@@ -1,8 +1,7 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
-const opentracing_1 = require('opentracing');
-const foxx_context_1 = require('./foxx_context');
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const opentracing_1 = require("opentracing");
+const foxx_context_1 = require("./foxx_context");
 /**
  * OpenTracing Span implementation designed for use in unit tests.
  */
@@ -13,14 +12,18 @@ class FoxxSpan extends opentracing_1.Span {
     constructor(tracer) {
         super();
         this._foxxTracer = tracer;
-        this._uuid = FoxxSpan._generateUUID();
+        this._uuid = FoxxSpan.generateUUID();
         this._startMs = Date.now();
         this._finishMs = 0;
         this._operationName = '';
         this._tags = {};
         this._logs = [];
         this._refs = [];
-        this._foxxContext = new foxx_context_1.default(this);
+    }
+    static generateUUID() {
+        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+        return `${p0}${p1}`;
     }
     _setOperationName(name) {
         this._operationName = name;
@@ -34,20 +37,14 @@ class FoxxSpan extends opentracing_1.Span {
     logs() {
         return this._logs;
     }
-    static _generateUUID() {
-        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        return `${p0}${p1}`;
+    initContext() {
+        const parent = this.getParent();
+        const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
+        this._foxxContext = new foxx_context_1.default(traceId, this._uuid);
     }
     getParent() {
         const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
         return parent ? parent.referencedContext() : null;
-    }
-    //------------------------------------------------------------------------//
-    // FoxxSpan-specific
-    //------------------------------------------------------------------------//
-    tracer() {
-        return this._foxxTracer;
     }
     uuid() {
         return this._uuid;
@@ -72,6 +69,7 @@ class FoxxSpan extends opentracing_1.Span {
     }
     _finish(finishTime) {
         this._finishMs = finishTime || Date.now();
+        console.log(this.debug());
     }
     _context() {
         return this._foxxContext;
