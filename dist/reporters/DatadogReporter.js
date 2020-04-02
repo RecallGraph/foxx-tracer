@@ -57,7 +57,7 @@ class DatadogReporter {
                 })
             },
             params: { traces: ddTraces, url: this.ddURL }
-        })
+        });
     }
 }
 exports.default = DatadogReporter;

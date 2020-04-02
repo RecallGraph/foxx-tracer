@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "SpanRecord.js",
+  "sourceRoot": "",
+  "sources": [
+    "../src/SpanRecord.ts"
+  ],
+  "names": [],
+  "mappings": ""
+}

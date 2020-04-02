@@ -14,7 +14,7 @@ class FoxxContext extends opentracing_1.SpanContext {
     }
 
     toSpanId () {
-        return this.spanId;
+        return this.spanId
     }
 }
 exports.FoxxContext = FoxxContext;

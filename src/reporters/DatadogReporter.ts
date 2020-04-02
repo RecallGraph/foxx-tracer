@@ -1,23 +1,9 @@
 import Reporter from "./Reporter";
 import FoxxSpan from "../foxx_span";
 import { ERROR } from "opentracing/lib/ext/tags";
+import SpanRecord from "../SpanRecord";
 
 const tasks = require("@arangodb/tasks");
-
-interface SpanRecord {
-    trace_id: number;
-    span_id: number;
-    name: string;
-    resource: string;
-    service: string;
-    type?: string;
-    start: number;
-    duration: number;
-    parent_id?: number;
-    error?: number;
-    meta?: { [key: string]: string };
-    metrics?: { [key: string]: number };
-}
 
 export default class DatadogReporter implements Reporter {
     private readonly ddURL: string;

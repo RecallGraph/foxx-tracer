@@ -9,12 +9,16 @@ class FoxxTracer extends opentracing_1.Tracer {
         this._reporter = recorder
     }
 
-    _extract (format, carrier) {
-        throw new Error('NOT YET IMPLEMENTED')
-    }
-
     get reporter () {
         return this._reporter
+    }
+
+    get currentContext () {
+        return this._currentContext
+    }
+
+    _extract (format, carrier) {
+        throw new Error('NOT YET IMPLEMENTED')
     }
 
     _inject (span, format, carrier) {
@@ -25,18 +29,16 @@ class FoxxTracer extends opentracing_1.Tracer {
         return new foxx_span_1.default(this)
     }
 
-    get currentContext () {
-        return this._currentContext
+    set currentContext (value) {
+        this._currentContext = value
     }
-    set currentContext(value) {
-        this._currentContext = value;
-    }
-    _startSpan(name, fields) {
-        const span = this._allocSpan();
-        span.setOperationName(name);
+
+    _startSpan (name, fields) {
+        const span = this._allocSpan()
+        span.setOperationName(name)
         if (fields.references) {
             for (const ref of fields.references) {
-                span.addReference(ref);
+                span.addReference(ref)
             }
         }
         if (fields.tags) {
