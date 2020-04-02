@@ -3,7 +3,7 @@
   "file": "index.js",
   "sourceRoot": "",
   "sources": [
-    "../../src/recorders/index.ts"
+    "../../src/reporters/index.ts"
   ],
   "names": [],
   "mappings": ";;AACA,uDAAgD;AAG7B,0BAHZ,yBAAe,CAGY;AAFlC,uDAAgD;AAEZ,0BAF7B,yBAAe,CAE6B"

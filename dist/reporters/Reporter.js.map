@@ -1,9 +1,9 @@
 {
   "version": 3,
-  "file": "Recorder.js",
+  "file": "Reporter.js",
   "sourceRoot": "",
   "sources": [
-    "../../src/recorders/Recorder.ts"
+    "../../src/reporters/Reporter.ts"
   ],
   "names": [],
   "mappings": ""

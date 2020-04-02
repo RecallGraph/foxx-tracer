@@ -1,23 +1,23 @@
 import { SpanContext, SpanOptions, Tracer } from "opentracing";
 import FoxxContext from './foxx_context';
 import FoxxSpan from './foxx_span';
-import Recorder from "./recorders/Recorder";
+import Reporter from "./reporters/Reporter";
 
 export class FoxxTracer extends Tracer {
     private _currentContext: SpanContext;
-    private readonly _recorder: Recorder;
+    private readonly _recorder: Reporter;
 
     protected _extract(format: any, carrier: any): SpanContext {
         throw new Error('NOT YET IMPLEMENTED');
     }
 
-    constructor(recorder: Recorder) {
+    constructor(recorder: Reporter) {
         super();
 
         this._recorder = recorder
     }
 
-    get recorder(): Recorder {
+    get recorder(): Reporter {
         return this._recorder;
     }
 
