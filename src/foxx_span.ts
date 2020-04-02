@@ -148,7 +148,6 @@ export class FoxxSpan extends Span {
 
     protected _finish(finishTime?: number): void {
         this._finishS = finishTime || time();
-        this._foxxTracer.recorder.record(this);
     }
 }
 

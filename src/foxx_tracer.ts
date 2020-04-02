@@ -5,7 +5,7 @@ import Reporter from "./reporters/Reporter";
 
 export class FoxxTracer extends Tracer {
     private _currentContext: SpanContext;
-    private readonly _recorder: Reporter;
+    private readonly _reporter: Reporter;
 
     protected _extract(format: any, carrier: any): SpanContext {
         throw new Error('NOT YET IMPLEMENTED');
@@ -14,11 +14,11 @@ export class FoxxTracer extends Tracer {
     constructor(recorder: Reporter) {
         super();
 
-        this._recorder = recorder
+        this._reporter = recorder
     }
 
-    get recorder(): Reporter {
-        return this._recorder;
+    get reporter(): Reporter {
+        return this._reporter;
     }
 
     protected _inject(span: FoxxContext, format: any, carrier: any): never {

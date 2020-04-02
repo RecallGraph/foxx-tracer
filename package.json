@@ -1,7 +1,14 @@
 {
-  "name": "tracer",
-  "version": "1.0.0",
+  "name": "foxx-tracer",
+  "version": "0.0.1",
   "description": "An OpenTracing implemenation for Foxx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RecallGraph/foxx-tracer"
+  },
+  "directories": {
+    "lib": "dist"
+  },
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p ."

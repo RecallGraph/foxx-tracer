@@ -1,19 +1,19 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
-const opentracing_1 = require('opentracing');
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+const opentracing_1 = require('opentracing')
 
 class FoxxContext extends opentracing_1.SpanContext {
-    constructor(traceId, spanId) {
-        super();
-        this.traceId = traceId;
-        this.spanId = spanId;
+    constructor (traceId, spanId) {
+        super()
+        this.traceId = traceId
+        this.spanId = spanId
     }
 
-    toTraceId() {
-        return this.traceId;
+    toTraceId () {
+        return this.traceId
     }
 
-    toSpanId() {
+    toSpanId () {
         return this.spanId;
     }
 }

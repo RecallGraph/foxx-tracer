@@ -28,7 +28,7 @@ export default class DatadogReporter implements Reporter {
         this.service = service;
     }
 
-    record(traces: [[FoxxSpan]]): void {
+    report(traces: [[FoxxSpan]]): void {
         const ddTraces = traces.map(trace => trace.map(span => {
             const tags = span.tags();
             const record: SpanRecord = {
