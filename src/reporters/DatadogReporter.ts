@@ -1,5 +1,5 @@
 import Reporter from "./Reporter";
-import FoxxSpan from "../foxx_span";
+import FoxxSpan from "../FoxxSpan";
 import { ERROR } from "opentracing/lib/ext/tags";
 import SpanRecord from "../SpanRecord";
 

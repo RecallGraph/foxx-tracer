@@ -1,154 +1,105 @@
-import { Reference, REFERENCE_CHILD_OF, Span } from 'opentracing';
-import FoxxContext from './foxx_context';
-import FoxxTracer from './foxx_tracer';
-import SpanContext from "opentracing/lib/span_context";
-import { time } from "@arangodb";
-
-interface Log {
-    fields: { [key: string]: any };
-    timestamp?: number;
-}
-
-export interface DebugInfo {
-    traceId: string;
-    spanId: string;
-    parentId?: string;
-    operation: string;
-    millis: [number, number, number];
-    tags?: { [key: string]: any };
-    logs?: Log[];
-}
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const opentracing_1 = require('opentracing')
+const FoxxContext_1 = require('./FoxxContext')
+const _arangodb_1 = require('@arangodb')
 /**
  * OpenTracing Span implementation designed for use in unit tests.
  */
-export class FoxxSpan extends Span {
-    private _operationName: string;
-    private readonly _tags: { [key: string]: any };
-    private readonly _logs: Log[];
-    private readonly _refs: Reference[];
-    _finishS: number;
-    private readonly _foxxTracer: FoxxTracer;
-    private readonly _uuid: string;
-    private readonly _startS: number;
-    private _foxxContext: FoxxContext;
-
+class FoxxSpan extends opentracing_1.Span {
     //------------------------------------------------------------------------//
     // OpenTracing implementation
     //------------------------------------------------------------------------//
-
-    constructor(tracer: FoxxTracer) {
+    constructor(tracer) {
         super();
         this._foxxTracer = tracer;
         this._uuid = FoxxSpan.generateUUID();
-        this._startS = time();
+        this._startS = _arangodb_1.time();
         this._finishS = 0;
         this._operationName = '';
         this._tags = {};
         this._logs = [];
         this._refs = [];
     }
-
-    static generateUUID(): string {
+    static generateUUID() {
         const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-
         return `${p0}${p1}`;
     }
-
-    get startS(): number {
+    get startS() {
         return this._startS;
     }
-
-    protected _setOperationName(name: string): void {
+    _setOperationName(name) {
         this._operationName = name;
     }
-
-    protected _addTags(set: { [key: string]: any }): void {
+    _addTags(set) {
         const keys = Object.keys(set);
         for (const key of keys) {
             this._tags[key] = set[key];
         }
     }
-
-    logs(): Log[] {
+    logs() {
         return this._logs;
     }
-
     initContext() {
         const parent = this.getParent();
         const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
-
-        this._foxxContext = new FoxxContext(traceId, this._uuid);
+        this._foxxContext = new FoxxContext_1.default(traceId, this._uuid)
     }
-
-    getParent(): SpanContext {
-        const parent = this._refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
-
+    getParent() {
+        const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
         return parent ? parent.referencedContext() : null;
     }
-
-    uuid(): string {
+    uuid() {
         return this._uuid;
     }
-
-    operationName(): string {
+    operationName() {
         return this._operationName;
     }
-
-    durationS(): number {
+    durationS() {
         return this._finishS - this._startS;
     }
-
-    tags(): { [key: string]: any } {
+    tags() {
         return this._tags;
     }
-
-    protected _log(fields: { [key: string]: any }, timestamp?: number): void {
+    _log(fields, timestamp) {
         this._logs.push({
             fields,
             timestamp: timestamp || Date.now()
         });
     }
-
-    addReference(ref: Reference): void {
+    addReference(ref) {
         this._refs.push(ref);
     }
-
     /**
      * Returns a simplified object better for console.log()'ing.
      */
-    debug(): DebugInfo {
-        const obj: DebugInfo = {
+    debug() {
+        const obj = {
             traceId: this._foxxContext.toTraceId(),
             spanId: this._uuid,
             operation: this._operationName,
             millis: [this._finishS - this._startS, this._startS, this._finishS]
         };
-
         const parent = this.getParent();
         if (parent) {
             obj.parentId = this.getParent().toSpanId();
         }
-
         if (Object.keys(this._tags).length) {
             obj.tags = this._tags;
         }
-
         if (this._logs.length) {
             obj.logs = this._logs;
         }
-
         return obj;
     }
-
-    protected _context(): SpanContext {
+    _context() {
         return this._foxxContext;
     }
-
-    protected _finish(finishTime?: number): void {
-        this._finishS = finishTime || time();
+    _finish(finishTime) {
+        this._finishS = finishTime || _arangodb_1.time();
     }
 }
-
-export default FoxxSpan;
+exports.FoxxSpan = FoxxSpan;
+exports.default = FoxxSpan;
+//# sourceMappingURL=FoxxSpan.js.map

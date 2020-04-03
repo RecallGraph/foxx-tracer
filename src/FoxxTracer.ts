@@ -1,6 +1,6 @@
 import { SpanContext, SpanOptions, Tracer } from "opentracing";
-import FoxxContext from './foxx_context';
-import FoxxSpan from './foxx_span';
+import FoxxContext from './FoxxContext';
+import FoxxSpan from './FoxxSpan';
 import Reporter from "./reporters/Reporter";
 
 export class FoxxTracer extends Tracer {

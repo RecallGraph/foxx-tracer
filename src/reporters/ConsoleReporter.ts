@@ -1,5 +1,5 @@
 import Reporter from "./Reporter";
-import FoxxSpan from "../foxx_span";
+import FoxxSpan from "../FoxxSpan";
 
 export default class ConsoleReporter implements Reporter {
     report(traces: [[FoxxSpan]]): void {

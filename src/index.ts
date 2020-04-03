@@ -1,6 +1,6 @@
-import FoxxContext from './foxx_context';
-import FoxxSpan from './foxx_span';
-import FoxxTracer from './foxx_tracer';
+import FoxxContext from './FoxxContext';
+import FoxxSpan from './FoxxSpan';
+import FoxxTracer from './FoxxTracer';
 import SpanRecord from "./SpanRecord";
 import * as reporters from './reporters';
 
