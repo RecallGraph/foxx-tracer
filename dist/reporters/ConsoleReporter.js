@@ -3,7 +3,7 @@ Object.defineProperty(exports, '__esModule', { value: true })
 
 class ConsoleReporter {
   report (traces) {
-    console.dir(traces, { depth: null })
+    console.log('%O', traces)
   }
 }
 
