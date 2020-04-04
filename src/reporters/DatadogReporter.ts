@@ -41,7 +41,7 @@ export default class DatadogReporter implements Reporter {
                 type: 'db'
             };
 
-            const parent = span.references.find(ref => ref.type == REFERENCE_CHILD_OF);
+            const parent = span.references.find(ref => ref.type === REFERENCE_CHILD_OF);
             if (parent) {
                 record.parent_id = parseInt(parent.context.span_id, 16);
             }

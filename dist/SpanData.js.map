@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "SpanData.js",
+  "sourceRoot": "",
+  "sources": [
+    "../src/SpanData.ts"
+  ],
+  "names": [],
+  "mappings": ""
+}

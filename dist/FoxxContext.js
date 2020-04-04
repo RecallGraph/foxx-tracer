@@ -4,18 +4,25 @@ const opentracing_1 = require('opentracing')
 
 class FoxxContext extends opentracing_1.SpanContext {
   constructor (traceId, spanId) {
-    super()
-    this.traceId = traceId
-    this.spanId = spanId
+      super()
+      this.context = {
+          span_id: spanId,
+          trace_id: traceId,
+          baggage: {}
+      }
   }
 
-  toTraceId () {
-    return this.traceId
-  }
+    toTraceId () {
+        return this.context.trace_id
+    }
 
-  toSpanId () {
-    return this.spanId
-  }
+    toSpanId () {
+        return this.context.span_id
+    }
+
+    baggage () {
+        return this.context.baggage
+    }
 }
 
 exports.FoxxContext = FoxxContext

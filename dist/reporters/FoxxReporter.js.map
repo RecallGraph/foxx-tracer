@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "FoxxReporter.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../src/reporters/FoxxReporter.ts"
+  ],
+  "names": [],
+  "mappings": ";;AAGA,MAAM,EAAE,WAAW,EAAE,GAAG,MAAM,CAAC,OAAO,CAAC,YAAY,CAAC,cAAc,CAAC;AAEnE,MAAqB,YAAY;IAC7B,MAAM,CAAC,MAAoB;QACvB,MAAM,KAAK,GAAG,MAAM,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC;QAE7B,IAAI;YACA,WAAW,CAAC,KAAK,CAAC,CAAC;SACtB;QAAC,OAAO,CAAC,EAAE;YACR,OAAO,CAAC,KAAK,CAAC,CAAC,CAAC,CAAC;SACpB;IACL,CAAC;CACJ;AAVD,+BAUC"
+}

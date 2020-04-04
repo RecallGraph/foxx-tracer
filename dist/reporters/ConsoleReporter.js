@@ -3,7 +3,7 @@ Object.defineProperty(exports, '__esModule', { value: true })
 
 class ConsoleReporter {
   report (traces) {
-    traces.forEach(trace => trace.forEach(span => console.log(span.debug())))
+    console.dir(traces, { depth: null })
   }
 }
 

@@ -1,24 +1,16 @@
 import Reporter from './Reporter';
 import SpanData from '../SpanData';
 
-const request = require('@arangodb/request');
+const { recordSpans } = module.context.dependencies.traceCollector;
 
 export default class FoxxReporter implements Reporter {
-    private readonly collectorURL: string;
-    private readonly service: string;
-
-    constructor(collectorURL: string, service: string) {
-        this.collectorURL = collectorURL;
-        this.service = service;
-    }
-
     report(traces: [[SpanData]]): void {
-        // request.put(this.collectorURL, {
-        //     json: true,
-        //     body: ddTraces,
-        //     headers: {
-        //         'X-Datadog-Trace-Count': `${ddTraces.length}`
-        //     }
-        // });
+        const spans = traces.flat(2);
+
+        try {
+            recordSpans(spans);
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
