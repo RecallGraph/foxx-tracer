@@ -5,10 +5,8 @@ const { recordSpans } = module.context.dependencies.traceCollector;
 
 export default class FoxxReporter implements Reporter {
     report(traces: [[SpanData]]): void {
-        const spans = traces.flat(2);
-
         try {
-            recordSpans(spans);
+            recordSpans(traces.flat());
         } catch (e) {
             console.error(e);
         }

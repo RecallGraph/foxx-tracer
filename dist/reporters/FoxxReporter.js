@@ -4,9 +4,8 @@ const { recordSpans } = module.context.dependencies.traceCollector
 
 class FoxxReporter {
     report (traces) {
-        const spans = traces.flat(2)
         try {
-            recordSpans(spans)
+            recordSpans(traces.flat())
         }
         catch (e) {
             console.error(e)
