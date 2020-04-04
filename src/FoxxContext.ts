@@ -1,22 +1,29 @@
 import { SpanContext } from "opentracing";
+import { Context } from './SpanData'
 
 export class FoxxContext extends SpanContext {
-    private readonly traceId: string;
-    private readonly spanId: string;
+    private readonly context: Context;
 
     constructor(traceId: string, spanId: string) {
         super();
 
-        this.traceId = traceId;
-        this.spanId = spanId;
+        this.context = {
+            span_id: spanId,
+            trace_id: traceId,
+            baggage: {}
+        };
     }
 
     toTraceId(): string {
-        return this.traceId;
+        return this.context.trace_id;
     }
 
     toSpanId(): string {
-        return this.spanId;
+        return this.context.span_id;
+    }
+
+    baggage() {
+        return this.context.baggage;
     }
 }
 

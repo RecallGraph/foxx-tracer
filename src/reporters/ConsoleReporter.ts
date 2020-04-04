@@ -1,8 +1,8 @@
 import Reporter from "./Reporter";
-import FoxxSpan from "../FoxxSpan";
+import SpanData from '../SpanData';
 
 export default class ConsoleReporter implements Reporter {
-    report(traces: [[FoxxSpan]]): void {
-        traces.forEach(trace => trace.forEach(span => console.log(span.debug())));
+    report(traces: [[SpanData]]): void {
+        console.dir(traces, { depth: null });
     }
 }

@@ -1,9 +1,23 @@
-import Reporter from "./Reporter";
-import FoxxSpan from "../FoxxSpan";
-import { ERROR } from "opentracing/lib/ext/tags";
-import SpanRecord from "../SpanRecord";
+import Reporter from './Reporter';
+import { REFERENCE_CHILD_OF, Tags } from 'opentracing'
+import SpanData from '../SpanData';
 
-const tasks = require("@arangodb/tasks");
+const request = require('@arangodb/request');
+
+type Record = {
+    trace_id: number;
+    span_id: number;
+    name: string;
+    resource: string;
+    service: string;
+    type: string;
+    start: number;
+    duration: number;
+    parent_id?: number;
+    error?: number;
+    meta?: { [key: string]: string };
+    metrics?: { [key: string]: number };
+}
 
 export default class DatadogReporter implements Reporter {
     private readonly ddURL: string;
@@ -14,62 +28,56 @@ export default class DatadogReporter implements Reporter {
         this.service = service;
     }
 
-    report(traces: [[FoxxSpan]]): void {
+    report(traces: [[SpanData]]): void {
         const ddTraces = traces.map(trace => trace.map(span => {
-            const tags = span.tags();
-            const record: SpanRecord = {
-                duration: Math.floor(span.durationS() * 1e9),
-                name: span.operationName(),
-                resource: span.operationName(),
+            const record: Record = {
+                duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
+                name: span.operation,
+                resource: span.operation,
                 service: this.service,
-                span_id: parseInt(span.uuid(), 16),
-                start: Math.floor(span.startS * 1e9),
-                trace_id: parseInt(span.context().toTraceId(), 16),
+                span_id: parseInt(span.context.span_id, 16),
+                start: Math.floor(span.startTimeMs * 1e6),
+                trace_id: parseInt(span.context.trace_id, 16),
                 type: 'db'
             };
 
-            const parent = span.getParent();
+            const parent = span.references.find(ref => ref.type == REFERENCE_CHILD_OF);
             if (parent) {
-                record.parent_id = parseInt(parent.toSpanId(), 16);
+                record.parent_id = parseInt(parent.context.span_id, 16);
             }
 
-            const hasError = tags[ERROR];
+            const hasError = span.tags[Tags.ERROR];
             if (hasError) {
                 record.error = 1;
             }
 
             record.meta = {};
-            for (const key in tags) {
-                record.meta[key] = JSON.stringify(tags[key]);
+            for (const key in span.tags) {
+                if (span.tags.hasOwnProperty(key)) {
+                    record.meta[key] = JSON.stringify(span.tags[key]);
+                }
+            }
+
+            record.metrics = {};
+            const logs = Object.assign({}, ...span.logs.map(log => log.fields));
+
+            for (const key in logs) {
+                if (logs.hasOwnProperty(key)) {
+                    record.metrics[key] = parseFloat(logs[key]);
+                }
             }
 
             return record;
         }));
 
-
-        // record.metrics = {};
-        // const logs = Object.assign({}, ...span.logs().map(log => log.fields));
-        //
-        // for (const key in logs) {
-        //     record.metrics[key] = parseFloat(logs[key]);
-        // }
         console.log(ddTraces);
 
-        // noinspection JSIgnoredPromiseFromCall
-        tasks.register({
-            command: function (params) {
-                const request = require('@arangodb/request');
-                const { traces: [], url } = params;
-
-                request.put(url, {
-                    json: true,
-                    body: traces,
-                    headers: {
-                        "X-Datadog-Trace-Count": traces.length
-                    }
-                });
-            },
-            params: { traces: ddTraces, url: this.ddURL }
+        request.put(this.ddURL, {
+            json: true,
+            body: ddTraces,
+            headers: {
+                'X-Datadog-Trace-Count': `${ddTraces.length}`
+            }
         });
     }
 }

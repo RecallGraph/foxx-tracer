@@ -1,5 +1,5 @@
-import FoxxSpan from "../FoxxSpan";
+import SpanData from '../SpanData';
 
 export default interface Reporter {
-    report(traces: [[FoxxSpan]]): void;
+    report(traces: [[SpanData]]): void;
 }

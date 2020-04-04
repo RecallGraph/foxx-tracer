@@ -1,8 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
 const opentracing_1 = require('opentracing')
 const FoxxContext_1 = require('./FoxxContext')
 const _arangodb_1 = require('@arangodb')
+
 /**
  * OpenTracing Span implementation designed for use in unit tests.
  */
@@ -10,29 +11,33 @@ class FoxxSpan extends opentracing_1.Span {
     //------------------------------------------------------------------------//
     // OpenTracing implementation
     //------------------------------------------------------------------------//
-    constructor(tracer) {
-        super();
-        this._foxxTracer = tracer;
-        this._uuid = FoxxSpan.generateUUID();
-        this._startS = _arangodb_1.time();
-        this._finishS = 0;
-        this._operationName = '';
-        this._tags = {};
-        this._logs = [];
-        this._refs = [];
+    constructor (tracer) {
+        super()
+        this._foxxTracer = tracer
+        this._uuid = FoxxSpan.generateUUID()
+        this._startS = _arangodb_1.time()
+        this._finishS = 0
+        this._operationName = ''
+        this._tags = {}
+        this._logs = []
+        this._refs = []
     }
-    static generateUUID() {
-        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-        return `${p0}${p1}`;
+
+    static generateUUID () {
+        const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8)
+        const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8)
+        return `${p0}${p1}`
     }
-    get startS() {
-        return this._startS;
+
+    get startS () {
+        return this._startS
     }
-    _setOperationName(name) {
-        this._operationName = name;
+
+    _setOperationName (name) {
+        this._operationName = name
     }
-    _addTags(set) {
+
+    _addTags (set) {
         const keys = Object.keys(set);
         for (const key of keys) {
             this._tags[key] = set[key];
