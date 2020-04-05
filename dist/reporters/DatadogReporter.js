@@ -14,12 +14,12 @@ class DatadogReporter {
             const record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
                 name: span.operation,
-                resource: span.tags[tags_1.COMPONENT] || span.operation,
-                service: span.tags.service,
+                resource: (span.tags[tags_1.COMPONENT] ? `${span.tags[tags_1.COMPONENT]}-` : '') + span.operation,
+                service: span.tags.service || 'UNKNOWN',
                 span_id: parseInt(span.context.span_id, 16),
                 start: Math.floor(span.startTimeMs * 1e6),
                 trace_id: parseInt(span.context.trace_id, 16),
-                type: 'db'
+                type: span.tags[tags_1.SPAN_KIND] || 'db'
             }
             const parent = span.references.find(ref => ref.type === opentracing_1.REFERENCE_CHILD_OF)
             if (parent) {

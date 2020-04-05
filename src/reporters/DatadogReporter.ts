@@ -1,7 +1,7 @@
 import Reporter from './Reporter';
 import { REFERENCE_CHILD_OF } from 'opentracing'
 import SpanData from '../SpanData';
-import { COMPONENT, ERROR } from "opentracing/lib/ext/tags";
+import { COMPONENT, ERROR, SPAN_KIND } from "opentracing/lib/ext/tags";
 
 const request = require('@arangodb/request');
 
@@ -32,12 +32,12 @@ export default class DatadogReporter implements Reporter {
             const record: Record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
                 name: span.operation,
-                resource: <string>span.tags[COMPONENT] || span.operation,
-                service: <string>span.tags.service,
+                resource: (span.tags[COMPONENT] ? `${span.tags[COMPONENT]}-` : '') + span.operation,
+                service: <string>span.tags.service || 'UNKNOWN',
                 span_id: parseInt(span.context.span_id, 16),
                 start: Math.floor(span.startTimeMs * 1e6),
                 trace_id: parseInt(span.context.trace_id, 16),
-                type: 'db'
+                type: <string>span.tags[SPAN_KIND] || 'db'
             };
 
             const parent = span.references.find(ref => ref.type === REFERENCE_CHILD_OF);
