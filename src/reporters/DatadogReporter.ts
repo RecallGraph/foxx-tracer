@@ -1,6 +1,7 @@
 import Reporter from './Reporter';
-import { REFERENCE_CHILD_OF, Tags } from 'opentracing'
+import { REFERENCE_CHILD_OF } from 'opentracing'
 import SpanData from '../SpanData';
+import { COMPONENT, ERROR } from "opentracing/lib/ext/tags";
 
 const request = require('@arangodb/request');
 
@@ -21,11 +22,9 @@ type Record = {
 
 export default class DatadogReporter implements Reporter {
     private readonly ddURL: string;
-    private readonly service: string;
 
-    constructor(ddURL: string, service: string) {
+    constructor(ddURL: string) {
         this.ddURL = ddURL;
-        this.service = service;
     }
 
     report(traces: [[SpanData]]): void {
@@ -33,8 +32,8 @@ export default class DatadogReporter implements Reporter {
             const record: Record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
                 name: span.operation,
-                resource: span.operation,
-                service: this.service,
+                resource: <string>span.tags[COMPONENT] || span.operation,
+                service: <string>span.tags.service,
                 span_id: parseInt(span.context.span_id, 16),
                 start: Math.floor(span.startTimeMs * 1e6),
                 trace_id: parseInt(span.context.trace_id, 16),
@@ -46,7 +45,7 @@ export default class DatadogReporter implements Reporter {
                 record.parent_id = parseInt(parent.context.span_id, 16);
             }
 
-            const hasError = span.tags[Tags.ERROR];
+            const hasError = span.tags[ERROR];
             if (hasError) {
                 record.error = 1;
             }
@@ -63,7 +62,10 @@ export default class DatadogReporter implements Reporter {
 
             for (const key in logs) {
                 if (logs.hasOwnProperty(key)) {
-                    record.metrics[key] = parseFloat(logs[key]);
+                    const val = parseFloat(logs[key]);
+                    if (Number.isFinite(val)) {
+                        record.metrics[key] = val;
+                    }
                 }
             }
 

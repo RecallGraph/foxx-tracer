@@ -1,12 +1,12 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
 const opentracing_1 = require('opentracing')
+const tags_1 = require('opentracing/lib/ext/tags')
 const request = require('@arangodb/request')
 
 class DatadogReporter {
-    constructor (ddURL, service) {
+    constructor (ddURL) {
         this.ddURL = ddURL
-        this.service = service
     }
 
     report (traces) {
@@ -14,8 +14,8 @@ class DatadogReporter {
             const record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
                 name: span.operation,
-                resource: span.operation,
-                service: this.service,
+                resource: span.tags[tags_1.COMPONENT] || span.operation,
+                service: span.tags.service,
                 span_id: parseInt(span.context.span_id, 16),
                 start: Math.floor(span.startTimeMs * 1e6),
                 trace_id: parseInt(span.context.trace_id, 16),
@@ -25,7 +25,7 @@ class DatadogReporter {
             if (parent) {
                 record.parent_id = parseInt(parent.context.span_id, 16)
             }
-            const hasError = span.tags[opentracing_1.Tags.ERROR]
+            const hasError = span.tags[tags_1.ERROR]
             if (hasError) {
                 record.error = 1
             }
@@ -39,7 +39,10 @@ class DatadogReporter {
             const logs = Object.assign({}, ...span.logs.map(log => log.fields))
             for (const key in logs) {
                 if (logs.hasOwnProperty(key)) {
-                    record.metrics[key] = parseFloat(logs[key])
+                    const val = parseFloat(logs[key])
+                    if (Number.isFinite(val)) {
+                        record.metrics[key] = val
+                    }
                 }
             }
             return record
