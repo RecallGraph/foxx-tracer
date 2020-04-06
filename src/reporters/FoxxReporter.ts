@@ -1,5 +1,5 @@
 import Reporter from './Reporter';
-import SpanData from '../SpanData';
+import SpanData from '../helpers/SpanData';
 
 const { recordSpans } = module.context.dependencies.traceCollector;
 

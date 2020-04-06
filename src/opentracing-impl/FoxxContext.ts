@@ -1,5 +1,5 @@
 import { SpanContext } from "opentracing";
-import { Context } from './SpanData'
+import { Context } from '..'
 
 export class FoxxContext extends SpanContext {
     private readonly context: Context;

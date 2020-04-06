@@ -1,6 +1,6 @@
 import Reporter from './Reporter';
 import { REFERENCE_CHILD_OF } from 'opentracing'
-import SpanData from '../SpanData';
+import SpanData from '../helpers/SpanData';
 import { COMPONENT, ERROR, SPAN_KIND } from "opentracing/lib/ext/tags";
 
 const request = require('@arangodb/request');

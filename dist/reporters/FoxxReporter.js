@@ -1,17 +1,15 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-const { recordSpans } = module.context.dependencies.traceCollector
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const { recordSpans } = module.context.dependencies.traceCollector;
 class FoxxReporter {
-    report (traces) {
+    report(traces) {
         try {
-            recordSpans(traces.flat())
+            recordSpans(traces.flat());
         }
         catch (e) {
-            console.error(e)
+            console.error(e);
         }
     }
 }
-
-exports.default = FoxxReporter
+exports.default = FoxxReporter;
 //# sourceMappingURL=FoxxReporter.js.map

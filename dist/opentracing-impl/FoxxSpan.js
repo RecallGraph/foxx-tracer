@@ -1,16 +1,10 @@
-import { Reference, REFERENCE_CHILD_OF, Span, SpanContext } from 'opentracing';
-import { time } from '@arangodb';
-import FoxxContext from './FoxxContext';
-import FoxxTracer from './FoxxTracer';
-import SpanData from './SpanData';
-
-export class FoxxSpan extends Span {
-    private readonly _spanData: SpanData;
-    private readonly _refs: Reference[];
-    private readonly _foxxTracer: FoxxTracer;
-    private _foxxContext: FoxxContext;
-
-    constructor(tracer: FoxxTracer) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const opentracing_1 = require("opentracing");
+const _arangodb_1 = require("@arangodb");
+const FoxxContext_1 = require("./FoxxContext");
+class FoxxSpan extends opentracing_1.Span {
+    constructor(tracer) {
         super();
         this._foxxTracer = tracer;
         this._refs = [];
@@ -20,36 +14,29 @@ export class FoxxSpan extends Span {
             },
             finishTimeMs: 0,
             operation: '',
-            startTimeMs: time() * 1000,
+            startTimeMs: _arangodb_1.time() * 1000,
             tags: {},
             logs: [],
             references: []
         };
     }
-
-    get spanData(): SpanData {
+    get spanData() {
         return this._spanData;
     }
-
-    static generateUUID(): string {
+    static generateUUID() {
         const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-
         return `${p0}${p1}`;
     }
-
     initContext() {
         const parent = this.getParent();
         const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
-
-        this._foxxContext = new FoxxContext(traceId, this._spanData.context.span_id);
+        this._foxxContext = new FoxxContext_1.default(traceId, this._spanData.context.span_id);
     }
-
-    durationMs(): number {
+    durationMs() {
         return this._spanData.finishTimeMs - this._spanData.startTimeMs;
     }
-
-    addReference(ref: Reference): void {
+    addReference(ref) {
         this._refs.push(ref);
         this._spanData.references.push({
             context: {
@@ -59,38 +46,32 @@ export class FoxxSpan extends Span {
             type: ref.type()
         });
     }
-
-    getParent(): SpanContext {
-        const parent = this._refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
-
+    getParent() {
+        const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
         return parent ? parent.referencedContext() : null;
     }
-
-    protected _setOperationName(name: string): void {
+    _setOperationName(name) {
         this._spanData.operation = name;
     }
-
-    protected _addTags(set: { [key: string]: any }): void {
+    _addTags(set) {
         const keys = Object.keys(set);
         for (const key of keys) {
             this._spanData.tags[key] = set[key];
         }
     }
-
-    protected _log(fields: { [key: string]: any }, timestamp?: number): void {
+    _log(fields, timestamp) {
         this._spanData.logs.push({
             fields,
-            timestamp: timestamp || time() * 1000
+            timestamp: timestamp || _arangodb_1.time() * 1000
         });
     }
-
-    protected _context(): SpanContext {
+    _context() {
         return this._foxxContext;
     }
-
-    protected _finish(finishTime?: number): void {
-        this._spanData.finishTimeMs = finishTime || time() * 1000;
+    _finish(finishTime) {
+        this._spanData.finishTimeMs = finishTime || _arangodb_1.time() * 1000;
     }
 }
-
-export default FoxxSpan;
+exports.FoxxSpan = FoxxSpan;
+exports.default = FoxxSpan;
+//# sourceMappingURL=FoxxSpan.js.map

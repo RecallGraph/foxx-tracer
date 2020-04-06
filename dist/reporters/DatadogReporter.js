@@ -1,15 +1,13 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-const opentracing_1 = require('opentracing')
-const tags_1 = require('opentracing/lib/ext/tags')
-const request = require('@arangodb/request')
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const opentracing_1 = require("opentracing");
+const tags_1 = require("opentracing/lib/ext/tags");
+const request = require('@arangodb/request');
 class DatadogReporter {
-    constructor (ddURL) {
-        this.ddURL = ddURL
+    constructor(ddURL) {
+        this.ddURL = ddURL;
     }
-
-    report (traces) {
+    report(traces) {
         const ddTraces = traces.map(trace => trace.map(span => {
             const record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
@@ -20,43 +18,42 @@ class DatadogReporter {
                 start: Math.floor(span.startTimeMs * 1e6),
                 trace_id: parseInt(span.context.trace_id, 16),
                 type: span.tags[tags_1.SPAN_KIND] || 'db'
-            }
-            const parent = span.references.find(ref => ref.type === opentracing_1.REFERENCE_CHILD_OF)
+            };
+            const parent = span.references.find(ref => ref.type === opentracing_1.REFERENCE_CHILD_OF);
             if (parent) {
-                record.parent_id = parseInt(parent.context.span_id, 16)
+                record.parent_id = parseInt(parent.context.span_id, 16);
             }
-            const hasError = span.tags[tags_1.ERROR]
+            const hasError = span.tags[tags_1.ERROR];
             if (hasError) {
-                record.error = 1
+                record.error = 1;
             }
-            record.meta = {}
+            record.meta = {};
             for (const key in span.tags) {
                 if (span.tags.hasOwnProperty(key)) {
-                    record.meta[key] = JSON.stringify(span.tags[key])
+                    record.meta[key] = JSON.stringify(span.tags[key]);
                 }
             }
-            record.metrics = {}
-            const logs = Object.assign({}, ...span.logs.map(log => log.fields))
+            record.metrics = {};
+            const logs = Object.assign({}, ...span.logs.map(log => log.fields));
             for (const key in logs) {
                 if (logs.hasOwnProperty(key)) {
-                    const val = parseFloat(logs[key])
+                    const val = parseFloat(logs[key]);
                     if (Number.isFinite(val)) {
-                        record.metrics[key] = val
+                        record.metrics[key] = val;
                     }
                 }
             }
-            return record
-        }))
-        console.log(ddTraces)
+            return record;
+        }));
+        console.log(ddTraces);
         request.put(this.ddURL, {
             json: true,
             body: ddTraces,
             headers: {
                 'X-Datadog-Trace-Count': `${ddTraces.length}`
             }
-        })
+        });
     }
 }
-
-exports.default = DatadogReporter
+exports.default = DatadogReporter;
 //# sourceMappingURL=DatadogReporter.js.map

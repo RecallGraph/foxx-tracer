@@ -3,7 +3,8 @@
     "module": "commonjs",
     "target": "es2019",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "allowJs": true
   },
   "exclude": [
     "node_modules"

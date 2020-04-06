@@ -1,10 +1,1 @@
-{
-  "version": 3,
-  "file": "index.js",
-  "sourceRoot": "",
-  "sources": [
-    "../../src/reporters/index.ts"
-  ],
-  "names": [],
-  "mappings": ";;AACA,uDAAgD;AAG7B,0BAHZ,yBAAe,CAGY;AAFlC,uDAAgD;AAEZ,0BAF7B,yBAAe,CAE6B"
-}
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/reporters/index.ts"],"names":[],"mappings":";;AACA,uDAAgD;AAG7B,0BAHZ,yBAAe,CAGY;AAFlC,uDAAgD;AAEZ,0BAF7B,yBAAe,CAE6B"}
