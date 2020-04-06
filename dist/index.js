@@ -6,8 +6,9 @@ const FoxxSpan_1 = require("./opentracing-impl/FoxxSpan");
 exports.FoxxSpan = FoxxSpan_1.default;
 const FoxxTracer_1 = require("./opentracing-impl/FoxxTracer");
 exports.FoxxTracer = FoxxTracer_1.default;
-const Util_1 = require("./helpers/Util");
+const Util_1 = require("./helpers/Util"), HeaderSchemas = Util_1;
 exports.Util = Util_1.default;
+exports.HeaderSchemas = HeaderSchemas;
 const reporters = require("./reporters");
 exports.reporters = reporters;
 //# sourceMappingURL=index.js.map
