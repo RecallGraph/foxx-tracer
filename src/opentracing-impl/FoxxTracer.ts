@@ -1,13 +1,30 @@
-import { SpanContext, SpanOptions, Tracer } from "opentracing";
+import { FORMAT_HTTP_HEADERS, SpanContext, SpanOptions, Tracer } from "opentracing";
 import FoxxContext from './FoxxContext';
 import FoxxSpan from './FoxxSpan';
 import Reporter from "../reporters/Reporter";
+import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/Utils";
 
 export class FoxxTracer extends Tracer {
     private _currentContext: SpanContext;
     private readonly _reporter: Reporter;
 
+    private static isHeader(carrier: any): carrier is TraceHeaders {
+        const c = carrier as TraceHeaders;
+
+        return !!(c[TRACE_HEADER_KEYS.SPAN_ID] || c[TRACE_HEADER_KEYS.PARENT_SPAN_ID]);
+    }
+
     protected _extract(format: any, carrier: any): SpanContext {
+        if ((format as string) === FORMAT_HTTP_HEADERS && FoxxTracer.isHeader(carrier)) {
+            const c = carrier as TraceHeaders;
+
+            const spanId = c[TRACE_HEADER_KEYS.SPAN_ID] || c[TRACE_HEADER_KEYS.PARENT_SPAN_ID];
+            const traceId = c[TRACE_HEADER_KEYS.TRACE_ID];
+            const baggage = c[TRACE_HEADER_KEYS.BAGGAGE];
+
+            return new FoxxContext(spanId, traceId, baggage);
+        }
+
         throw new Error('NOT YET IMPLEMENTED');
     }
 

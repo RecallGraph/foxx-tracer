@@ -1,13 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const opentracing_1 = require("opentracing");
+const FoxxContext_1 = require("./FoxxContext");
 const FoxxSpan_1 = require("./FoxxSpan");
+const Utils_1 = require("../helpers/Utils");
 class FoxxTracer extends opentracing_1.Tracer {
     constructor(recorder) {
         super();
         this._reporter = recorder;
     }
+    static isHeader(carrier) {
+        const c = carrier;
+        return !!(c[Utils_1.TRACE_HEADER_KEYS.SPAN_ID] || c[Utils_1.TRACE_HEADER_KEYS.PARENT_SPAN_ID]);
+    }
     _extract(format, carrier) {
+        if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isHeader(carrier)) {
+            const c = carrier;
+            const spanId = c[Utils_1.TRACE_HEADER_KEYS.SPAN_ID] || c[Utils_1.TRACE_HEADER_KEYS.PARENT_SPAN_ID];
+            const traceId = c[Utils_1.TRACE_HEADER_KEYS.TRACE_ID];
+            const baggage = c[Utils_1.TRACE_HEADER_KEYS.BAGGAGE];
+            return new FoxxContext_1.default(spanId, traceId, baggage);
+        }
         throw new Error('NOT YET IMPLEMENTED');
     }
     get reporter() {

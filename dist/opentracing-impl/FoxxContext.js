@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const opentracing_1 = require("opentracing");
 class FoxxContext extends opentracing_1.SpanContext {
-    constructor(traceId, spanId) {
+    constructor(spanId, traceId, baggage) {
         super();
         this.context = {
             span_id: spanId,
             trace_id: traceId,
-            baggage: {}
+            baggage: baggage
         };
     }
     toTraceId() {
