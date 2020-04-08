@@ -3,7 +3,7 @@ import FoxxContext from './FoxxContext';
 import FoxxSpan from './FoxxSpan';
 import Reporter from "../reporters/Reporter";
 import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/Utils";
-import { isNil } from 'lodash';
+import { get, isNil } from 'lodash';
 
 export class FoxxTracer extends Tracer {
     private _currentContext: SpanContext;
@@ -12,8 +12,9 @@ export class FoxxTracer extends Tracer {
 
     private static isHeader(carrier: any): carrier is TraceHeaders {
         const c = carrier as TraceHeaders;
+        const { PARENT_SPAN_ID } = TRACE_HEADER_KEYS;
 
-        return !!(c[TRACE_HEADER_KEYS.SPAN_ID] || c[TRACE_HEADER_KEYS.PARENT_SPAN_ID]);
+        return !!c[PARENT_SPAN_ID];
     }
 
     constructor(reporter: Reporter) {
@@ -25,10 +26,10 @@ export class FoxxTracer extends Tracer {
     protected _extract(format: any, carrier: any): SpanContext {
         if ((format as string) === FORMAT_HTTP_HEADERS && FoxxTracer.isHeader(carrier)) {
             const c = carrier as TraceHeaders;
-
-            const spanId = c[TRACE_HEADER_KEYS.SPAN_ID] || c[TRACE_HEADER_KEYS.PARENT_SPAN_ID];
-            const traceId = c[TRACE_HEADER_KEYS.TRACE_ID];
-            const baggage = c[TRACE_HEADER_KEYS.BAGGAGE];
+            const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = TRACE_HEADER_KEYS;
+            const spanId = c[PARENT_SPAN_ID];
+            const traceId = c[TRACE_ID];
+            const baggage = c[BAGGAGE];
 
             return new FoxxContext(spanId, traceId, baggage);
         }
@@ -57,7 +58,8 @@ export class FoxxTracer extends Tracer {
     }
 
     protected _startSpan(name: string, fields: SpanOptions): Span {
-        const forceSample = fields.tags && fields.tags.forceSample;
+        const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
+        const forceSample = get(fields, ['tags', FORCE_SAMPLE], get(fields, ['tags', PARENT_SPAN_ID]));
         let doTrace: boolean;
         if (isNil(forceSample)) {
             const samplingProbability = module.context.configuration['sampling-probability'];

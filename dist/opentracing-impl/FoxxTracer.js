@@ -13,14 +13,16 @@ class FoxxTracer extends opentracing_1.Tracer {
     }
     static isHeader(carrier) {
         const c = carrier;
-        return !!(c[Utils_1.TRACE_HEADER_KEYS.SPAN_ID] || c[Utils_1.TRACE_HEADER_KEYS.PARENT_SPAN_ID]);
+        const { PARENT_SPAN_ID } = Utils_1.TRACE_HEADER_KEYS;
+        return !!c[PARENT_SPAN_ID];
     }
     _extract(format, carrier) {
         if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isHeader(carrier)) {
             const c = carrier;
-            const spanId = c[Utils_1.TRACE_HEADER_KEYS.SPAN_ID] || c[Utils_1.TRACE_HEADER_KEYS.PARENT_SPAN_ID];
-            const traceId = c[Utils_1.TRACE_HEADER_KEYS.TRACE_ID];
-            const baggage = c[Utils_1.TRACE_HEADER_KEYS.BAGGAGE];
+            const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = Utils_1.TRACE_HEADER_KEYS;
+            const spanId = c[PARENT_SPAN_ID];
+            const traceId = c[TRACE_ID];
+            const baggage = c[BAGGAGE];
             return new FoxxContext_1.default(spanId, traceId, baggage);
         }
         return null;
@@ -41,7 +43,8 @@ class FoxxTracer extends opentracing_1.Tracer {
         this._currentContext = value;
     }
     _startSpan(name, fields) {
-        const forceSample = fields.tags && fields.tags.forceSample;
+        const { PARENT_SPAN_ID, FORCE_SAMPLE } = Utils_1.TRACE_HEADER_KEYS;
+        const forceSample = lodash_1.get(fields, ['tags', FORCE_SAMPLE], lodash_1.get(fields, ['tags', PARENT_SPAN_ID]));
         let doTrace;
         if (lodash_1.isNil(forceSample)) {
             const samplingProbability = module.context.configuration['sampling-probability'];

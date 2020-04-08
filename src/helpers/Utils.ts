@@ -97,7 +97,6 @@ export const forceSampleSchema: BooleanSchema = joi.boolean();
 
 export enum TRACE_HEADER_KEYS {
     TRACE_ID = 'X-Trace-ID',
-    SPAN_ID = 'X-Span-ID',
     PARENT_SPAN_ID = 'X-Parent-Span-ID',
     BAGGAGE = 'X-Baggage',
     FORCE_SAMPLE = 'X-Force-Sample'
@@ -105,36 +104,15 @@ export enum TRACE_HEADER_KEYS {
 
 export interface TraceHeaders {
     [TRACE_HEADER_KEYS.TRACE_ID]?: string;
-    [TRACE_HEADER_KEYS.SPAN_ID]?: string;
     [TRACE_HEADER_KEYS.PARENT_SPAN_ID]?: string;
     [TRACE_HEADER_KEYS.BAGGAGE]?: object;
     [TRACE_HEADER_KEYS.FORCE_SAMPLE]?: boolean;
 }
 
-export default class Utils {
-    static setTracerHeaders(endpoint: Endpoint): void {
-        endpoint.header(TRACE_HEADER_KEYS.TRACE_ID, traceIdSchema, '64 or 128 bit trace id to use for creating spans.');
-        endpoint.header(TRACE_HEADER_KEYS.SPAN_ID, spanIdSchema, '64 bit span id to use for creating spans.');
-        endpoint.header(TRACE_HEADER_KEYS.PARENT_SPAN_ID, spanIdSchema, '64 bit parent span id to use for creating spans.');
-        endpoint.header(TRACE_HEADER_KEYS.BAGGAGE, baggageSchema, 'Context baggage.');
-        endpoint.header(TRACE_HEADER_KEYS.FORCE_SAMPLE, forceSampleSchema, 'Boolean flag to force sampling on or off. ' +
-            'Leave blank to let the tracer decide.');
-    }
-
-    // static startSpan(name, options = {}, traceOverride) {
-    //     const traceByDefault = module.context.service.configuration['trace-by-default']
-    //     const doTrace = (isNil(traceOverride) ? traceByDefault : traceOverride)
-    //
-    //     const parent = tracer.currentContext
-    //     if (parent) {
-    //         options.childOf = parent
-    //     }
-    //
-    //     return doTrace ? tracer.startSpan(name, options) : noopTracer.startSpan(name, options)
-    // }
-    //
-    // static endSpan(span) {
-    //     span.finish()
-    //     tracer.currentContext = span.getParent()
-    // }
+export function setTracerHeaders(endpoint: Endpoint): void {
+    endpoint.header(TRACE_HEADER_KEYS.TRACE_ID, traceIdSchema, '64 or 128 bit trace id to use for creating spans.');
+    endpoint.header(TRACE_HEADER_KEYS.PARENT_SPAN_ID, spanIdSchema, '64 bit parent span id to use for creating spans.');
+    endpoint.header(TRACE_HEADER_KEYS.BAGGAGE, baggageSchema, 'Context baggage.');
+    endpoint.header(TRACE_HEADER_KEYS.FORCE_SAMPLE, forceSampleSchema, 'Boolean flag to force sampling on or off. ' +
+        'Leave blank to let the tracer decide.');
 }

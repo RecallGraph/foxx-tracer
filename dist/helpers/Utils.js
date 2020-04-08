@@ -84,20 +84,16 @@ exports.forceSampleSchema = joi.boolean();
 var TRACE_HEADER_KEYS;
 (function (TRACE_HEADER_KEYS) {
     TRACE_HEADER_KEYS["TRACE_ID"] = "X-Trace-ID";
-    TRACE_HEADER_KEYS["SPAN_ID"] = "X-Span-ID";
     TRACE_HEADER_KEYS["PARENT_SPAN_ID"] = "X-Parent-Span-ID";
     TRACE_HEADER_KEYS["BAGGAGE"] = "X-Baggage";
     TRACE_HEADER_KEYS["FORCE_SAMPLE"] = "X-Force-Sample";
 })(TRACE_HEADER_KEYS = exports.TRACE_HEADER_KEYS || (exports.TRACE_HEADER_KEYS = {}));
-class Utils {
-    static setTracerHeaders(endpoint) {
-        endpoint.header(TRACE_HEADER_KEYS.TRACE_ID, exports.traceIdSchema, '64 or 128 bit trace id to use for creating spans.');
-        endpoint.header(TRACE_HEADER_KEYS.SPAN_ID, exports.spanIdSchema, '64 bit span id to use for creating spans.');
-        endpoint.header(TRACE_HEADER_KEYS.PARENT_SPAN_ID, exports.spanIdSchema, '64 bit parent span id to use for creating spans.');
-        endpoint.header(TRACE_HEADER_KEYS.BAGGAGE, exports.baggageSchema, 'Context baggage.');
-        endpoint.header(TRACE_HEADER_KEYS.FORCE_SAMPLE, exports.forceSampleSchema, 'Boolean flag to force sampling on or off. ' +
-            'Leave blank to let the tracer decide.');
-    }
+function setTracerHeaders(endpoint) {
+    endpoint.header(TRACE_HEADER_KEYS.TRACE_ID, exports.traceIdSchema, '64 or 128 bit trace id to use for creating spans.');
+    endpoint.header(TRACE_HEADER_KEYS.PARENT_SPAN_ID, exports.spanIdSchema, '64 bit parent span id to use for creating spans.');
+    endpoint.header(TRACE_HEADER_KEYS.BAGGAGE, exports.baggageSchema, 'Context baggage.');
+    endpoint.header(TRACE_HEADER_KEYS.FORCE_SAMPLE, exports.forceSampleSchema, 'Boolean flag to force sampling on or off. ' +
+        'Leave blank to let the tracer decide.');
 }
-exports.default = Utils;
+exports.setTracerHeaders = setTracerHeaders;
 //# sourceMappingURL=Utils.js.map
