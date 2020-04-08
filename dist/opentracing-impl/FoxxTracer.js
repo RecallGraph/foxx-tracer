@@ -4,10 +4,12 @@ const opentracing_1 = require("opentracing");
 const FoxxContext_1 = require("./FoxxContext");
 const FoxxSpan_1 = require("./FoxxSpan");
 const Utils_1 = require("../helpers/Utils");
+const lodash_1 = require("lodash");
 class FoxxTracer extends opentracing_1.Tracer {
-    constructor(recorder) {
+    constructor(reporter) {
         super();
-        this._reporter = recorder;
+        this.noopTracer = new opentracing_1.Tracer();
+        this._reporter = reporter;
     }
     static isHeader(carrier) {
         const c = carrier;
@@ -21,7 +23,7 @@ class FoxxTracer extends opentracing_1.Tracer {
             const baggage = c[Utils_1.TRACE_HEADER_KEYS.BAGGAGE];
             return new FoxxContext_1.default(spanId, traceId, baggage);
         }
-        throw new Error('NOT YET IMPLEMENTED');
+        return null;
     }
     get reporter() {
         return this._reporter;
@@ -39,20 +41,36 @@ class FoxxTracer extends opentracing_1.Tracer {
         this._currentContext = value;
     }
     _startSpan(name, fields) {
-        const span = this._allocSpan();
-        span.setOperationName(name);
-        if (fields.references) {
-            for (const ref of fields.references) {
-                span.addReference(ref);
-            }
+        const forceSample = fields.tags && fields.tags.forceSample;
+        let doTrace;
+        if (lodash_1.isNil(forceSample)) {
+            const samplingProbability = module.context.configuration['sampling-probability'];
+            doTrace = Math.random() < samplingProbability;
         }
-        if (fields.tags) {
-            for (const tagKey in fields.tags) {
-                span.setTag(tagKey, fields.tags[tagKey]);
-            }
+        else {
+            doTrace = forceSample;
+            delete fields.tags.forceSample;
         }
-        span.initContext();
-        this._currentContext = span.context();
+        let span;
+        if (doTrace) {
+            span = this._allocSpan();
+            span.setOperationName(name);
+            if (fields.references) {
+                for (const ref of fields.references) {
+                    span.addReference(ref);
+                }
+            }
+            if (fields.tags) {
+                for (const tagKey in fields.tags) {
+                    span.setTag(tagKey, fields.tags[tagKey]);
+                }
+            }
+            span.initContext();
+            this._currentContext = span.context();
+        }
+        else {
+            span = this.noopTracer.startSpan(name, fields);
+        }
         return span;
     }
 }

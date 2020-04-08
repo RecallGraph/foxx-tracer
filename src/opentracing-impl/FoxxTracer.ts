@@ -1,17 +1,25 @@
-import { FORMAT_HTTP_HEADERS, SpanContext, SpanOptions, Tracer } from "opentracing";
+import { FORMAT_HTTP_HEADERS, Span, SpanContext, SpanOptions, Tracer } from "opentracing";
 import FoxxContext from './FoxxContext';
 import FoxxSpan from './FoxxSpan';
 import Reporter from "../reporters/Reporter";
 import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/Utils";
+import { isNil } from 'lodash';
 
 export class FoxxTracer extends Tracer {
     private _currentContext: SpanContext;
     private readonly _reporter: Reporter;
+    private readonly noopTracer: Tracer = new Tracer();
 
     private static isHeader(carrier: any): carrier is TraceHeaders {
         const c = carrier as TraceHeaders;
 
         return !!(c[TRACE_HEADER_KEYS.SPAN_ID] || c[TRACE_HEADER_KEYS.PARENT_SPAN_ID]);
+    }
+
+    constructor(reporter: Reporter) {
+        super();
+
+        this._reporter = reporter
     }
 
     protected _extract(format: any, carrier: any): SpanContext {
@@ -25,13 +33,7 @@ export class FoxxTracer extends Tracer {
             return new FoxxContext(spanId, traceId, baggage);
         }
 
-        throw new Error('NOT YET IMPLEMENTED');
-    }
-
-    constructor(recorder: Reporter) {
-        super();
-
-        this._reporter = recorder
+        return null;
     }
 
     get reporter(): Reporter {
@@ -54,23 +56,40 @@ export class FoxxTracer extends Tracer {
         this._currentContext = value;
     }
 
-    protected _startSpan(name: string, fields: SpanOptions): FoxxSpan {
-        const span = this._allocSpan();
-        span.setOperationName(name);
+    protected _startSpan(name: string, fields: SpanOptions): Span {
+        const forceSample = fields.tags && fields.tags.forceSample;
+        let doTrace: boolean;
+        if (isNil(forceSample)) {
+            const samplingProbability = module.context.configuration['sampling-probability'];
 
-        if (fields.references) {
-            for (const ref of fields.references) {
-                span.addReference(ref);
-            }
-        }
-        if (fields.tags) {
-            for (const tagKey in fields.tags) {
-                span.setTag(tagKey, fields.tags[tagKey])
-            }
+            doTrace = Math.random() < samplingProbability;
+        } else {
+            doTrace = forceSample;
+            delete fields.tags.forceSample;
         }
 
-        span.initContext();
-        this._currentContext = span.context();
+        let span: Span;
+        if (doTrace) {
+            span = this._allocSpan();
+            span.setOperationName(name);
+
+            if (fields.references) {
+                for (const ref of fields.references) {
+                    (span as FoxxSpan).addReference(ref);
+                }
+            }
+            if (fields.tags) {
+                for (const tagKey in fields.tags) {
+                    span.setTag(tagKey, fields.tags[tagKey])
+                }
+            }
+
+            (span as FoxxSpan).initContext();
+            this._currentContext = span.context();
+        } else {
+            span = this.noopTracer.startSpan(name, fields);
+        }
+
 
         return span;
     }
