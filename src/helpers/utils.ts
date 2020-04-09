@@ -11,7 +11,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { defaultsDeep, get, isNil, omitBy } from 'lodash';
+import { defaultsDeep, get, isNil, lowerCase, mapKeys, omitBy } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -115,10 +115,10 @@ export const spanReqSchema: AlternativesSchema = joi
 export const forceSampleSchema: BooleanSchema = joi.boolean();
 
 export enum TRACE_HEADER_KEYS {
-    TRACE_ID = 'X-Trace-ID',
-    PARENT_SPAN_ID = 'X-Parent-Span-ID',
-    BAGGAGE = 'X-Baggage',
-    FORCE_SAMPLE = 'X-Force-Sample'
+    TRACE_ID = 'x-trace-id',
+    PARENT_SPAN_ID = 'x-parent-span-id',
+    BAGGAGE = 'x-baggage',
+    FORCE_SAMPLE = 'x-force-sample'
 }
 
 export interface TraceHeaders {
@@ -137,6 +137,8 @@ export function setTracerHeaders(endpoint: Endpoint): void {
 }
 
 export function getTraceDirectiveFromHeaders(headers?: TraceHeaders): boolean | null {
+    headers = mapKeys(headers, lowerCase);
+
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
 
     return get(headers, FORCE_SAMPLE, get(headers, PARENT_SPAN_ID) ? true : null);

@@ -90,10 +90,10 @@ exports.spanReqSchema = joi
 exports.forceSampleSchema = joi.boolean();
 var TRACE_HEADER_KEYS;
 (function (TRACE_HEADER_KEYS) {
-    TRACE_HEADER_KEYS["TRACE_ID"] = "X-Trace-ID";
-    TRACE_HEADER_KEYS["PARENT_SPAN_ID"] = "X-Parent-Span-ID";
-    TRACE_HEADER_KEYS["BAGGAGE"] = "X-Baggage";
-    TRACE_HEADER_KEYS["FORCE_SAMPLE"] = "X-Force-Sample";
+    TRACE_HEADER_KEYS["TRACE_ID"] = "x-trace-id";
+    TRACE_HEADER_KEYS["PARENT_SPAN_ID"] = "x-parent-span-id";
+    TRACE_HEADER_KEYS["BAGGAGE"] = "x-baggage";
+    TRACE_HEADER_KEYS["FORCE_SAMPLE"] = "x-force-sample";
 })(TRACE_HEADER_KEYS = exports.TRACE_HEADER_KEYS || (exports.TRACE_HEADER_KEYS = {}));
 function setTracerHeaders(endpoint) {
     endpoint.header(TRACE_HEADER_KEYS.TRACE_ID, exports.traceIdSchema, '64 or 128 bit trace id to use for creating spans.');
@@ -104,6 +104,7 @@ function setTracerHeaders(endpoint) {
 }
 exports.setTracerHeaders = setTracerHeaders;
 function getTraceDirectiveFromHeaders(headers) {
+    headers = lodash_1.mapKeys(headers, lodash_1.lowerCase);
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
     return lodash_1.get(headers, FORCE_SAMPLE, lodash_1.get(headers, PARENT_SPAN_ID) ? true : null);
 }
