@@ -239,7 +239,7 @@ export function instrumentEntryPoints() {
 }
 
 export function attachSpan(fn: Function | FunctionConstructor, operation: string, implicitParent: boolean = true,
-                           options?: SpanOptions, forceTrace?: boolean) {
+                           options: SpanOptions = {}, forceTrace?: boolean) {
     return function () {
         options.tags.args = omitBy(arguments, isNil);
         const span = startSpan(operation, implicitParent, options, forceTrace);

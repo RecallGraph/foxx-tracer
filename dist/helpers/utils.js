@@ -186,7 +186,7 @@ function instrumentEntryPoints() {
     };
 }
 exports.instrumentEntryPoints = instrumentEntryPoints;
-function attachSpan(fn, operation, implicitParent = true, options, forceTrace) {
+function attachSpan(fn, operation, implicitParent = true, options = {}, forceTrace) {
     return function () {
         options.tags.args = lodash_1.omitBy(arguments, lodash_1.isNil);
         const span = startSpan(operation, implicitParent, options, forceTrace);
