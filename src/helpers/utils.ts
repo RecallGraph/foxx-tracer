@@ -21,7 +21,6 @@ import { ContextualTracer } from "../opentracing-impl/FoxxTracer";
 const joi = require('joi');
 const tasks = require('@arangodb/tasks');
 
-const tracer = globalTracer() as ContextualTracer;
 const noopTracer = new Tracer();
 
 export const spanIdSchema: StringSchema = joi
@@ -144,8 +143,9 @@ export function getTraceDirectiveFromHeaders(headers?: TraceHeaders): boolean | 
 }
 
 export function startSpan(name: string, implicitParent: boolean = true, options: SpanOptions = {}, forceTrace?: boolean): Span {
-    let doTrace;
+    const tracer = globalTracer() as ContextualTracer;
 
+    let doTrace;
     let co = options.childOf;
     if (!co && implicitParent && tracer.currentContext) {
         co = options.childOf = tracer.currentContext;
@@ -167,6 +167,8 @@ export function startSpan(name: string, implicitParent: boolean = true, options:
 }
 
 export function reportSpan(spanData: SpanData) {
+    const tracer = globalTracer() as ContextualTracer;
+
     tracer.reporter.report([[spanData]]);
 }
 
@@ -195,7 +197,9 @@ interface TaskOpts {
 }
 
 export function instrumentEntryPoints() {
+    const tracer = globalTracer() as ContextualTracer;
     const et = db._executeTransaction;
+
     db._executeTransaction = function (data: Transaction) {
         const spanContext = tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, {});
         data.params = {

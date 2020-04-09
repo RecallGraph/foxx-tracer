@@ -8,7 +8,6 @@ const tags_1 = require("opentracing/lib/ext/tags");
 const reporters_1 = require("../reporters");
 const joi = require('joi');
 const tasks = require('@arangodb/tasks');
-const tracer = opentracing_1.globalTracer();
 const noopTracer = new opentracing_1.Tracer();
 exports.spanIdSchema = joi
     .string()
@@ -110,6 +109,7 @@ function getTraceDirectiveFromHeaders(headers) {
 }
 exports.getTraceDirectiveFromHeaders = getTraceDirectiveFromHeaders;
 function startSpan(name, implicitParent = true, options = {}, forceTrace) {
+    const tracer = opentracing_1.globalTracer();
     let doTrace;
     let co = options.childOf;
     if (!co && implicitParent && tracer.currentContext) {
@@ -131,6 +131,7 @@ function startSpan(name, implicitParent = true, options = {}, forceTrace) {
 }
 exports.startSpan = startSpan;
 function reportSpan(spanData) {
+    const tracer = opentracing_1.globalTracer();
     tracer.reporter.report([[spanData]]);
 }
 exports.reportSpan = reportSpan;
@@ -152,6 +153,7 @@ function initTracer() {
 }
 exports.initTracer = initTracer;
 function instrumentEntryPoints() {
+    const tracer = opentracing_1.globalTracer();
     const et = _arangodb_1.db._executeTransaction;
     _arangodb_1.db._executeTransaction = function (data) {
         const spanContext = tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, {});
