@@ -1,12 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class FoxxReporter {
-    constructor() {
-        this.recordSpans = module.context.dependencies.traceCollector.recordSpans;
-    }
     report(traces) {
         try {
-            this.recordSpans(traces.flat());
+            module.context.dependencies.traceCollector.recordSpans(traces.flat());
         }
         catch (e) {
             console.error(e);
