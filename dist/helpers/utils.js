@@ -5,6 +5,7 @@ const lodash_1 = require("lodash");
 const __1 = require("..");
 const _arangodb_1 = require("@arangodb");
 const tags_1 = require("opentracing/lib/ext/tags");
+const reporters_1 = require("../reporters");
 const joi = require('joi');
 const tasks = require('@arangodb/tasks');
 const tracer = opentracing_1.globalTracer();
@@ -129,6 +130,23 @@ function startSpan(name, options = {}, implicitParent = true, forceTrace) {
     return doTrace ? tracer.startSpan(name, options) : noopTracer.startSpan(name, options);
 }
 exports.startSpan = startSpan;
+function initTracer() {
+    const reporter = new reporters_1.FoxxReporter();
+    const tracer = new __1.FoxxTracer(reporter);
+    opentracing_1.initGlobalTracer(tracer);
+    const gTracer = opentracing_1.globalTracer();
+    Object.defineProperty(gTracer, 'currentContext', {
+        get() {
+            return tracer.currentContext;
+        },
+        set(context) {
+            tracer.currentContext = context;
+        },
+        enumerable: true,
+        configurable: false
+    });
+}
+exports.initTracer = initTracer;
 function instrumentEntryPoints() {
     const et = _arangodb_1.db._executeTransaction;
     _arangodb_1.db._executeTransaction = function (data) {

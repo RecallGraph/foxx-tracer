@@ -4,7 +4,10 @@ const opentracing_1 = require("opentracing");
 const utils_1 = require("../helpers/utils");
 const lodash_1 = require("lodash");
 const __1 = require("..");
-class FoxxTracer extends opentracing_1.Tracer {
+class ContextualTracer extends opentracing_1.Tracer {
+}
+exports.ContextualTracer = ContextualTracer;
+class FoxxTracer extends ContextualTracer {
     constructor(reporter) {
         super();
         this.noopTracer = new opentracing_1.Tracer();

@@ -4,7 +4,11 @@ import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
 import { get, isNil } from 'lodash';
 import { Context, FoxxContext, FoxxSpan } from "..";
 
-export class FoxxTracer extends Tracer {
+export abstract class ContextualTracer extends Tracer {
+    abstract currentContext: FoxxContext;
+}
+
+export class FoxxTracer extends ContextualTracer {
     private _currentContext: FoxxContext;
     private readonly _reporter: Reporter;
     private readonly noopTracer: Tracer = new Tracer();

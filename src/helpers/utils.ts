@@ -4,6 +4,7 @@ import { AlternativesSchema, ArraySchema, BooleanSchema, ObjectSchema, StringSch
 import {
     FORMAT_TEXT_MAP,
     globalTracer,
+    initGlobalTracer,
     REFERENCE_CHILD_OF,
     REFERENCE_FOLLOWS_FROM,
     Span,
@@ -14,11 +15,13 @@ import { get, isNil, reject } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
+import { FoxxReporter } from "../reporters";
+import { ContextualTracer } from "../opentracing-impl/FoxxTracer";
 
 const joi = require('joi');
 const tasks = require('@arangodb/tasks');
 
-const tracer = globalTracer() as FoxxTracer;
+const tracer = globalTracer() as ContextualTracer;
 const noopTracer = new Tracer();
 
 export const spanIdSchema: StringSchema = joi
@@ -168,6 +171,25 @@ interface TaskOpts {
     params?: any;
 }
 
+export function initTracer() {
+    const reporter = new FoxxReporter();
+    const tracer = new FoxxTracer(reporter);
+    initGlobalTracer(tracer);
+
+    const gTracer = globalTracer();
+    Object.defineProperty(gTracer, 'currentContext', {
+        get() {
+            return tracer.currentContext;
+        },
+
+        set(context: FoxxContext): void {
+            tracer.currentContext = context;
+        },
+        enumerable: true,
+        configurable: false
+    });
+}
+
 export function instrumentEntryPoints() {
     const et = db._executeTransaction;
     db._executeTransaction = function (data: Transaction) {
@@ -181,7 +203,7 @@ export function instrumentEntryPoints() {
         data.action = function (params) {
             const { get } = require('lodash');
 
-            const tracer = globalTracer() as FoxxTracer;
+            const tracer = globalTracer() as ContextualTracer;
             tracer.currentContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext')) as FoxxContext;
 
             return get(params, '_action').call(this, get(params, '_params'));
@@ -202,7 +224,7 @@ export function instrumentEntryPoints() {
         options.command = function (params) {
             const { get } = require('lodash');
 
-            const tracer = globalTracer() as FoxxTracer;
+            const tracer = globalTracer() as ContextualTracer;
             tracer.currentContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext')) as FoxxContext;
 
             params._cmd(params._params);
