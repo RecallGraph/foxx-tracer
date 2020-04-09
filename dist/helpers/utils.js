@@ -109,7 +109,7 @@ function getTraceDirectiveFromHeaders(headers) {
     return lodash_1.get(headers, FORCE_SAMPLE, lodash_1.get(headers, PARENT_SPAN_ID) ? true : null);
 }
 exports.getTraceDirectiveFromHeaders = getTraceDirectiveFromHeaders;
-function startSpan(name, options = {}, implicitParent = true, forceTrace) {
+function startSpan(name, implicitParent = true, options = {}, forceTrace) {
     let doTrace;
     let co = options.childOf;
     if (!co && implicitParent && tracer.currentContext) {
@@ -186,19 +186,9 @@ function instrumentEntryPoints() {
     };
 }
 exports.instrumentEntryPoints = instrumentEntryPoints;
-function attachChildSpan(fn, operation, forceTrace) {
-    operation = operation || fn.name;
+function attachSpan(fn, operation, implicitParent = true, options, forceTrace) {
     return function () {
-        const options = {
-            tags: {
-                args: lodash_1.reject(arguments, lodash_1.isNil)
-            }
-        };
-        const cc = tracer.currentContext;
-        if (cc) {
-            options.childOf = cc;
-        }
-        this.span = startSpan(operation, options, true, forceTrace);
+        const span = startSpan(operation, implicitParent, options, forceTrace);
         let ex = null;
         try {
             if (new.target) {
@@ -207,19 +197,19 @@ function attachChildSpan(fn, operation, forceTrace) {
             return fn.apply(this, arguments);
         }
         catch (e) {
-            this.span.setTag(tags_1.ERROR, true);
-            this.span.log({
+            span.setTag(tags_1.ERROR, true);
+            span.log({
                 errorMessage: e.message
             });
             ex = e;
         }
         finally {
-            this.span.finish();
+            span.finish();
         }
         if (ex) {
             throw ex;
         }
     };
 }
-exports.attachChildSpan = attachChildSpan;
+exports.attachSpan = attachSpan;
 //# sourceMappingURL=utils.js.map

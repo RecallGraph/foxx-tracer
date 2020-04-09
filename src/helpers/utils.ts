@@ -11,7 +11,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { get, isNil, reject } from 'lodash';
+import { get, isNil } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -143,7 +143,7 @@ export function getTraceDirectiveFromHeaders(headers?: TraceHeaders): boolean | 
     return get(headers, FORCE_SAMPLE, get(headers, PARENT_SPAN_ID) ? true : null);
 }
 
-export function startSpan(name: string, options: SpanOptions = {}, implicitParent: boolean = true, forceTrace?: boolean): Span {
+export function startSpan(name: string, implicitParent: boolean = true, options: SpanOptions = {}, forceTrace?: boolean): Span {
     let doTrace;
 
     let co = options.childOf;
@@ -238,21 +238,10 @@ export function instrumentEntryPoints() {
     }
 }
 
-export function attachChildSpan(fn: Function | FunctionConstructor, operation?: string, forceTrace?: boolean) {
-    operation = operation || fn.name;
-
+export function attachSpan(fn: Function | FunctionConstructor, operation: string, implicitParent: boolean = true,
+                           options?: SpanOptions, forceTrace?: boolean) {
     return function () {
-        const options: SpanOptions = {
-            tags: {
-                args: reject(arguments, isNil)
-            }
-        };
-        const cc = tracer.currentContext;
-        if (cc) {
-            options.childOf = cc;
-        }
-
-        this.span = startSpan(operation, options, true, forceTrace);
+        const span = startSpan(operation, implicitParent, options, forceTrace);
         let ex = null;
         try {
             if (new.target) {
@@ -261,13 +250,13 @@ export function attachChildSpan(fn: Function | FunctionConstructor, operation?: 
 
             return fn.apply(this, arguments);
         } catch (e) {
-            this.span.setTag(ERROR, true);
-            this.span.log({
+            span.setTag(ERROR, true);
+            span.log({
                 errorMessage: e.message
             });
             ex = e;
         } finally {
-            this.span.finish();
+            span.finish();
         }
 
         if (ex) {

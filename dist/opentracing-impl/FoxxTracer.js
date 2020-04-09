@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const opentracing_1 = require("opentracing");
 const utils_1 = require("../helpers/utils");
-const lodash_1 = require("lodash");
 const __1 = require("..");
 class ContextualTracer extends opentracing_1.Tracer {
 }
@@ -10,7 +9,6 @@ exports.ContextualTracer = ContextualTracer;
 class FoxxTracer extends ContextualTracer {
     constructor(reporter) {
         super();
-        this.noopTracer = new opentracing_1.Tracer();
         this._reporter = reporter;
     }
     static isHeader(carrier) {
@@ -61,37 +59,20 @@ class FoxxTracer extends ContextualTracer {
         }
     }
     _startSpan(name, fields) {
-        const { PARENT_SPAN_ID, FORCE_SAMPLE } = utils_1.TRACE_HEADER_KEYS;
-        const forceSample = lodash_1.get(fields, ['tags', FORCE_SAMPLE], lodash_1.get(fields, ['tags', PARENT_SPAN_ID]));
-        let doTrace;
-        if (lodash_1.isNil(forceSample)) {
-            const samplingProbability = module.context.configuration['sampling-probability'];
-            doTrace = Math.random() < samplingProbability;
-        }
-        else {
-            doTrace = forceSample;
-            delete fields.tags.forceSample;
-        }
-        let span;
-        if (doTrace) {
-            span = FoxxTracer._allocSpan();
-            span.setOperationName(name);
-            if (fields.references) {
-                for (const ref of fields.references) {
-                    span.addReference(ref);
-                }
+        const span = FoxxTracer._allocSpan();
+        span.setOperationName(name);
+        if (fields.references) {
+            for (const ref of fields.references) {
+                span.addReference(ref);
             }
-            if (fields.tags) {
-                for (const tagKey in fields.tags) {
-                    span.setTag(tagKey, fields.tags[tagKey]);
-                }
+        }
+        if (fields.tags) {
+            for (const tagKey in fields.tags) {
+                span.setTag(tagKey, fields.tags[tagKey]);
             }
-            span.initContext();
-            this._currentContext = span.context();
         }
-        else {
-            span = this.noopTracer.startSpan(name, fields);
-        }
+        span.initContext();
+        this._currentContext = span.context();
         return span;
     }
 }

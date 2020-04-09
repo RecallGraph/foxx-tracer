@@ -1,7 +1,6 @@
 import { FORMAT_HTTP_HEADERS, FORMAT_TEXT_MAP, Span, SpanContext, SpanOptions, Tracer } from "opentracing";
 import Reporter from "../reporters/Reporter";
 import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
-import { get, isNil } from 'lodash';
 import { Context, FoxxContext, FoxxSpan } from "..";
 
 export abstract class ContextualTracer extends Tracer {
@@ -12,7 +11,6 @@ export abstract class ContextualTracer extends Tracer {
 export class FoxxTracer extends ContextualTracer {
     private _currentContext: FoxxContext;
     private readonly _reporter: Reporter;
-    private readonly noopTracer: Tracer = new Tracer();
 
     private static isHeader(carrier: any): carrier is TraceHeaders {
         const c = carrier as TraceHeaders;
@@ -79,40 +77,22 @@ export class FoxxTracer extends ContextualTracer {
     }
 
     protected _startSpan(name: string, fields: SpanOptions): Span {
-        const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
-        const forceSample = get(fields, ['tags', FORCE_SAMPLE], get(fields, ['tags', PARENT_SPAN_ID]));
-        let doTrace: boolean;
-        if (isNil(forceSample)) {
-            const samplingProbability = module.context.configuration['sampling-probability'];
+        const span = FoxxTracer._allocSpan();
+        span.setOperationName(name);
 
-            doTrace = Math.random() < samplingProbability;
-        } else {
-            doTrace = forceSample;
-            delete fields.tags.forceSample;
+        if (fields.references) {
+            for (const ref of fields.references) {
+                span.addReference(ref);
+            }
+        }
+        if (fields.tags) {
+            for (const tagKey in fields.tags) {
+                span.setTag(tagKey, fields.tags[tagKey])
+            }
         }
 
-        let span: Span;
-        if (doTrace) {
-            span = FoxxTracer._allocSpan();
-            span.setOperationName(name);
-
-            if (fields.references) {
-                for (const ref of fields.references) {
-                    (span as FoxxSpan).addReference(ref);
-                }
-            }
-            if (fields.tags) {
-                for (const tagKey in fields.tags) {
-                    span.setTag(tagKey, fields.tags[tagKey])
-                }
-            }
-
-            (span as FoxxSpan).initContext();
-            this._currentContext = span.context() as FoxxContext;
-        } else {
-            span = this.noopTracer.startSpan(name, fields);
-        }
-
+        span.initContext();
+        this._currentContext = span.context() as FoxxContext;
 
         return span;
     }
