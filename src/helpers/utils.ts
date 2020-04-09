@@ -11,7 +11,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { get, isNil } from 'lodash';
+import { get, isNil, omitBy } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -241,6 +241,7 @@ export function instrumentEntryPoints() {
 export function attachSpan(fn: Function | FunctionConstructor, operation: string, implicitParent: boolean = true,
                            options?: SpanOptions, forceTrace?: boolean) {
     return function () {
+        options.tags.args = omitBy(arguments, isNil);
         const span = startSpan(operation, implicitParent, options, forceTrace);
         let ex = null;
         try {
@@ -254,6 +255,7 @@ export function attachSpan(fn: Function | FunctionConstructor, operation: string
             span.log({
                 errorMessage: e.message
             });
+
             ex = e;
         } finally {
             span.finish();
