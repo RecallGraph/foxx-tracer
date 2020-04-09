@@ -4,9 +4,8 @@ const opentracing_1 = require("opentracing");
 const _arangodb_1 = require("@arangodb");
 const FoxxContext_1 = require("./FoxxContext");
 class FoxxSpan extends opentracing_1.Span {
-    constructor(tracer) {
+    constructor() {
         super();
-        this._foxxTracer = tracer;
         this._refs = [];
         this._spanData = {
             context: {

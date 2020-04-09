@@ -2,7 +2,7 @@ import FoxxContext from './opentracing-impl/FoxxContext';
 import FoxxSpan from './opentracing-impl/FoxxSpan';
 import FoxxTracer from './opentracing-impl/FoxxTracer';
 import { Context, default as SpanData, Log, Reference, Tags, TagValue } from './helpers/SpanData';
-import * as Utils from './helpers/Utils';
+import * as utils from './helpers/utils';
 import * as reporters from './reporters';
 
 export {
@@ -15,6 +15,6 @@ export {
     Tags,
     TagValue,
     Log,
-    Utils,
+    utils,
     reporters
 };

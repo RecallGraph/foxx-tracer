@@ -1,18 +1,15 @@
 import { Reference, REFERENCE_CHILD_OF, Span, SpanContext } from 'opentracing';
 import { time } from '@arangodb';
 import FoxxContext from './FoxxContext';
-import FoxxTracer from './FoxxTracer';
 import SpanData from '../helpers/SpanData';
 
 export class FoxxSpan extends Span {
     private readonly _spanData: SpanData;
     private readonly _refs: Reference[];
-    private readonly _foxxTracer: FoxxTracer;
     private _foxxContext: FoxxContext;
 
-    constructor(tracer: FoxxTracer) {
+    constructor() {
         super();
-        this._foxxTracer = tracer;
         this._refs = [];
         this._spanData = {
             context: {
