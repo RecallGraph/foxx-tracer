@@ -15,9 +15,21 @@ class FoxxTracer extends opentracing_1.Tracer {
         const { PARENT_SPAN_ID } = utils_1.TRACE_HEADER_KEYS;
         return !!c[PARENT_SPAN_ID];
     }
+    get currentContext() {
+        return this._currentContext;
+    }
+    set currentContext(value) {
+        this._currentContext = value;
+    }
+    get reporter() {
+        return this._reporter;
+    }
     static isContext(carrier) {
         const c = carrier;
         return !!c.span_id;
+    }
+    static _allocSpan() {
+        return new __1.FoxxSpan();
     }
     _extract(format, carrier) {
         if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isHeader(carrier)) {
@@ -34,9 +46,6 @@ class FoxxTracer extends opentracing_1.Tracer {
         }
         throw new Error('NOT YET IMPLEMENTED');
     }
-    get reporter() {
-        return this._reporter;
-    }
     _inject(span, format, carrier) {
         if (format === opentracing_1.FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
             const c = carrier;
@@ -47,15 +56,6 @@ class FoxxTracer extends opentracing_1.Tracer {
         else {
             throw new Error('NOT YET IMPLEMENTED');
         }
-    }
-    static _allocSpan() {
-        return new __1.FoxxSpan();
-    }
-    get currentContext() {
-        return this._currentContext;
-    }
-    set currentContext(value) {
-        this._currentContext = value;
     }
     _startSpan(name, fields) {
         const { PARENT_SPAN_ID, FORCE_SAMPLE } = utils_1.TRACE_HEADER_KEYS;
