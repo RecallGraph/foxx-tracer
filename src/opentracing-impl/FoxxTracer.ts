@@ -6,6 +6,7 @@ import { Context, FoxxContext, FoxxSpan } from "..";
 
 export abstract class ContextualTracer extends Tracer {
     abstract currentContext: FoxxContext;
+    abstract reporter: Reporter;
 }
 
 export class FoxxTracer extends ContextualTracer {

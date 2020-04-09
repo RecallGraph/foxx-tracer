@@ -2,6 +2,7 @@ import { Reference, REFERENCE_CHILD_OF, Span, SpanContext } from 'opentracing';
 import { time } from '@arangodb';
 import FoxxContext from './FoxxContext';
 import SpanData from '../helpers/SpanData';
+import { reportSpan } from '../helpers/utils'
 
 export class FoxxSpan extends Span {
     private readonly _spanData: SpanData;
@@ -87,6 +88,7 @@ export class FoxxSpan extends Span {
 
     protected _finish(finishTime?: number): void {
         this._spanData.finishTimeMs = finishTime || time() * 1000;
+        reportSpan(this._spanData);
     }
 }
 

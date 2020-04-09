@@ -12,7 +12,7 @@ import {
     Tracer
 } from 'opentracing';
 import { get, isNil, reject } from 'lodash';
-import { FoxxContext, FoxxSpan, FoxxTracer } from '..';
+import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
 import { FoxxReporter } from "../reporters";
@@ -166,9 +166,8 @@ export function startSpan(name: string, options: SpanOptions = {}, implicitParen
     return doTrace ? tracer.startSpan(name, options) : noopTracer.startSpan(name, options);
 }
 
-interface TaskOpts {
-    command: Function;
-    params?: any;
+export function reportSpan(spanData: SpanData) {
+    tracer.reporter.report([[spanData]]);
 }
 
 export function initTracer() {
@@ -188,6 +187,11 @@ export function initTracer() {
         enumerable: true,
         configurable: false
     });
+}
+
+interface TaskOpts {
+    command: Function;
+    params?: any;
 }
 
 export function instrumentEntryPoints() {
@@ -234,7 +238,7 @@ export function instrumentEntryPoints() {
     }
 }
 
-export function instrument(fn: Function | FunctionConstructor, operation?: string, forceTrace?: boolean) {
+export function attachChildSpan(fn: Function | FunctionConstructor, operation?: string, forceTrace?: boolean) {
     operation = operation || fn.name;
 
     return function () {
@@ -249,6 +253,7 @@ export function instrument(fn: Function | FunctionConstructor, operation?: strin
         }
 
         this.span = startSpan(operation, options, true, forceTrace);
+        let ex = null;
         try {
             if (new.target) {
                 return Reflect.construct(fn, arguments, new.target);
@@ -260,8 +265,13 @@ export function instrument(fn: Function | FunctionConstructor, operation?: strin
             this.span.log({
                 errorMessage: e.message
             });
+            ex = e;
         } finally {
             this.span.finish();
+        }
+
+        if (ex) {
+            throw ex;
         }
     }
 }

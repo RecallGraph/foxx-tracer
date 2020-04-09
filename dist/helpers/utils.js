@@ -130,6 +130,10 @@ function startSpan(name, options = {}, implicitParent = true, forceTrace) {
     return doTrace ? tracer.startSpan(name, options) : noopTracer.startSpan(name, options);
 }
 exports.startSpan = startSpan;
+function reportSpan(spanData) {
+    tracer.reporter.report([[spanData]]);
+}
+exports.reportSpan = reportSpan;
 function initTracer() {
     const reporter = new reporters_1.FoxxReporter();
     const tracer = new __1.FoxxTracer(reporter);
@@ -182,7 +186,7 @@ function instrumentEntryPoints() {
     };
 }
 exports.instrumentEntryPoints = instrumentEntryPoints;
-function instrument(fn, operation, forceTrace) {
+function attachChildSpan(fn, operation, forceTrace) {
     operation = operation || fn.name;
     return function () {
         const options = {
@@ -195,6 +199,7 @@ function instrument(fn, operation, forceTrace) {
             options.childOf = cc;
         }
         this.span = startSpan(operation, options, true, forceTrace);
+        let ex = null;
         try {
             if (new.target) {
                 return Reflect.construct(fn, arguments, new.target);
@@ -206,11 +211,15 @@ function instrument(fn, operation, forceTrace) {
             this.span.log({
                 errorMessage: e.message
             });
+            ex = e;
         }
         finally {
             this.span.finish();
         }
+        if (ex) {
+            throw ex;
+        }
     };
 }
-exports.instrument = instrument;
+exports.attachChildSpan = attachChildSpan;
 //# sourceMappingURL=utils.js.map

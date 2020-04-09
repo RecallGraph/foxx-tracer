@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const opentracing_1 = require("opentracing");
 const _arangodb_1 = require("@arangodb");
 const FoxxContext_1 = require("./FoxxContext");
+const utils_1 = require("../helpers/utils");
 class FoxxSpan extends opentracing_1.Span {
     constructor() {
         super();
@@ -69,6 +70,7 @@ class FoxxSpan extends opentracing_1.Span {
     }
     _finish(finishTime) {
         this._spanData.finishTimeMs = finishTime || _arangodb_1.time() * 1000;
+        utils_1.reportSpan(this._spanData);
     }
 }
 exports.FoxxSpan = FoxxSpan;
