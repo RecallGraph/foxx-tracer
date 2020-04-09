@@ -11,7 +11,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { defaultsDeep, get, isNil, lowerCase, mapKeys, omitBy } from 'lodash';
+import { defaultsDeep, get, isNil, lowerCase, omitBy, transform } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -137,7 +137,12 @@ export function setTracerHeaders(endpoint: Endpoint): void {
 }
 
 export function getTraceDirectiveFromHeaders(headers?: TraceHeaders): boolean | null {
-    headers = mapKeys(headers, lowerCase);
+    // @ts-ignore
+    headers = transform(headers, (acc, v, k) => {
+        acc[lowerCase(k)] = JSON.parse(v);
+
+        return acc;
+    }, {});
 
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
 

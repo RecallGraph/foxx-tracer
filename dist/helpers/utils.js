@@ -104,7 +104,11 @@ function setTracerHeaders(endpoint) {
 }
 exports.setTracerHeaders = setTracerHeaders;
 function getTraceDirectiveFromHeaders(headers) {
-    headers = lodash_1.mapKeys(headers, lodash_1.lowerCase);
+    // @ts-ignore
+    headers = lodash_1.transform(headers, (acc, v, k) => {
+        acc[lodash_1.lowerCase(k)] = JSON.parse(v);
+        return acc;
+    }, {});
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
     return lodash_1.get(headers, FORCE_SAMPLE, lodash_1.get(headers, PARENT_SPAN_ID) ? true : null);
 }
