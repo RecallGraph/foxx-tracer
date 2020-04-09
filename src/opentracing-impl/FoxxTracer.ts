@@ -62,7 +62,7 @@ export class FoxxTracer extends ContextualTracer {
             return new FoxxContext(c.span_id, c.trace_id, c.baggage);
         }
 
-        throw new Error('NOT YET IMPLEMENTED');
+        return null;
     }
 
     protected _inject(span: FoxxContext, format: any, carrier: any): void {

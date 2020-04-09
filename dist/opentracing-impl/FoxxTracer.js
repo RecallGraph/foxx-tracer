@@ -45,7 +45,7 @@ class FoxxTracer extends ContextualTracer {
             const c = carrier;
             return new __1.FoxxContext(c.span_id, c.trace_id, c.baggage);
         }
-        throw new Error('NOT YET IMPLEMENTED');
+        return null;
     }
     _inject(span, format, carrier) {
         if (format === opentracing_1.FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
