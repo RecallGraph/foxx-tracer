@@ -176,23 +176,27 @@ export function getTraceDirectiveFromHeaders(headers: TraceHeaders): boolean | n
 
 export function startSpan(name: string, implicitParent: boolean = true, options: SpanOptions = {}, forceTrace?: boolean): Span {
     const tracer = globalTracer() as ContextualTracer;
-
     let doTrace;
-    let co = options.childOf;
-    if (!co && implicitParent && tracer.currentContext) {
-        co = options.childOf = tracer.currentContext;
-    }
 
-    if (isNil(forceTrace)) {
-        if (co) {
-            doTrace = co instanceof FoxxContext || co instanceof FoxxSpan;
-        } else {
-            const samplingProbability = module.context.configuration['sampling-probability'];
-
-            doTrace = Math.random() < samplingProbability;
-        }
+    if (!module.context.dependencies.traceCollector) {
+        doTrace = false;
     } else {
-        doTrace = forceTrace;
+        let co = options.childOf;
+        if (!co && implicitParent && tracer.currentContext) {
+            co = options.childOf = tracer.currentContext;
+        }
+
+        if (isNil(forceTrace)) {
+            if (co) {
+                doTrace = co instanceof FoxxContext || co instanceof FoxxSpan;
+            } else {
+                const samplingProbability = module.context.configuration['sampling-probability'];
+
+                doTrace = Math.random() < samplingProbability;
+            }
+        } else {
+            doTrace = forceTrace;
+        }
     }
 
     return doTrace ? tracer.startSpan(name, options) : noopTracer.startSpan(name, options);
