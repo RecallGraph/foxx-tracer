@@ -4,7 +4,7 @@ import { Context } from '..'
 export class FoxxContext extends SpanContext {
     private readonly context: Context;
 
-    constructor(spanId: string, traceId?: string, baggage?: object) {
+    constructor(spanId: string, traceId?: string, baggage: object = {}) {
         super();
 
         this.context = {

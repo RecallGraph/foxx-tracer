@@ -40,7 +40,7 @@ export class FoxxSpan extends Span {
         const parent = this.getParent();
         const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
 
-        this._foxxContext = new FoxxContext(traceId, this._spanData.context.span_id);
+        this._foxxContext = new FoxxContext(this._spanData.context.span_id, traceId);
     }
 
     durationMs(): number {
@@ -73,6 +73,14 @@ export class FoxxSpan extends Span {
         for (const key of keys) {
             this._spanData.tags[key] = set[key];
         }
+    }
+
+    protected _setBaggageItem(key: string, value: string): void {
+        this._spanData.context.baggage[key] = value;
+    }
+
+    protected _getBaggageItem(key: string): string | undefined {
+        return this._spanData.context.baggage[key];
     }
 
     protected _log(fields: { [key: string]: any }, timestamp?: number): void {
