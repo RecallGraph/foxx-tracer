@@ -120,7 +120,7 @@ function setEndpointTraceHeaders(endpoint) {
 }
 exports.setEndpointTraceHeaders = setEndpointTraceHeaders;
 function parseTraceHeaders(headers) {
-    headers = lodash_1.mapKeys(headers, lodash_1.lowerCase);
+    headers = lodash_1.mapKeys(headers, (v, k) => k.toLowerCase());
     console.log(headers);
     const traceHeaders = {};
     for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {

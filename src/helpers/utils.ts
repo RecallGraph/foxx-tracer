@@ -11,7 +11,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { defaultsDeep, get, isNil, lowerCase, mapKeys, omitBy } from 'lodash';
+import { defaultsDeep, get, isNil, mapKeys, omitBy } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -154,7 +154,7 @@ export function setEndpointTraceHeaders(endpoint: Endpoint): void {
 }
 
 export function parseTraceHeaders(headers: { [key: string]: string | undefined }): TraceHeaders {
-    headers = mapKeys(headers, lowerCase);
+    headers = mapKeys(headers, (v, k) => k.toLowerCase());
     console.log(headers);
 
     const traceHeaders: TraceHeaders = {};
