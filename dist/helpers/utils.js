@@ -121,16 +121,13 @@ function setEndpointTraceHeaders(endpoint) {
 exports.setEndpointTraceHeaders = setEndpointTraceHeaders;
 function parseTraceHeaders(headers) {
     headers = lodash_1.mapKeys(headers, (v, k) => k.toLowerCase());
-    console.log(headers);
     const traceHeaders = {};
     for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
         const headerVal = lodash_1.get(headers, key);
-        console.log(headerVal);
         if (headerVal) {
             traceHeaders[key] = joi.validate(headerVal, value.schema).value;
         }
     }
-    console.log(traceHeaders);
     return traceHeaders;
 }
 exports.parseTraceHeaders = parseTraceHeaders;
@@ -179,6 +176,12 @@ function initTracer() {
         set(context) {
             tracer.currentContext = context;
         },
+        enumerable: true,
+        configurable: false
+    });
+    Object.defineProperty(gTracer, 'reporter', {
+        value: tracer.reporter,
+        writable: false,
         enumerable: true,
         configurable: false
     });

@@ -155,17 +155,14 @@ export function setEndpointTraceHeaders(endpoint: Endpoint): void {
 
 export function parseTraceHeaders(headers: { [key: string]: string | undefined }): TraceHeaders {
     headers = mapKeys(headers, (v, k) => k.toLowerCase());
-    console.log(headers);
 
     const traceHeaders: TraceHeaders = {};
     for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
         const headerVal = get(headers, key);
-        console.log(headerVal);
         if (headerVal) {
             traceHeaders[key] = joi.validate(headerVal, value.schema).value;
         }
     }
-    console.log(traceHeaders);
 
     return traceHeaders;
 }
@@ -221,6 +218,13 @@ export function initTracer() {
         set(context: FoxxContext): void {
             tracer.currentContext = context;
         },
+        enumerable: true,
+        configurable: false
+    });
+
+    Object.defineProperty(gTracer, 'reporter', {
+        value: tracer.reporter,
+        writable: false,
         enumerable: true,
         configurable: false
     });
