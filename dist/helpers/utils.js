@@ -95,20 +95,47 @@ var TRACE_HEADER_KEYS;
     TRACE_HEADER_KEYS["BAGGAGE"] = "x-baggage";
     TRACE_HEADER_KEYS["FORCE_SAMPLE"] = "x-force-sample";
 })(TRACE_HEADER_KEYS = exports.TRACE_HEADER_KEYS || (exports.TRACE_HEADER_KEYS = {}));
-function setTracerHeaders(endpoint) {
-    endpoint.header(TRACE_HEADER_KEYS.TRACE_ID, exports.traceIdSchema, '64 or 128 bit trace id to use for creating spans.');
-    endpoint.header(TRACE_HEADER_KEYS.PARENT_SPAN_ID, exports.spanIdSchema, '64 bit parent span id to use for creating spans.');
-    endpoint.header(TRACE_HEADER_KEYS.BAGGAGE, exports.baggageSchema, 'Context baggage.');
-    endpoint.header(TRACE_HEADER_KEYS.FORCE_SAMPLE, exports.forceSampleSchema, 'Boolean flag to force sampling on or off. ' +
-        'Leave blank to let the tracer decide.');
+const TRACE_HEADER_SCHEMAS = Object.freeze({
+    [TRACE_HEADER_KEYS.TRACE_ID]: {
+        schema: exports.traceIdSchema,
+        description: '64 or 128 bit trace id to use for creating spans.'
+    },
+    [TRACE_HEADER_KEYS.PARENT_SPAN_ID]: {
+        schema: exports.spanIdSchema,
+        description: '64 bit parent span id to use for creating spans.'
+    },
+    [TRACE_HEADER_KEYS.BAGGAGE]: {
+        schema: exports.baggageSchema,
+        description: 'Context baggage.'
+    },
+    [TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
+        schema: exports.forceSampleSchema,
+        description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
+    }
+});
+function setEndpointTraceHeaders(endpoint) {
+    for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
+        endpoint.header(key, value.schema, value.description);
+    }
 }
-exports.setTracerHeaders = setTracerHeaders;
+exports.setEndpointTraceHeaders = setEndpointTraceHeaders;
+function parseTraceHeaders(headers) {
+    headers = lodash_1.mapKeys(headers, lodash_1.lowerCase);
+    const traceHeaders = {};
+    for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
+        const headerVal = lodash_1.get(headers, key);
+        if (headerVal) {
+            joi.validate(headerVal, value.schema, (err, val) => {
+                if (!err) {
+                    traceHeaders[key] = val;
+                }
+            });
+        }
+    }
+    return traceHeaders;
+}
+exports.parseTraceHeaders = parseTraceHeaders;
 function getTraceDirectiveFromHeaders(headers) {
-    // @ts-ignore
-    headers = lodash_1.transform(headers, (acc, v, k) => {
-        acc[lodash_1.lowerCase(k)] = JSON.parse(v);
-        return acc;
-    }, {});
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
     return lodash_1.get(headers, FORCE_SAMPLE, lodash_1.get(headers, PARENT_SPAN_ID) ? true : null);
 }

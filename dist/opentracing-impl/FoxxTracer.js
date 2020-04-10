@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const opentracing_1 = require("opentracing");
 const utils_1 = require("../helpers/utils");
 const __1 = require("..");
-const lodash_1 = require("lodash");
 class ContextualTracer extends opentracing_1.Tracer {
 }
 exports.ContextualTracer = ContextualTracer;
@@ -12,7 +11,7 @@ class FoxxTracer extends ContextualTracer {
         super();
         this._reporter = reporter;
     }
-    static isHeader(carrier) {
+    static isTraceHeaders(carrier) {
         const c = carrier;
         const { PARENT_SPAN_ID } = utils_1.TRACE_HEADER_KEYS;
         return !!c[PARENT_SPAN_ID];
@@ -34,12 +33,7 @@ class FoxxTracer extends ContextualTracer {
         return new __1.FoxxSpan();
     }
     _extract(format, carrier) {
-        if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isHeader(carrier)) {
-            // @ts-ignore
-            carrier = lodash_1.transform(carrier, (acc, v, k) => {
-                acc[lodash_1.lowerCase(k)] = JSON.parse(v);
-                return acc;
-            }, {});
+        if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
             const c = carrier;
             const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = utils_1.TRACE_HEADER_KEYS;
             const spanId = c[PARENT_SPAN_ID];

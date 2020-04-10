@@ -11,7 +11,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { defaultsDeep, get, isNil, lowerCase, omitBy, transform } from 'lodash';
+import { defaultsDeep, get, isNil, lowerCase, mapKeys, omitBy } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -128,22 +128,50 @@ export interface TraceHeaders {
     [TRACE_HEADER_KEYS.FORCE_SAMPLE]?: boolean;
 }
 
-export function setTracerHeaders(endpoint: Endpoint): void {
-    endpoint.header(TRACE_HEADER_KEYS.TRACE_ID, traceIdSchema, '64 or 128 bit trace id to use for creating spans.');
-    endpoint.header(TRACE_HEADER_KEYS.PARENT_SPAN_ID, spanIdSchema, '64 bit parent span id to use for creating spans.');
-    endpoint.header(TRACE_HEADER_KEYS.BAGGAGE, baggageSchema, 'Context baggage.');
-    endpoint.header(TRACE_HEADER_KEYS.FORCE_SAMPLE, forceSampleSchema, 'Boolean flag to force sampling on or off. ' +
-        'Leave blank to let the tracer decide.');
+const TRACE_HEADER_SCHEMAS = Object.freeze({
+    [TRACE_HEADER_KEYS.TRACE_ID]: {
+        schema: traceIdSchema,
+        description: '64 or 128 bit trace id to use for creating spans.'
+    },
+    [TRACE_HEADER_KEYS.PARENT_SPAN_ID]: {
+        schema: spanIdSchema,
+        description: '64 bit parent span id to use for creating spans.'
+    },
+    [TRACE_HEADER_KEYS.BAGGAGE]: {
+        schema: baggageSchema,
+        description: 'Context baggage.'
+    },
+    [TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
+        schema: forceSampleSchema,
+        description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
+    }
+});
+
+export function setEndpointTraceHeaders(endpoint: Endpoint): void {
+    for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
+        endpoint.header(key, value.schema, value.description);
+    }
 }
 
-export function getTraceDirectiveFromHeaders(headers?: TraceHeaders): boolean | null {
-    // @ts-ignore
-    headers = transform(headers, (acc, v, k) => {
-        acc[lowerCase(k)] = JSON.parse(v);
+export function parseTraceHeaders(headers: { [key: string]: string | undefined }): TraceHeaders {
+    headers = mapKeys(headers, lowerCase);
 
-        return acc;
-    }, {});
+    const traceHeaders: TraceHeaders = {};
+    for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
+        const headerVal = get(headers, key);
+        if (headerVal) {
+            joi.validate(headerVal, value.schema, (err, val) => {
+                if (!err) {
+                    traceHeaders[key] = val;
+                }
+            });
+        }
+    }
 
+    return traceHeaders;
+}
+
+export function getTraceDirectiveFromHeaders(headers: TraceHeaders): boolean | null {
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
 
     return get(headers, FORCE_SAMPLE, get(headers, PARENT_SPAN_ID) ? true : null);

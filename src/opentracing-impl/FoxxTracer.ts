@@ -2,7 +2,6 @@ import { FORMAT_HTTP_HEADERS, FORMAT_TEXT_MAP, Span, SpanContext, SpanOptions, T
 import Reporter from "../reporters/Reporter";
 import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
 import { Context, FoxxContext, FoxxSpan } from "..";
-import { lowerCase, transform } from "lodash";
 
 export abstract class ContextualTracer extends Tracer {
     abstract currentContext: FoxxContext;
@@ -13,7 +12,7 @@ export class FoxxTracer extends ContextualTracer {
     private _currentContext: FoxxContext;
     private readonly _reporter: Reporter;
 
-    private static isHeader(carrier: any): carrier is TraceHeaders {
+    private static isTraceHeaders(carrier: any): carrier is TraceHeaders {
         const c = carrier as TraceHeaders;
         const { PARENT_SPAN_ID } = TRACE_HEADER_KEYS;
 
@@ -49,14 +48,7 @@ export class FoxxTracer extends ContextualTracer {
     }
 
     protected _extract(format: any, carrier: any): SpanContext {
-        if ((format as string) === FORMAT_HTTP_HEADERS && FoxxTracer.isHeader(carrier)) {
-            // @ts-ignore
-            carrier = transform(carrier, (acc, v, k) => {
-                acc[lowerCase(k)] = JSON.parse(v);
-
-                return acc;
-            }, {});
-
+        if ((format as string) === FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
             const c = carrier as TraceHeaders;
             const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = TRACE_HEADER_KEYS;
             const spanId = c[PARENT_SPAN_ID];
