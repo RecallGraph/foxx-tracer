@@ -32,16 +32,15 @@ class FoxxSpan extends opentracing_1.Span {
         const parent = this.getParent();
         const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
         this._foxxContext = new FoxxContext_1.default(this._spanData.context.span_id, traceId);
-    }
-    durationMs() {
-        return this._spanData.finishTimeMs - this._spanData.startTimeMs;
+        this._spanData.context.trace_id = traceId;
     }
     addReference(ref) {
         this._refs.push(ref);
+        const refContext = ref.referencedContext();
         this._spanData.references.push({
             context: {
-                span_id: ref.referencedContext().toSpanId(),
-                trace_id: ref.referencedContext().toTraceId()
+                span_id: refContext.toSpanId(),
+                trace_id: refContext.toTraceId()
             },
             type: ref.type()
         });

@@ -41,24 +41,22 @@ export class FoxxSpan extends Span {
         const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
 
         this._foxxContext = new FoxxContext(this._spanData.context.span_id, traceId);
-    }
-
-    durationMs(): number {
-        return this._spanData.finishTimeMs - this._spanData.startTimeMs;
+        this._spanData.context.trace_id = traceId;
     }
 
     addReference(ref: Reference): void {
         this._refs.push(ref);
+        const refContext = ref.referencedContext();
         this._spanData.references.push({
             context: {
-                span_id: ref.referencedContext().toSpanId(),
-                trace_id: ref.referencedContext().toTraceId()
+                span_id: refContext.toSpanId(),
+                trace_id: refContext.toTraceId()
             },
             type: ref.type()
         });
     }
 
-    getParent(): SpanContext {
+    private getParent(): SpanContext {
         const parent = this._refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
 
         return parent ? parent.referencedContext() : null;
