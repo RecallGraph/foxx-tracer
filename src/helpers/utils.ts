@@ -173,8 +173,9 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
 
 export function getTraceDirectiveFromHeaders(headers: TraceHeaders): boolean | null {
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
+    const forceSample = headers[FORCE_SAMPLE];
 
-    return get(headers, FORCE_SAMPLE, get(headers, PARENT_SPAN_ID) ? true : null);
+    return isNil(forceSample) ? (isNil(headers[PARENT_SPAN_ID]) ? null : true) : forceSample;
 }
 
 export function startSpan(name: string, implicitParent: boolean = true, options: SpanOptions = {}, forceTrace?: boolean): Span {

@@ -137,7 +137,8 @@ function parseTraceHeaders(headers) {
 exports.parseTraceHeaders = parseTraceHeaders;
 function getTraceDirectiveFromHeaders(headers) {
     const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
-    return lodash_1.get(headers, FORCE_SAMPLE, lodash_1.get(headers, PARENT_SPAN_ID) ? true : null);
+    const forceSample = headers[FORCE_SAMPLE];
+    return lodash_1.isNil(forceSample) ? (lodash_1.isNil(headers[PARENT_SPAN_ID]) ? null : true) : forceSample;
 }
 exports.getTraceDirectiveFromHeaders = getTraceDirectiveFromHeaders;
 function startSpan(name, implicitParent = true, options = {}, forceTrace) {
