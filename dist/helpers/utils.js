@@ -121,17 +121,16 @@ function setEndpointTraceHeaders(endpoint) {
 exports.setEndpointTraceHeaders = setEndpointTraceHeaders;
 function parseTraceHeaders(headers) {
     headers = lodash_1.mapKeys(headers, lodash_1.lowerCase);
+    console.log(headers);
     const traceHeaders = {};
     for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
         const headerVal = lodash_1.get(headers, key);
+        console.log(headerVal);
         if (headerVal) {
-            joi.validate(headerVal, value.schema, (err, val) => {
-                if (!err) {
-                    traceHeaders[key] = val;
-                }
-            });
+            traceHeaders[key] = joi.validate(headerVal, value.schema).value;
         }
     }
+    console.log(traceHeaders);
     return traceHeaders;
 }
 exports.parseTraceHeaders = parseTraceHeaders;

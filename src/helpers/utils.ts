@@ -155,18 +155,17 @@ export function setEndpointTraceHeaders(endpoint: Endpoint): void {
 
 export function parseTraceHeaders(headers: { [key: string]: string | undefined }): TraceHeaders {
     headers = mapKeys(headers, lowerCase);
+    console.log(headers);
 
     const traceHeaders: TraceHeaders = {};
     for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
         const headerVal = get(headers, key);
+        console.log(headerVal);
         if (headerVal) {
-            joi.validate(headerVal, value.schema, (err, val) => {
-                if (!err) {
-                    traceHeaders[key] = val;
-                }
-            });
+            traceHeaders[key] = joi.validate(headerVal, value.schema).value;
         }
     }
+    console.log(traceHeaders);
 
     return traceHeaders;
 }
