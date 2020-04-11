@@ -199,7 +199,15 @@ export function startSpan(name: string, implicitParent: boolean = true, options:
         }
     }
 
-    return doTrace ? tracer.startSpan(name, options) : noopTracer.startSpan(name, options);
+    let span;
+    if (doTrace) {
+        span = tracer.startSpan(name, options);
+    } else {
+        span = noopTracer.startSpan(name, options);
+        tracer.currentContext = span;
+    }
+
+    return span;
 }
 
 export function reportSpan(spanData: SpanData) {

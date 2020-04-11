@@ -161,7 +161,15 @@ function startSpan(name, implicitParent = true, options = {}, forceTrace) {
             doTrace = forceTrace;
         }
     }
-    return doTrace ? tracer.startSpan(name, options) : noopTracer.startSpan(name, options);
+    let span;
+    if (doTrace) {
+        span = tracer.startSpan(name, options);
+    }
+    else {
+        span = noopTracer.startSpan(name, options);
+        tracer.currentContext = span;
+    }
+    return span;
 }
 exports.startSpan = startSpan;
 function reportSpan(spanData) {

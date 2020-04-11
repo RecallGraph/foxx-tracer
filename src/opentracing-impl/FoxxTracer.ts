@@ -4,12 +4,17 @@ import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
 import { Context, FoxxContext, FoxxSpan } from "..";
 
 export abstract class ContextualTracer extends Tracer {
-    abstract currentContext: FoxxContext;
+    abstract currentContext: SpanContext;
     abstract reporter: Reporter;
 }
 
 export class FoxxTracer extends ContextualTracer {
-    private _currentContext: FoxxContext;
+    constructor(reporter: Reporter) {
+        super();
+
+        this._reporter = reporter
+    }
+
     private readonly _reporter: Reporter;
 
     private static isTraceHeaders(carrier: any): carrier is TraceHeaders {
@@ -19,17 +24,13 @@ export class FoxxTracer extends ContextualTracer {
         return !!c[PARENT_SPAN_ID];
     }
 
-    get currentContext(): FoxxContext {
+    private _currentContext: SpanContext;
+
+    get currentContext(): SpanContext {
         return this._currentContext;
     }
 
-    constructor(reporter: Reporter) {
-        super();
-
-        this._reporter = reporter
-    }
-
-    set currentContext(value: FoxxContext) {
+    set currentContext(value: SpanContext) {
         this._currentContext = value;
     }
 
