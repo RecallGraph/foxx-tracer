@@ -147,7 +147,7 @@ function getParent(refs) {
 }
 exports.getParent = getParent;
 function setTraceContext(traceID, context) {
-    if (!traceID) {
+    if (!traceID && context) {
         traceID = context.toTraceId();
     }
     const tracer = opentracing_1.globalTracer();

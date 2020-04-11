@@ -188,7 +188,7 @@ export function getParent(refs: Reference[]): SpanContext {
 }
 
 export function setTraceContext(traceID?: string, context?: SpanContext) {
-    if (!traceID) {
+    if (!traceID && context) {
         traceID = context.toTraceId();
     }
 

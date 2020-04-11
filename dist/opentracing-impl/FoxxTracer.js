@@ -11,17 +11,16 @@ class FoxxTracer extends ContextualTracer {
         super();
         this._reporter = reporter;
     }
+    get currentTrace() {
+        return this._currentTrace;
+    }
+    set currentTrace(value) {
+        this._currentTrace = value;
+    }
     static isTraceHeaders(carrier) {
         const c = carrier;
         const { TRACE_ID } = utils_1.TRACE_HEADER_KEYS;
         return !!c[TRACE_ID];
-    }
-    static isContext(carrier) {
-        const c = carrier;
-        return !!c.span_id;
-    }
-    static _allocSpan() {
-        return new __1.FoxxSpan();
     }
     get currentContext() {
         return this._currentContext;
@@ -32,11 +31,12 @@ class FoxxTracer extends ContextualTracer {
     get reporter() {
         return this._reporter;
     }
-    get currentTrace() {
-        return this._currentTrace;
+    static isContext(carrier) {
+        const c = carrier;
+        return !!c.span_id;
     }
-    set currentTrace(value) {
-        this._currentTrace = value;
+    static _allocSpan() {
+        return new __1.FoxxSpan();
     }
     _extract(format, carrier) {
         if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
