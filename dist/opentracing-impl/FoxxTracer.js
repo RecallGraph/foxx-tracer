@@ -13,8 +13,15 @@ class FoxxTracer extends ContextualTracer {
     }
     static isTraceHeaders(carrier) {
         const c = carrier;
-        const { PARENT_SPAN_ID } = utils_1.TRACE_HEADER_KEYS;
-        return !!c[PARENT_SPAN_ID];
+        const { TRACE_ID } = utils_1.TRACE_HEADER_KEYS;
+        return !!c[TRACE_ID];
+    }
+    static isContext(carrier) {
+        const c = carrier;
+        return !!c.span_id;
+    }
+    static _allocSpan() {
+        return new __1.FoxxSpan();
     }
     get currentContext() {
         return this._currentContext;
@@ -25,21 +32,25 @@ class FoxxTracer extends ContextualTracer {
     get reporter() {
         return this._reporter;
     }
-    static isContext(carrier) {
-        const c = carrier;
-        return !!c.span_id;
+    get currentTrace() {
+        return this._currentTrace;
     }
-    static _allocSpan() {
-        return new __1.FoxxSpan();
+    set currentTrace(value) {
+        this._currentTrace = value;
     }
     _extract(format, carrier) {
         if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
             const c = carrier;
             const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = utils_1.TRACE_HEADER_KEYS;
-            const spanId = c[PARENT_SPAN_ID];
-            const traceId = c[TRACE_ID];
-            const baggage = c[BAGGAGE];
-            return new __1.FoxxContext(spanId, traceId, baggage);
+            if (c[PARENT_SPAN_ID]) {
+                const spanId = c[PARENT_SPAN_ID];
+                const traceId = c[TRACE_ID];
+                const baggage = c[BAGGAGE];
+                return new __1.FoxxContext(spanId, traceId, baggage);
+            }
+            else {
+                return null;
+            }
         }
         else if (format === opentracing_1.FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
             const c = carrier;
@@ -71,7 +82,7 @@ class FoxxTracer extends ContextualTracer {
                 span.setTag(tagKey, fields.tags[tagKey]);
             }
         }
-        span.initContext();
+        span.initContext(this._currentTrace);
         this._currentContext = span.context();
         return span;
     }

@@ -1,8 +1,8 @@
-import { Reference, REFERENCE_CHILD_OF, Span, SpanContext } from 'opentracing';
+import { Reference, Span, SpanContext } from 'opentracing';
 import { time } from '@arangodb';
 import FoxxContext from './FoxxContext';
 import SpanData from '../helpers/SpanData';
-import { reportSpan } from '../helpers/utils'
+import { getParent, reportSpan } from '../helpers/utils'
 
 export class FoxxSpan extends Span {
     private readonly _spanData: SpanData;
@@ -36,9 +36,9 @@ export class FoxxSpan extends Span {
         return `${p0}${p1}`;
     }
 
-    initContext() {
+    initContext(traceId: string) {
         const parent = this.getParent();
-        const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
+        traceId = traceId || (parent ? parent.toTraceId() : FoxxSpan.generateUUID());
 
         this._foxxContext = new FoxxContext(this._spanData.context.span_id, traceId);
         this._spanData.context.trace_id = traceId;
@@ -57,9 +57,7 @@ export class FoxxSpan extends Span {
     }
 
     private getParent(): SpanContext {
-        const parent = this._refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
-
-        return parent ? parent.referencedContext() : null;
+        return getParent(this._refs);
     }
 
     protected _setOperationName(name: string): void {

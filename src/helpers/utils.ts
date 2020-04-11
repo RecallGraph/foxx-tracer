@@ -5,6 +5,7 @@ import {
     FORMAT_TEXT_MAP,
     globalTracer,
     initGlobalTracer,
+    Reference,
     REFERENCE_CHILD_OF,
     REFERENCE_FOLLOWS_FROM,
     Span,
@@ -17,6 +18,7 @@ import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
 import { FoxxReporter } from "../reporters";
 import { ContextualTracer } from "../opentracing-impl/FoxxTracer";
+import SpanContext from "opentracing/lib/span_context";
 
 const joi = require('joi');
 const tasks = require('@arangodb/tasks');
@@ -164,38 +166,58 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
         }
     }
 
+    const { PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
+    if (traceHeaders[PARENT_SPAN_ID] && !traceHeaders[TRACE_ID]) {
+        throw new Error('Parent span received without associated trace ID.');
+    }
+
     return traceHeaders;
 }
 
 export function getTraceDirectiveFromHeaders(headers: TraceHeaders): boolean | null {
-    const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
-    const forceSample = headers[FORCE_SAMPLE];
+    const { FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
+    let doTrace = [FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID].find(key => !isNil(headers[key]));
 
-    return isNil(forceSample) ? (isNil(headers[PARENT_SPAN_ID]) ? null : true) : forceSample;
+    return isNil(doTrace) ? null : !!doTrace;
 }
 
-export function startSpan(name: string, implicitParent: boolean = true, options: SpanOptions = {}, forceTrace?: boolean): Span {
+export function getParent(refs: Reference[]): SpanContext {
+    const parent = refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
+
+    return parent ? parent.referencedContext() : null;
+}
+
+export function setTraceContext(traceID?: string, context?: SpanContext) {
+    if (!traceID) {
+        traceID = context.toTraceId();
+    }
+
     const tracer = globalTracer() as ContextualTracer;
-    let doTrace;
+    tracer.currentContext = context;
+    tracer.currentTrace = traceID;
+}
+
+export function startSpan(name: string, implicitParent: boolean = true, options: SpanOptions = {}, doTrace?: boolean): Span {
+    const tracer = globalTracer() as ContextualTracer;
 
     if (!module.context.dependencies.traceCollector) {
         doTrace = false;
     } else {
-        let co = options.childOf;
-        if (!co && implicitParent && tracer.currentContext) {
+        let co = options.childOf || getParent(options.references);
+        if (!co && implicitParent && tracer.currentContext && tracer.currentContext.toSpanId()) {
             co = options.childOf = tracer.currentContext;
         }
 
-        if (isNil(forceTrace)) {
+        if (isNil(doTrace)) {
             if (co) {
                 doTrace = co instanceof FoxxContext || co instanceof FoxxSpan;
+            } else if (tracer.currentTrace) {
+                doTrace = true;
             } else {
                 const samplingProbability = module.context.configuration['sampling-probability'];
 
                 doTrace = Math.random() < samplingProbability;
             }
-        } else {
-            doTrace = forceTrace;
         }
     }
 
@@ -294,31 +316,41 @@ export function instrumentEntryPoints() {
 }
 
 export function attachSpan(fn: Function | FunctionConstructor, operation: string, implicitParent: boolean = true,
-                           options: SpanOptions = {}, forceTrace?: boolean) {
+                           options: SpanOptions = {}, forceTrace: boolean,
+                           onSuccess?: (result: any, span: Span) => void,
+                           onError?: (err: Error, span: Span) => void) {
     return function () {
         defaultsDeep(options, { tags: {} });
         options.tags.args = omitBy(arguments, isNil);
         const span = startSpan(operation, implicitParent, options, forceTrace);
-        let ex = null;
         try {
+            let result;
             if (new.target) {
-                return Reflect.construct(fn, arguments, new.target);
+                result = Reflect.construct(fn, arguments, new.target);
+            } else {
+                result = fn.apply(this, arguments);
             }
 
-            return fn.apply(this, arguments);
+            if (onSuccess) {
+                onSuccess(result, span);
+            } else {
+                span.finish();
+
+                return result;
+            }
         } catch (e) {
             span.setTag(ERROR, true);
             span.log({
                 errorMessage: e.message
             });
 
-            ex = e;
-        } finally {
-            span.finish();
-        }
+            if (onError) {
+                onError(e, span);
+            } else {
+                span.finish();
 
-        if (ex) {
-            throw ex;
+                throw e;
+            }
         }
     }
 }

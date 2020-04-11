@@ -128,37 +128,54 @@ function parseTraceHeaders(headers) {
             traceHeaders[key] = joi.validate(headerVal, value.schema).value;
         }
     }
+    const { PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
+    if (traceHeaders[PARENT_SPAN_ID] && !traceHeaders[TRACE_ID]) {
+        throw new Error('Parent span received without associated trace ID.');
+    }
     return traceHeaders;
 }
 exports.parseTraceHeaders = parseTraceHeaders;
 function getTraceDirectiveFromHeaders(headers) {
-    const { PARENT_SPAN_ID, FORCE_SAMPLE } = TRACE_HEADER_KEYS;
-    const forceSample = headers[FORCE_SAMPLE];
-    return lodash_1.isNil(forceSample) ? (lodash_1.isNil(headers[PARENT_SPAN_ID]) ? null : true) : forceSample;
+    const { FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
+    let doTrace = [FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID].find(key => !lodash_1.isNil(headers[key]));
+    return lodash_1.isNil(doTrace) ? null : !!doTrace;
 }
 exports.getTraceDirectiveFromHeaders = getTraceDirectiveFromHeaders;
-function startSpan(name, implicitParent = true, options = {}, forceTrace) {
+function getParent(refs) {
+    const parent = refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
+    return parent ? parent.referencedContext() : null;
+}
+exports.getParent = getParent;
+function setTraceContext(traceID, context) {
+    if (!traceID) {
+        traceID = context.toTraceId();
+    }
     const tracer = opentracing_1.globalTracer();
-    let doTrace;
+    tracer.currentContext = context;
+    tracer.currentTrace = traceID;
+}
+exports.setTraceContext = setTraceContext;
+function startSpan(name, implicitParent = true, options = {}, doTrace) {
+    const tracer = opentracing_1.globalTracer();
     if (!module.context.dependencies.traceCollector) {
         doTrace = false;
     }
     else {
-        let co = options.childOf;
-        if (!co && implicitParent && tracer.currentContext) {
+        let co = options.childOf || getParent(options.references);
+        if (!co && implicitParent && tracer.currentContext && tracer.currentContext.toSpanId()) {
             co = options.childOf = tracer.currentContext;
         }
-        if (lodash_1.isNil(forceTrace)) {
+        if (lodash_1.isNil(doTrace)) {
             if (co) {
                 doTrace = co instanceof __1.FoxxContext || co instanceof __1.FoxxSpan;
+            }
+            else if (tracer.currentTrace) {
+                doTrace = true;
             }
             else {
                 const samplingProbability = module.context.configuration['sampling-probability'];
                 doTrace = Math.random() < samplingProbability;
             }
-        }
-        else {
-            doTrace = forceTrace;
         }
     }
     let span;
@@ -236,30 +253,39 @@ function instrumentEntryPoints() {
     };
 }
 exports.instrumentEntryPoints = instrumentEntryPoints;
-function attachSpan(fn, operation, implicitParent = true, options = {}, forceTrace) {
+function attachSpan(fn, operation, implicitParent = true, options = {}, forceTrace, onSuccess, onError) {
     return function () {
         lodash_1.defaultsDeep(options, { tags: {} });
         options.tags.args = lodash_1.omitBy(arguments, lodash_1.isNil);
         const span = startSpan(operation, implicitParent, options, forceTrace);
-        let ex = null;
         try {
+            let result;
             if (new.target) {
-                return Reflect.construct(fn, arguments, new.target);
+                result = Reflect.construct(fn, arguments, new.target);
             }
-            return fn.apply(this, arguments);
+            else {
+                result = fn.apply(this, arguments);
+            }
+            if (onSuccess) {
+                onSuccess(result, span);
+            }
+            else {
+                span.finish();
+                return result;
+            }
         }
         catch (e) {
             span.setTag(tags_1.ERROR, true);
             span.log({
                 errorMessage: e.message
             });
-            ex = e;
-        }
-        finally {
-            span.finish();
-        }
-        if (ex) {
-            throw ex;
+            if (onError) {
+                onError(e, span);
+            }
+            else {
+                span.finish();
+                throw e;
+            }
         }
     };
 }

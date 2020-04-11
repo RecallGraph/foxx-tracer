@@ -28,9 +28,9 @@ class FoxxSpan extends opentracing_1.Span {
         const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
         return `${p0}${p1}`;
     }
-    initContext() {
+    initContext(traceId) {
         const parent = this.getParent();
-        const traceId = parent ? parent.toTraceId() : FoxxSpan.generateUUID();
+        traceId = traceId || (parent ? parent.toTraceId() : FoxxSpan.generateUUID());
         this._foxxContext = new FoxxContext_1.default(this._spanData.context.span_id, traceId);
         this._spanData.context.trace_id = traceId;
     }
@@ -46,8 +46,7 @@ class FoxxSpan extends opentracing_1.Span {
         });
     }
     getParent() {
-        const parent = this._refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
-        return parent ? parent.referencedContext() : null;
+        return utils_1.getParent(this._refs);
     }
     _setOperationName(name) {
         this._spanData.operation = name;

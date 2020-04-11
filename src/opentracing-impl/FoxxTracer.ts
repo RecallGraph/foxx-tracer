@@ -6,25 +6,35 @@ import { Context, FoxxContext, FoxxSpan } from "..";
 export abstract class ContextualTracer extends Tracer {
     abstract currentContext: SpanContext;
     abstract reporter: Reporter;
+    abstract currentTrace: string;
 }
 
 export class FoxxTracer extends ContextualTracer {
+    private readonly _reporter: Reporter;
+    private _currentContext: SpanContext;
+
+    private _currentTrace: string;
+
+    get currentTrace(): string {
+        return this._currentTrace;
+    }
+
+    set currentTrace(value: string) {
+        this._currentTrace = value;
+    }
+
+    private static isTraceHeaders(carrier: any): carrier is TraceHeaders {
+        const c = carrier as TraceHeaders;
+        const { TRACE_ID } = TRACE_HEADER_KEYS;
+
+        return !!c[TRACE_ID];
+    }
+
     constructor(reporter: Reporter) {
         super();
 
         this._reporter = reporter
     }
-
-    private readonly _reporter: Reporter;
-
-    private static isTraceHeaders(carrier: any): carrier is TraceHeaders {
-        const c = carrier as TraceHeaders;
-        const { PARENT_SPAN_ID } = TRACE_HEADER_KEYS;
-
-        return !!c[PARENT_SPAN_ID];
-    }
-
-    private _currentContext: SpanContext;
 
     get currentContext(): SpanContext {
         return this._currentContext;
@@ -52,11 +62,16 @@ export class FoxxTracer extends ContextualTracer {
         if ((format as string) === FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
             const c = carrier as TraceHeaders;
             const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = TRACE_HEADER_KEYS;
-            const spanId = c[PARENT_SPAN_ID];
-            const traceId = c[TRACE_ID];
-            const baggage = c[BAGGAGE];
 
-            return new FoxxContext(spanId, traceId, baggage);
+            if (c[PARENT_SPAN_ID]) {
+                const spanId = c[PARENT_SPAN_ID];
+                const traceId = c[TRACE_ID];
+                const baggage = c[BAGGAGE];
+
+                return new FoxxContext(spanId, traceId, baggage);
+            } else {
+                return null;
+            }
         } else if ((format as string) === FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
             const c = carrier as Context;
 
@@ -92,7 +107,7 @@ export class FoxxTracer extends ContextualTracer {
             }
         }
 
-        span.initContext();
+        span.initContext(this._currentTrace);
         this._currentContext = span.context() as FoxxContext;
 
         return span;
