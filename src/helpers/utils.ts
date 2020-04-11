@@ -182,7 +182,7 @@ export function getTraceDirectiveFromHeaders(headers: TraceHeaders): boolean | n
 }
 
 export function getParent(refs: Reference[]): SpanContext {
-    const parent = refs.find(ref => ref.type() === REFERENCE_CHILD_OF);
+    const parent = refs ? refs.find(ref => ref.type() === REFERENCE_CHILD_OF) : null;
 
     return parent ? parent.referencedContext() : null;
 }

@@ -142,7 +142,7 @@ function getTraceDirectiveFromHeaders(headers) {
 }
 exports.getTraceDirectiveFromHeaders = getTraceDirectiveFromHeaders;
 function getParent(refs) {
-    const parent = refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF);
+    const parent = refs ? refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF) : null;
     return parent ? parent.referencedContext() : null;
 }
 exports.getParent = getParent;
