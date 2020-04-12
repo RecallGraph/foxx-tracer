@@ -172,6 +172,7 @@ function setTraceContext(traceID, context) {
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
 }
+exports.setTraceContext = setTraceContext;
 function clearTraceContext() {
     const tracer = opentracing_1.globalTracer();
     tracer.currentContext = null;

@@ -212,7 +212,7 @@ export function getParent(refs: Reference[]): SpanContext {
     return parent ? parent.referencedContext() : null;
 }
 
-function setTraceContext(traceID?: string, context?: SpanContext) {
+export function setTraceContext(traceID?: string, context?: SpanContext) {
     const tracer = globalTracer() as ContextualTracer;
 
     tracer.currentContext = context;

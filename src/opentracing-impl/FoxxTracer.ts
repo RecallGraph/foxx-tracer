@@ -106,7 +106,6 @@ export class FoxxTracer extends ContextualTracer {
         }
 
         span.initContext(this._currentTrace);
-        this._currentContext = span.context() as FoxxContext;
 
         return span;
     }

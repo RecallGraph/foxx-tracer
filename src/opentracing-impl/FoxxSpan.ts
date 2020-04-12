@@ -2,7 +2,7 @@ import { Reference, Span, SpanContext } from 'opentracing';
 import { time } from '@arangodb';
 import FoxxContext from './FoxxContext';
 import SpanData from '../helpers/SpanData';
-import { getParent, reportSpan } from '../helpers/utils'
+import { getParent, reportSpan, setTraceContext } from '../helpers/utils'
 
 export class FoxxSpan extends Span {
     private readonly _spanData: SpanData;
@@ -42,6 +42,8 @@ export class FoxxSpan extends Span {
 
         this._foxxContext = new FoxxContext(this._spanData.context.span_id, traceId);
         this._spanData.context.trace_id = traceId;
+
+        setTraceContext(traceId, this._foxxContext);
     }
 
     addReference(ref: Reference): void {
@@ -92,6 +94,8 @@ export class FoxxSpan extends Span {
 
     protected _finish(finishTime?: number): void {
         this._spanData.finishTimeMs = finishTime || time() * 1000;
+
+        setTraceContext(this._spanData.context.trace_id, this.getParent());
         reportSpan(this._spanData);
     }
 }

@@ -33,6 +33,7 @@ class FoxxSpan extends opentracing_1.Span {
         traceId = traceId || (parent ? parent.toTraceId() : FoxxSpan.generateUUID());
         this._foxxContext = new FoxxContext_1.default(this._spanData.context.span_id, traceId);
         this._spanData.context.trace_id = traceId;
+        utils_1.setTraceContext(traceId, this._foxxContext);
     }
     addReference(ref) {
         this._refs.push(ref);
@@ -74,6 +75,7 @@ class FoxxSpan extends opentracing_1.Span {
     }
     _finish(finishTime) {
         this._spanData.finishTimeMs = finishTime || _arangodb_1.time() * 1000;
+        utils_1.setTraceContext(this._spanData.context.trace_id, this.getParent());
         utils_1.reportSpan(this._spanData);
     }
 }
