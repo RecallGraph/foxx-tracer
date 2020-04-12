@@ -365,10 +365,13 @@ export function attachSpan(
     fn: Function | FunctionConstructor, operation: string, options: SpanOptions = {},
     onSuccess?: (result: any, span: Span) => void, onError?: (err: Error, span: Span) => void
 ) {
+    const params = getParams(fn);
+    console.log(params);
+
     return function () {
-        const params = getParams(fn);
         defaultsDeep(options, { tags: {} });
         options.tags.args = mapKeys(omitBy(arguments, isNil), (v, k) => params[k]);
+        console.log(options.tags.args);
 
         const span = startSpan(operation, options);
         try {

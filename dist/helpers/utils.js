@@ -283,10 +283,12 @@ function getParams(func) {
     return params;
 }
 function attachSpan(fn, operation, options = {}, onSuccess, onError) {
+    const params = getParams(fn);
+    console.log(params);
     return function () {
-        const params = getParams(fn);
         lodash_1.defaultsDeep(options, { tags: {} });
         options.tags.args = lodash_1.mapKeys(lodash_1.omitBy(arguments, lodash_1.isNil), (v, k) => params[k]);
+        console.log(options.tags.args);
         const span = startSpan(operation, options);
         try {
             let result;
