@@ -29,6 +29,7 @@ class FoxxSpan extends opentracing_1.Span {
         return `${p0}${p1}`;
     }
     initContext(traceId) {
+        console.log(traceId);
         const parent = this.getParent();
         traceId = traceId || (parent ? parent.toTraceId() : FoxxSpan.generateUUID());
         this._foxxContext = new FoxxContext_1.default(this._spanData.context.span_id, traceId);
