@@ -13,7 +13,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { defaultsDeep, get, isNil, mapKeys, omitBy } from 'lodash';
+import { get, mapKeys } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -328,52 +328,13 @@ export function instrumentEntryPoints() {
     }
 }
 
-function getParams(func: Function) {
-    // String representaation of the function code
-    let str = func.toString();
-
-    // Remove comments of the form /* ... */
-    // Removing comments of the form //
-    // Remove body of the function { ... }
-    // removing '=>' if func is arrow function
-    str = str.replace(/\/\*[\s\S]*?\*\//g, '')
-        .replace(/\/\/(.)*/g, '')
-        .replace(/{[\s\S]*}/, '')
-        .replace(/=>/g, '')
-        .trim();
-
-    // Start parameter names after first '('
-    const start = str.indexOf("(") + 1;
-
-    // End parameter names is just before last ')'
-    const end = str.length - 1;
-    const result = str.substring(start, end).split(", ");
-    const params = [];
-
-    result.forEach(element => {
-        // Removing any default value
-        element = element.replace(/=[\s\S]*/g, '').trim();
-        if (element.length > 0) {
-            params.push(element);
-        }
-    });
-
-    return params;
-}
-
 export function attachSpan(
     fn: Function | FunctionConstructor, operation: string, options: SpanOptions = {},
     onSuccess?: (result: any, span: Span) => void, onError?: (err: Error, span: Span) => void
 ) {
-    const params = getParams(fn);
-    console.log(params);
-
     return function () {
-        defaultsDeep(options, { tags: {} });
-        options.tags.args = mapKeys(omitBy(arguments, isNil), (v, k) => params[k]);
-        console.log(options.tags.args);
-
         const span = startSpan(operation, options);
+
         try {
             let result;
             if (new.target) {
