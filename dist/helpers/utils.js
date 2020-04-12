@@ -160,6 +160,7 @@ function setTraceContextFromHeaders(headers) {
     const { TRACE_ID } = TRACE_HEADER_KEYS;
     const traceId = headers[TRACE_ID] || __1.FoxxSpan.generateUUID();
     headers[TRACE_ID] = traceId;
+    console.log(headers);
     const rootContext = tracer.extract(opentracing_1.FORMAT_HTTP_HEADERS, headers);
     setTraceContext(traceId, rootContext);
 }
@@ -172,6 +173,7 @@ function setTraceContext(traceID, context) {
     const tracer = opentracing_1.globalTracer();
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
+    console.log({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 function clearTraceContext() {
     const tracer = opentracing_1.globalTracer();

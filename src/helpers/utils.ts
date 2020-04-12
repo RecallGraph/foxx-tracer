@@ -202,6 +202,7 @@ function setTraceContextFromHeaders(headers: TraceHeaders) {
 
     const traceId = headers[TRACE_ID] || FoxxSpan.generateUUID();
     headers[TRACE_ID] = traceId;
+    console.log(headers);
 
     const rootContext = tracer.extract(FORMAT_HTTP_HEADERS, headers);
 
@@ -219,6 +220,8 @@ function setTraceContext(traceID?: string, context?: SpanContext) {
 
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
+
+    console.log({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 
 function clearTraceContext() {
