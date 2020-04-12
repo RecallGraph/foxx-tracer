@@ -4,10 +4,7 @@ import SpanData from '../helpers/SpanData';
 export default class FoxxReporter implements Reporter {
     report(traces: [[SpanData]]): void {
         try {
-            const spans = traces.flat();
-            console.log(spans);
-
-            module.context.dependencies.traceCollector.recordSpans(spans);
+            module.context.dependencies.traceCollector.recordSpans(traces.flat());
         } catch (e) {
             console.error(`Collector endpoint error: ${e}`);
         }

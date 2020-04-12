@@ -299,7 +299,7 @@ export function instrumentEntryPoints() {
         tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
 
         data.params = {
-            _traceID: tracer.currentTrace,
+            _traceId: tracer.currentTrace,
             _parentContext: spanContext,
             _params: data.params,
             _action: data.action
@@ -307,9 +307,14 @@ export function instrumentEntryPoints() {
 
         data.action = function (params) {
             const { get } = require('lodash');
+            const { globalTracer } = require('opentracing');
 
             const tracer = globalTracer() as ContextualTracer;
-            tracer.currentContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext')) as FoxxContext;
+            const traceId = get(params, '_traceId');
+            const rootContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext'));
+
+            clearTraceContext();
+            setTraceContext(traceId, rootContext);
 
             return get(params, '_action').call(this, get(params, '_params'));
         };

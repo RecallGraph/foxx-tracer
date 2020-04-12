@@ -234,15 +234,19 @@ function instrumentEntryPoints() {
         const spanContext = {};
         tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
         data.params = {
-            _traceID: tracer.currentTrace,
+            _traceId: tracer.currentTrace,
             _parentContext: spanContext,
             _params: data.params,
             _action: data.action
         };
         data.action = function (params) {
             const { get } = require('lodash');
-            const tracer = opentracing_1.globalTracer();
-            tracer.currentContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, get(params, '_parentContext'));
+            const { globalTracer } = require('opentracing');
+            const tracer = globalTracer();
+            const traceId = get(params, '_traceId');
+            const rootContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, get(params, '_parentContext'));
+            clearTraceContext();
+            setTraceContext(traceId, rootContext);
             return get(params, '_action').call(this, get(params, '_params'));
         };
         return et.call(_arangodb_1.db, data);
