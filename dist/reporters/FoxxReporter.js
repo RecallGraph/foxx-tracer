@@ -6,7 +6,7 @@ class FoxxReporter {
             module.context.dependencies.traceCollector.recordSpans(traces.flat());
         }
         catch (e) {
-            console.error(e);
+            console.error(`Collector endpoint error: ${e}`);
         }
     }
 }
