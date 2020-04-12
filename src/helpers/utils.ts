@@ -270,6 +270,18 @@ export function initTracer() {
         configurable: false
     });
 
+    Object.defineProperty(gTracer, 'currentTrace', {
+        get() {
+            return tracer.currentTrace;
+        },
+
+        set(traceId: string): void {
+            tracer.currentTrace = traceId;
+        },
+        enumerable: true,
+        configurable: false
+    });
+
     Object.defineProperty(gTracer, 'reporter', {
         value: tracer.reporter,
         writable: false,

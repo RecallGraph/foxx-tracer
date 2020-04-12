@@ -212,6 +212,16 @@ function initTracer() {
         enumerable: true,
         configurable: false
     });
+    Object.defineProperty(gTracer, 'currentTrace', {
+        get() {
+            return tracer.currentTrace;
+        },
+        set(traceId) {
+            tracer.currentTrace = traceId;
+        },
+        enumerable: true,
+        configurable: false
+    });
     Object.defineProperty(gTracer, 'reporter', {
         value: tracer.reporter,
         writable: false,
