@@ -171,7 +171,6 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
     if (traceHeaders[PARENT_SPAN_ID] && !traceHeaders[TRACE_ID]) {
         throw new Error('Parent span received without associated trace ID.');
     }
-    console.log(traceHeaders);
 
     return traceHeaders;
 }
@@ -202,10 +201,8 @@ function setTraceContextFromHeaders(headers: TraceHeaders) {
 
     const traceId = headers[TRACE_ID] || FoxxSpan.generateUUID();
     headers[TRACE_ID] = traceId;
-    console.log(headers);
 
     const rootContext = tracer.extract(FORMAT_HTTP_HEADERS, headers);
-
     setTraceContext(traceId, rootContext);
 }
 
@@ -220,8 +217,6 @@ function setTraceContext(traceID?: string, context?: SpanContext) {
 
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
-
-    console.log({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 
 function clearTraceContext() {

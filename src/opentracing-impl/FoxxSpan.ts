@@ -37,7 +37,6 @@ export class FoxxSpan extends Span {
     }
 
     initContext(traceId: string) {
-        console.log(traceId);
         const parent = this.getParent();
         traceId = traceId || (parent ? parent.toTraceId() : FoxxSpan.generateUUID());
 
