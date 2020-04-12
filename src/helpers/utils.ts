@@ -2,6 +2,7 @@ import Endpoint = Foxx.Endpoint;
 import Transaction = ArangoDB.Transaction;
 import { AlternativesSchema, ArraySchema, BooleanSchema, ObjectSchema, StringSchema } from 'joi';
 import {
+    FORMAT_HTTP_HEADERS,
     FORMAT_TEXT_MAP,
     globalTracer,
     initGlobalTracer,
@@ -174,11 +175,36 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
     return traceHeaders;
 }
 
-export function getTraceDirectiveFromHeaders(headers: TraceHeaders): boolean | null {
-    const { FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
-    let doTrace = [FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID].find(key => !isNil(headers[key]));
+export function setTrace(headers: TraceHeaders): void {
+    clearTraceContext();
 
-    return isNil(doTrace) ? null : !!doTrace;
+    const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
+    const forceSample = headers[FORCE_SAMPLE];
+
+    if (forceSample === false) {
+        return;
+    } else if (forceSample === true) {
+        setTraceContextFromHeaders(headers);
+    } else {
+        const samplingProbability = module.context.configuration['sampling-probability'];
+        const doTrace = Math.random() < samplingProbability;
+
+        if (doTrace) {
+            setTraceContextFromHeaders(headers);
+        }
+    }
+}
+
+function setTraceContextFromHeaders(headers: TraceHeaders) {
+    const tracer = globalTracer() as ContextualTracer;
+    const { TRACE_ID } = TRACE_HEADER_KEYS;
+
+    const traceId = headers[TRACE_ID] || FoxxSpan.generateUUID();
+    headers[TRACE_ID] = traceId;
+
+    const rootContext = tracer.extract(FORMAT_HTTP_HEADERS, headers);
+
+    setTraceContext(traceId, rootContext);
 }
 
 export function getParent(refs: Reference[]): SpanContext {
@@ -187,49 +213,33 @@ export function getParent(refs: Reference[]): SpanContext {
     return parent ? parent.referencedContext() : null;
 }
 
-export function setTraceContext(traceID?: string, context?: SpanContext) {
-    if (!traceID && context) {
-        traceID = context.toTraceId();
-    }
-
+function setTraceContext(traceID?: string, context?: SpanContext) {
     const tracer = globalTracer() as ContextualTracer;
+
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
 }
 
-export function startSpan(name: string, implicitParent: boolean = true, options: SpanOptions = {}, doTrace?: boolean): Span {
+function clearTraceContext() {
     const tracer = globalTracer() as ContextualTracer;
 
-    if (!module.context.dependencies.traceCollector) {
-        doTrace = false;
-    } else {
-        let co = options.childOf || getParent(options.references);
-        if (!co && implicitParent && tracer.currentContext && tracer.currentContext.toSpanId()) {
-            co = options.childOf = tracer.currentContext;
+    tracer.currentContext = null;
+    tracer.currentTrace = null;
+}
+
+export function startSpan(name: string, options: SpanOptions = {}): Span {
+    const tracer = globalTracer() as ContextualTracer;
+
+    if (tracer.currentTrace) {
+        const co = options.childOf || getParent(options.references);
+        if (!co && tracer.currentContext) {
+            options.childOf = tracer.currentContext;
         }
 
-        if (isNil(doTrace)) {
-            if (co) {
-                doTrace = co instanceof FoxxContext || co instanceof FoxxSpan;
-            } else if (tracer.currentTrace) {
-                doTrace = true;
-            } else {
-                const samplingProbability = module.context.configuration['sampling-probability'];
-
-                doTrace = Math.random() < samplingProbability;
-            }
-        }
+        return tracer.startSpan(name, options);
     }
 
-    let span;
-    if (doTrace) {
-        span = tracer.startSpan(name, options);
-    } else {
-        span = noopTracer.startSpan(name, options);
-        tracer.currentContext = span;
-    }
-
-    return span;
+    return noopTracer.startSpan(name, options);
 }
 
 export function reportSpan(spanData: SpanData) {
@@ -274,8 +284,11 @@ export function instrumentEntryPoints() {
     const et = db._executeTransaction;
 
     db._executeTransaction = function (data: Transaction) {
-        const spanContext = tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, {});
+        const spanContext = {};
+        tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
+
         data.params = {
+            _traceID: tracer.currentTrace,
             _parentContext: spanContext,
             _params: data.params,
             _action: data.action
@@ -315,14 +328,49 @@ export function instrumentEntryPoints() {
     }
 }
 
-export function attachSpan(fn: Function | FunctionConstructor, operation: string, implicitParent: boolean = true,
-                           options: SpanOptions = {}, forceTrace: boolean,
-                           onSuccess?: (result: any, span: Span) => void,
-                           onError?: (err: Error, span: Span) => void) {
+function getParams(func: Function) {
+    // String representaation of the function code
+    let str = func.toString();
+
+    // Remove comments of the form /* ... */
+    // Removing comments of the form //
+    // Remove body of the function { ... }
+    // removing '=>' if func is arrow function
+    str = str.replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\/\/(.)*/g, '')
+        .replace(/{[\s\S]*}/, '')
+        .replace(/=>/g, '')
+        .trim();
+
+    // Start parameter names after first '('
+    const start = str.indexOf("(") + 1;
+
+    // End parameter names is just before last ')'
+    const end = str.length - 1;
+    const result = str.substring(start, end).split(", ");
+    const params = [];
+
+    result.forEach(element => {
+        // Removing any default value
+        element = element.replace(/=[\s\S]*/g, '').trim();
+        if (element.length > 0) {
+            params.push(element);
+        }
+    });
+
+    return params;
+}
+
+export function attachSpan(
+    fn: Function | FunctionConstructor, operation: string, options: SpanOptions = {},
+    onSuccess?: (result: any, span: Span) => void, onError?: (err: Error, span: Span) => void
+) {
     return function () {
+        const params = getParams(fn);
         defaultsDeep(options, { tags: {} });
-        options.tags.args = omitBy(arguments, isNil);
-        const span = startSpan(operation, implicitParent, options, forceTrace);
+        options.tags.args = mapKeys(omitBy(arguments, isNil), (v, k) => params[k]);
+
+        const span = startSpan(operation, options);
         try {
             let result;
             if (new.target) {

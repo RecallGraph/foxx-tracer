@@ -87,8 +87,6 @@ export class FoxxTracer extends ContextualTracer {
             c.span_id = span.toSpanId();
             c.trace_id = span.toTraceId();
             c.baggage = span.baggage();
-        } else {
-            throw new Error('NOT YET IMPLEMENTED');
         }
     }
 

@@ -135,58 +135,58 @@ function parseTraceHeaders(headers) {
     return traceHeaders;
 }
 exports.parseTraceHeaders = parseTraceHeaders;
-function getTraceDirectiveFromHeaders(headers) {
-    const { FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
-    let doTrace = [FORCE_SAMPLE, PARENT_SPAN_ID, TRACE_ID].find(key => !lodash_1.isNil(headers[key]));
-    return lodash_1.isNil(doTrace) ? null : !!doTrace;
+function setTrace(headers) {
+    clearTraceContext();
+    const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
+    const forceSample = headers[FORCE_SAMPLE];
+    if (forceSample === false) {
+        return;
+    }
+    else if (forceSample === true) {
+        setTraceContextFromHeaders(headers);
+    }
+    else {
+        const samplingProbability = module.context.configuration['sampling-probability'];
+        const doTrace = Math.random() < samplingProbability;
+        if (doTrace) {
+            setTraceContextFromHeaders(headers);
+        }
+    }
 }
-exports.getTraceDirectiveFromHeaders = getTraceDirectiveFromHeaders;
+exports.setTrace = setTrace;
+function setTraceContextFromHeaders(headers) {
+    const tracer = opentracing_1.globalTracer();
+    const { TRACE_ID } = TRACE_HEADER_KEYS;
+    const traceId = headers[TRACE_ID] || __1.FoxxSpan.generateUUID();
+    headers[TRACE_ID] = traceId;
+    const rootContext = tracer.extract(opentracing_1.FORMAT_HTTP_HEADERS, headers);
+    setTraceContext(traceId, rootContext);
+}
 function getParent(refs) {
     const parent = refs ? refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF) : null;
     return parent ? parent.referencedContext() : null;
 }
 exports.getParent = getParent;
 function setTraceContext(traceID, context) {
-    if (!traceID && context) {
-        traceID = context.toTraceId();
-    }
     const tracer = opentracing_1.globalTracer();
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
 }
-exports.setTraceContext = setTraceContext;
-function startSpan(name, implicitParent = true, options = {}, doTrace) {
+function clearTraceContext() {
     const tracer = opentracing_1.globalTracer();
-    if (!module.context.dependencies.traceCollector) {
-        doTrace = false;
-    }
-    else {
-        let co = options.childOf || getParent(options.references);
-        if (!co && implicitParent && tracer.currentContext && tracer.currentContext.toSpanId()) {
-            co = options.childOf = tracer.currentContext;
+    tracer.currentContext = null;
+    tracer.currentTrace = null;
+}
+function startSpan(name, options = {}) {
+    const tracer = opentracing_1.globalTracer();
+    if (tracer.currentTrace) {
+        const co = options.childOf || getParent(options.references);
+        if (!co && tracer.currentContext) {
+            options.childOf = tracer.currentContext;
         }
-        if (lodash_1.isNil(doTrace)) {
-            if (co) {
-                doTrace = co instanceof __1.FoxxContext || co instanceof __1.FoxxSpan;
-            }
-            else if (tracer.currentTrace) {
-                doTrace = true;
-            }
-            else {
-                const samplingProbability = module.context.configuration['sampling-probability'];
-                doTrace = Math.random() < samplingProbability;
-            }
-        }
+        return tracer.startSpan(name, options);
     }
-    let span;
-    if (doTrace) {
-        span = tracer.startSpan(name, options);
-    }
-    else {
-        span = noopTracer.startSpan(name, options);
-        tracer.currentContext = span;
-    }
-    return span;
+    return noopTracer.startSpan(name, options);
 }
 exports.startSpan = startSpan;
 function reportSpan(spanData) {
@@ -221,8 +221,10 @@ function instrumentEntryPoints() {
     const tracer = opentracing_1.globalTracer();
     const et = _arangodb_1.db._executeTransaction;
     _arangodb_1.db._executeTransaction = function (data) {
-        const spanContext = tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, {});
+        const spanContext = {};
+        tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
         data.params = {
+            _traceID: tracer.currentTrace,
             _parentContext: spanContext,
             _params: data.params,
             _action: data.action
@@ -253,11 +255,39 @@ function instrumentEntryPoints() {
     };
 }
 exports.instrumentEntryPoints = instrumentEntryPoints;
-function attachSpan(fn, operation, implicitParent = true, options = {}, forceTrace, onSuccess, onError) {
+function getParams(func) {
+    // String representaation of the function code
+    let str = func.toString();
+    // Remove comments of the form /* ... */
+    // Removing comments of the form //
+    // Remove body of the function { ... }
+    // removing '=>' if func is arrow function
+    str = str.replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\/\/(.)*/g, '')
+        .replace(/{[\s\S]*}/, '')
+        .replace(/=>/g, '')
+        .trim();
+    // Start parameter names after first '('
+    const start = str.indexOf("(") + 1;
+    // End parameter names is just before last ')'
+    const end = str.length - 1;
+    const result = str.substring(start, end).split(", ");
+    const params = [];
+    result.forEach(element => {
+        // Removing any default value
+        element = element.replace(/=[\s\S]*/g, '').trim();
+        if (element.length > 0) {
+            params.push(element);
+        }
+    });
+    return params;
+}
+function attachSpan(fn, operation, options = {}, onSuccess, onError) {
     return function () {
+        const params = getParams(fn);
         lodash_1.defaultsDeep(options, { tags: {} });
-        options.tags.args = lodash_1.omitBy(arguments, lodash_1.isNil);
-        const span = startSpan(operation, implicitParent, options, forceTrace);
+        options.tags.args = lodash_1.mapKeys(lodash_1.omitBy(arguments, lodash_1.isNil), (v, k) => params[k]);
+        const span = startSpan(operation, options);
         try {
             let result;
             if (new.target) {
