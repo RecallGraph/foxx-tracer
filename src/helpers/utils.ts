@@ -171,6 +171,7 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
     if (traceHeaders[PARENT_SPAN_ID] && !traceHeaders[TRACE_ID]) {
         throw new Error('Parent span received without associated trace ID.');
     }
+    console.log(traceHeaders);
 
     return traceHeaders;
 }

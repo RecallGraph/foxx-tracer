@@ -132,6 +132,7 @@ function parseTraceHeaders(headers) {
     if (traceHeaders[PARENT_SPAN_ID] && !traceHeaders[TRACE_ID]) {
         throw new Error('Parent span received without associated trace ID.');
     }
+    console.log(traceHeaders);
     return traceHeaders;
 }
 exports.parseTraceHeaders = parseTraceHeaders;
