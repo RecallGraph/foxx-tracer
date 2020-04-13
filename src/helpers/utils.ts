@@ -1,5 +1,6 @@
 import Endpoint = Foxx.Endpoint;
 import Transaction = ArangoDB.Transaction;
+import Query = ArangoDB.Query;
 import { AlternativesSchema, ArraySchema, BooleanSchema, ObjectSchema, StringSchema } from 'joi';
 import {
     FORMAT_HTTP_HEADERS,
@@ -16,7 +17,7 @@ import {
 import { cloneDeep, get, mapKeys } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
-import { ERROR } from "opentracing/lib/ext/tags";
+import { COMPONENT, ERROR } from "opentracing/lib/ext/tags";
 import { FoxxReporter } from "../reporters";
 import { ContextualTracer } from "../opentracing-impl/FoxxTracer";
 import SpanContext from "opentracing/lib/span_context";
@@ -389,4 +390,24 @@ export function attachSpan(
             }
         }
     }
+}
+
+export function instrumentedQuery(query: Query, operation: string) {
+    const span = startSpan(operation, {
+        tags: {
+            [COMPONENT]: 'query',
+            query: query.query,
+            bindVars: query.bindVars,
+            options: query.options
+        }
+    });
+    const cursor = db._query(query)
+
+    span.log(cursor.getExtra())
+    span.finish()
+
+    const results = cursor.toArray()
+    cursor.dispose()
+
+    return results;
 }

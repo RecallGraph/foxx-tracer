@@ -313,4 +313,21 @@ function attachSpan(fn, operation, options = {}, onSuccess, onError) {
     };
 }
 exports.attachSpan = attachSpan;
+function instrumentedQuery(query, operation) {
+    const span = startSpan(operation, {
+        tags: {
+            [tags_1.COMPONENT]: 'query',
+            query: query.query,
+            bindVars: query.bindVars,
+            options: query.options
+        }
+    });
+    const cursor = _arangodb_1.db._query(query);
+    span.log(cursor.getExtra());
+    span.finish();
+    const results = cursor.toArray();
+    cursor.dispose();
+    return results;
+}
+exports.instrumentedQuery = instrumentedQuery;
 //# sourceMappingURL=utils.js.map
