@@ -236,6 +236,8 @@ export function startSpan(name: string, options: SpanOptions = {}): Span {
 
     if (tracer.currentTrace) {
         const co = options.childOf || getParent(options.references);
+        console.debug(co);
+
         if (!co && tracer.currentContext) {
             options.childOf = tracer.currentContext;
         }
