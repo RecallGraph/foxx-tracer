@@ -232,6 +232,7 @@ function clearTraceContext() {
 
 export function startSpan(name: string, options: SpanOptions = {}): Span {
     const tracer = globalTracer() as ContextualTracer;
+    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 
     if (tracer.currentTrace) {
         const co = options.childOf || getParent(options.references);

@@ -182,6 +182,7 @@ function clearTraceContext() {
 }
 function startSpan(name, options = {}) {
     const tracer = opentracing_1.globalTracer();
+    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
     if (tracer.currentTrace) {
         const co = options.childOf || getParent(options.references);
         if (!co && tracer.currentContext) {
