@@ -217,6 +217,8 @@ export function setTraceContext(traceID?: string, context?: SpanContext) {
 
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
+
+    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 
 function clearTraceContext() {
@@ -224,6 +226,8 @@ function clearTraceContext() {
 
     tracer.currentContext = null;
     tracer.currentTrace = null;
+
+    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 
 export function startSpan(name: string, options: SpanOptions = {}): Span {

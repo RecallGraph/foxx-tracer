@@ -171,12 +171,14 @@ function setTraceContext(traceID, context) {
     const tracer = opentracing_1.globalTracer();
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
+    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 exports.setTraceContext = setTraceContext;
 function clearTraceContext() {
     const tracer = opentracing_1.globalTracer();
     tracer.currentContext = null;
     tracer.currentTrace = null;
+    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 function startSpan(name, options = {}) {
     const tracer = opentracing_1.globalTracer();
