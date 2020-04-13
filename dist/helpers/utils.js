@@ -185,7 +185,7 @@ function startSpan(name, options = {}) {
     console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
     if (tracer.currentTrace) {
         const co = options.childOf || getParent(options.references);
-        console.debug(co);
+        console.debug(options);
         if (!co && tracer.currentContext) {
             options.childOf = tracer.currentContext;
         }
