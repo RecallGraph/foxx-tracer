@@ -25,6 +25,7 @@ function trace(req, res, next) {
         span.finish();
         throw err;
     })();
+    utils_1.clearTraceContext();
 }
 exports.default = trace;
 //# sourceMappingURL=middleware.js.map

@@ -176,8 +176,6 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
 }
 
 export function setTrace(headers: TraceHeaders): void {
-    clearTraceContext();
-
     const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
     const forceSample = headers[FORCE_SAMPLE];
 
@@ -219,7 +217,7 @@ export function setTraceContext(traceID?: string, context?: SpanContext) {
     tracer.currentTrace = traceID;
 }
 
-function clearTraceContext() {
+export function clearTraceContext() {
     const tracer = globalTracer() as ContextualTracer;
 
     tracer.currentContext = null;
@@ -314,10 +312,11 @@ export function instrumentEntryPoints() {
             const traceId = get(params, '_traceId');
             const rootContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext'));
 
-            clearTraceContext();
             setTraceContext(traceId, rootContext);
+            const result = get(params, '_action').call(this, get(params, '_params'));
+            clearTraceContext();
 
-            return get(params, '_action').call(this, get(params, '_params'));
+            return result;
         };
 
         return et.call(db, data);
@@ -325,8 +324,11 @@ export function instrumentEntryPoints() {
 
     const rt = tasks.register;
     tasks.register = function (options: TaskOpts) {
-        const spanContext = tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, {});
+        const spanContext = {};
+        tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
+
         options.params = {
+            _traceId: tracer.currentTrace,
             _parentContext: spanContext,
             _params: options.params,
             _cmd: options.command
@@ -334,11 +336,15 @@ export function instrumentEntryPoints() {
 
         options.command = function (params) {
             const { get } = require('lodash');
+            const { globalTracer } = require('opentracing');
 
             const tracer = globalTracer() as ContextualTracer;
-            tracer.currentContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext')) as FoxxContext;
+            const traceId = get(params, '_traceId');
+            const rootContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext'));
 
+            setTraceContext(traceId, rootContext);
             params._cmd(params._params);
+            clearTraceContext();
         };
 
         rt.call(tasks, options);

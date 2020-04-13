@@ -136,7 +136,6 @@ function parseTraceHeaders(headers) {
 }
 exports.parseTraceHeaders = parseTraceHeaders;
 function setTrace(headers) {
-    clearTraceContext();
     const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
     const forceSample = headers[FORCE_SAMPLE];
     if (forceSample === false) {
@@ -178,6 +177,7 @@ function clearTraceContext() {
     tracer.currentContext = null;
     tracer.currentTrace = null;
 }
+exports.clearTraceContext = clearTraceContext;
 function startSpan(name, options = {}) {
     const tracer = opentracing_1.globalTracer();
     if (tracer.currentTrace) {
@@ -246,25 +246,32 @@ function instrumentEntryPoints() {
             const tracer = globalTracer();
             const traceId = get(params, '_traceId');
             const rootContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, get(params, '_parentContext'));
-            clearTraceContext();
             setTraceContext(traceId, rootContext);
-            return get(params, '_action').call(this, get(params, '_params'));
+            const result = get(params, '_action').call(this, get(params, '_params'));
+            clearTraceContext();
+            return result;
         };
         return et.call(_arangodb_1.db, data);
     };
     const rt = tasks.register;
     tasks.register = function (options) {
-        const spanContext = tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, {});
+        const spanContext = {};
+        tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
         options.params = {
+            _traceId: tracer.currentTrace,
             _parentContext: spanContext,
             _params: options.params,
             _cmd: options.command
         };
         options.command = function (params) {
             const { get } = require('lodash');
-            const tracer = opentracing_1.globalTracer();
-            tracer.currentContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, get(params, '_parentContext'));
+            const { globalTracer } = require('opentracing');
+            const tracer = globalTracer();
+            const traceId = get(params, '_traceId');
+            const rootContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, get(params, '_parentContext'));
+            setTraceContext(traceId, rootContext);
             params._cmd(params._params);
+            clearTraceContext();
         };
         rt.call(tasks, options);
     };

@@ -1,7 +1,7 @@
 import Request = Foxx.Request;
 import Response = Foxx.Response;
 import NextFunction = Foxx.NextFunction;
-import { attachSpan, parseTraceHeaders, setTrace, } from "./utils";
+import { attachSpan, clearTraceContext, parseTraceHeaders, setTrace } from "./utils";
 import { HTTP_METHOD, HTTP_STATUS_CODE, SPAN_KIND } from "opentracing/lib/ext/tags";
 
 export default function trace(req: Request, res: Response, next: NextFunction) {
@@ -30,4 +30,6 @@ export default function trace(req: Request, res: Response, next: NextFunction) {
 
             throw err;
         })();
+
+    clearTraceContext();
 }
