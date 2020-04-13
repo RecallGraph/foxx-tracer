@@ -164,6 +164,7 @@ function setTraceContextFromHeaders(headers) {
 }
 function getParent(refs) {
     const parent = refs ? refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF) : null;
+    console.debug(parent);
     return parent ? parent.referencedContext() : null;
 }
 exports.getParent = getParent;
@@ -171,21 +172,18 @@ function setTraceContext(traceID, context) {
     const tracer = opentracing_1.globalTracer();
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
-    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 exports.setTraceContext = setTraceContext;
 function clearTraceContext() {
     const tracer = opentracing_1.globalTracer();
     tracer.currentContext = null;
     tracer.currentTrace = null;
-    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 function startSpan(name, options = {}) {
     const tracer = opentracing_1.globalTracer();
-    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
     if (tracer.currentTrace) {
         const co = options.childOf || getParent(options.references);
-        console.debug(options);
+        console.debug(co);
         if (!co && tracer.currentContext) {
             options.childOf = tracer.currentContext;
         }

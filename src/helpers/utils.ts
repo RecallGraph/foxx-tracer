@@ -208,6 +208,7 @@ function setTraceContextFromHeaders(headers: TraceHeaders) {
 
 export function getParent(refs: Reference[]): SpanContext {
     const parent = refs ? refs.find(ref => ref.type() === REFERENCE_CHILD_OF) : null;
+    console.debug(parent);
 
     return parent ? parent.referencedContext() : null;
 }
@@ -217,8 +218,6 @@ export function setTraceContext(traceID?: string, context?: SpanContext) {
 
     tracer.currentContext = context;
     tracer.currentTrace = traceID;
-
-    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 
 function clearTraceContext() {
@@ -226,17 +225,14 @@ function clearTraceContext() {
 
     tracer.currentContext = null;
     tracer.currentTrace = null;
-
-    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 }
 
 export function startSpan(name: string, options: SpanOptions = {}): Span {
     const tracer = globalTracer() as ContextualTracer;
-    console.debug({ trace: tracer.currentTrace, context: tracer.currentContext });
 
     if (tracer.currentTrace) {
         const co = options.childOf || getParent(options.references);
-        console.debug(options);
+        console.debug(co);
 
         if (!co && tracer.currentContext) {
             options.childOf = tracer.currentContext;
