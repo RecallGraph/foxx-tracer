@@ -13,7 +13,7 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { get, mapKeys } from 'lodash';
+import { cloneDeep, get, mapKeys } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -351,7 +351,8 @@ export function attachSpan(
     onSuccess?: (result: any, span: Span) => void, onError?: (err: Error, span: Span) => void
 ) {
     return function () {
-        const span = startSpan(operation, options);
+        const optsCopy = cloneDeep(options);
+        const span = startSpan(operation, optsCopy);
 
         try {
             let result;

@@ -273,7 +273,8 @@ function instrumentEntryPoints() {
 exports.instrumentEntryPoints = instrumentEntryPoints;
 function attachSpan(fn, operation, options = {}, onSuccess, onError) {
     return function () {
-        const span = startSpan(operation, options);
+        const optsCopy = lodash_1.cloneDeep(options);
+        const span = startSpan(operation, optsCopy);
         try {
             let result;
             if (new.target) {
