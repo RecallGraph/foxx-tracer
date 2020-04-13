@@ -164,7 +164,6 @@ function setTraceContextFromHeaders(headers) {
 }
 function getParent(refs) {
     const parent = refs ? refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF) : null;
-    console.debug(parent);
     return parent ? parent.referencedContext() : null;
 }
 exports.getParent = getParent;

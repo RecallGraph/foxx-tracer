@@ -208,7 +208,6 @@ function setTraceContextFromHeaders(headers: TraceHeaders) {
 
 export function getParent(refs: Reference[]): SpanContext {
     const parent = refs ? refs.find(ref => ref.type() === REFERENCE_CHILD_OF) : null;
-    console.debug(parent);
 
     return parent ? parent.referencedContext() : null;
 }
