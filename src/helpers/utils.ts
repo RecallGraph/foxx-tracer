@@ -14,10 +14,10 @@ import {
     SpanOptions,
     Tracer
 } from 'opentracing';
-import { cloneDeep, get, mapKeys } from 'lodash';
+import { cloneDeep, defaultsDeep, get, mapKeys } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
-import { COMPONENT, ERROR } from "opentracing/lib/ext/tags";
+import { ERROR } from "opentracing/lib/ext/tags";
 import { FoxxReporter } from "../reporters";
 import { ContextualTracer } from "../opentracing-impl/FoxxTracer";
 import SpanContext from "opentracing/lib/span_context";
@@ -392,15 +392,15 @@ export function attachSpan(
     }
 }
 
-export function instrumentedQuery(query: Query, operation: string) {
-    const span = startSpan(operation, {
+export function instrumentedQuery(query: Query, operation: string, options: SpanOptions = {}) {
+    defaultsDeep(options, {
         tags: {
-            [COMPONENT]: 'query',
             query: query.query,
             bindVars: query.bindVars,
             options: query.options
         }
-    });
+    })
+    const span = startSpan(operation, options);
     const cursor = db._query(query)
 
     span.log(cursor.getExtra())

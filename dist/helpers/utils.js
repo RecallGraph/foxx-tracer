@@ -313,15 +313,15 @@ function attachSpan(fn, operation, options = {}, onSuccess, onError) {
     };
 }
 exports.attachSpan = attachSpan;
-function instrumentedQuery(query, operation) {
-    const span = startSpan(operation, {
+function instrumentedQuery(query, operation, options = {}) {
+    lodash_1.defaultsDeep(options, {
         tags: {
-            [tags_1.COMPONENT]: 'query',
             query: query.query,
             bindVars: query.bindVars,
             options: query.options
         }
     });
+    const span = startSpan(operation, options);
     const cursor = _arangodb_1.db._query(query);
     span.log(cursor.getExtra());
     span.finish();
