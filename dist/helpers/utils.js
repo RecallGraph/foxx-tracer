@@ -7,7 +7,7 @@ const _arangodb_1 = require("@arangodb");
 const tags_1 = require("opentracing/lib/ext/tags");
 const reporters_1 = require("../reporters");
 const joi = require('joi');
-// const tasks = require('@arangodb/tasks');
+const tasks = require('@arangodb/tasks');
 const noopTracer = new opentracing_1.Tracer();
 exports.spanIdSchema = joi
     .string()
@@ -228,69 +228,57 @@ function initTracer() {
     });
 }
 exports.initTracer = initTracer;
-/*
-interface TaskOpts {
-  command: Function;
-  params?: any;
-}
-*/
-function instrumentEntryPoints() {
+function instrumentedTransaction(data) {
     const tracer = opentracing_1.globalTracer();
-    const et = _arangodb_1.db._executeTransaction;
-    _arangodb_1.db._executeTransaction = function (data) {
-        const spanContext = {};
+    let spanContext = null;
+    if (tracer.currentContext) {
+        spanContext = {};
         tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
-        data.params = {
-            _traceId: tracer.currentTrace,
-            _parentContext: spanContext,
-            _params: data.params,
-            _action: data.action
-        };
-        data.action = function (params) {
-            const { get } = require('lodash');
-            const { globalTracer } = require('opentracing');
-            const tracer = globalTracer();
-            const traceId = get(params, '_traceId');
-            const rootContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, get(params, '_parentContext'));
-            setTraceContext(traceId, rootContext);
-            const result = get(params, '_action').call(this, get(params, '_params'));
-            clearTraceContext();
-            return result;
-        };
-        return et.call(_arangodb_1.db, data);
+    }
+    const wrappedData = lodash_1.omit(data, 'action', 'params');
+    wrappedData.params = {
+        _traceId: tracer.currentTrace,
+        _parentContext: spanContext,
+        _params: data.params,
+        _action: data.action
     };
-    /*
-    const rt = tasks.register;
-    tasks.register = function (options: TaskOpts) {
-      const spanContext = {};
-      tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
-  
-      options.params = {
+    wrappedData.action = function (params) {
+        const { globalTracer } = require('opentracing');
+        const tracer = globalTracer();
+        const rootContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, params._parentContext);
+        setTraceContext(params._traceId, rootContext);
+        const result = params._action(params._params);
+        clearTraceContext();
+        return result;
+    };
+    return _arangodb_1.db._executeTransaction(wrappedData);
+}
+exports.instrumentedTransaction = instrumentedTransaction;
+function instrumentedTask(options) {
+    const tracer = opentracing_1.globalTracer();
+    let spanContext = null;
+    if (tracer.currentContext) {
+        spanContext = {};
+        tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
+    }
+    const wrappedOptions = lodash_1.omit(options, 'command', 'params');
+    wrappedOptions.params = {
         _traceId: tracer.currentTrace,
         _parentContext: spanContext,
         _params: options.params,
-        _cmd: options.command
-      };
-  
-      options.command = function (params) {
-        const { get } = require('lodash');
+        _command: options.command
+    };
+    wrappedOptions.command = function (params) {
         const { globalTracer } = require('opentracing');
-  
-        const tracer = globalTracer() as ContextualTracer;
-        const traceId = get(params, '_traceId');
-        const rootContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext'));
-  
-        setTraceContext(traceId, rootContext);
-        params._cmd(params._params);
+        const tracer = globalTracer();
+        const rootContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, params._parentContext);
+        setTraceContext(params._traceId, rootContext);
+        params._command(params._params);
         clearTraceContext();
-      };
-  
-      console.debug(options);
-      rt.call(tasks, options);
-    }
-    */
+    };
+    tasks.register(wrappedOptions);
 }
-exports.instrumentEntryPoints = instrumentEntryPoints;
+exports.instrumentedTask = instrumentedTask;
 function attachSpan(fn, operation, options = {}, onSuccess, onError) {
     return function () {
         const optsCopy = lodash_1.cloneDeep(options);

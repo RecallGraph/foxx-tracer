@@ -14,7 +14,7 @@ import {
   SpanOptions,
   Tracer
 } from 'opentracing';
-import { cloneDeep, defaultsDeep, get, mapKeys } from 'lodash';
+import { cloneDeep, defaultsDeep, get, mapKeys, omit } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -23,7 +23,7 @@ import { ContextualTracer } from "../opentracing-impl/FoxxTracer";
 import SpanContext from "opentracing/lib/span_context";
 
 const joi = require('joi');
-// const tasks = require('@arangodb/tasks');
+const tasks = require('@arangodb/tasks');
 
 const noopTracer = new Tracer();
 
@@ -285,76 +285,85 @@ export function initTracer() {
   });
 }
 
-/*
 interface TaskOpts {
   command: Function;
   params?: any;
 }
-*/
 
-export function instrumentEntryPoints() {
+interface InstrumentedOpts {
+  _traceId: string;
+  _parentContext: object;
+  _params: object;
+}
+
+interface TxnParams extends InstrumentedOpts {
+  _action: (params: object | undefined) => any;
+}
+
+interface TaskParams extends InstrumentedOpts {
+  _command: (params: object | undefined) => void;
+}
+
+export function instrumentedTransaction(data: Transaction) {
   const tracer = globalTracer() as ContextualTracer;
 
-  const et = db._executeTransaction;
-  db._executeTransaction = function (data: Transaction) {
-    const spanContext = {};
+  let spanContext = null;
+  if (tracer.currentContext) {
+    spanContext = {};
     tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
-
-    data.params = {
-      _traceId: tracer.currentTrace,
-      _parentContext: spanContext,
-      _params: data.params,
-      _action: data.action
-    };
-
-    data.action = function (params) {
-      const { get } = require('lodash');
-      const { globalTracer } = require('opentracing');
-
-      const tracer = globalTracer() as ContextualTracer;
-      const traceId = get(params, '_traceId');
-      const rootContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext'));
-
-      setTraceContext(traceId, rootContext);
-      const result = get(params, '_action').call(this, get(params, '_params'));
-      clearTraceContext();
-
-      return result;
-    };
-
-    return et.call(db, data);
-  };
-
-  /*
-  const rt = tasks.register;
-  tasks.register = function (options: TaskOpts) {
-    const spanContext = {};
-    tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
-
-    options.params = {
-      _traceId: tracer.currentTrace,
-      _parentContext: spanContext,
-      _params: options.params,
-      _cmd: options.command
-    };
-
-    options.command = function (params) {
-      const { get } = require('lodash');
-      const { globalTracer } = require('opentracing');
-
-      const tracer = globalTracer() as ContextualTracer;
-      const traceId = get(params, '_traceId');
-      const rootContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext'));
-
-      setTraceContext(traceId, rootContext);
-      params._cmd(params._params);
-      clearTraceContext();
-    };
-
-    console.debug(options);
-    rt.call(tasks, options);
   }
-  */
+
+  const wrappedData = omit(data, 'action', 'params') as Transaction;
+  wrappedData.params = {
+    _traceId: tracer.currentTrace,
+    _parentContext: spanContext,
+    _params: data.params,
+    _action: data.action
+  };
+  wrappedData.action = function (params: TxnParams) {
+    const { globalTracer } = require('opentracing');
+
+    const tracer = globalTracer() as ContextualTracer;
+    const rootContext = tracer.extract(FORMAT_TEXT_MAP, params._parentContext);
+
+    setTraceContext(params._traceId, rootContext);
+    const result = params._action(params._params);
+    clearTraceContext();
+
+    return result;
+  }
+
+  return db._executeTransaction(wrappedData);
+}
+
+export function instrumentedTask(options: TaskOpts) {
+  const tracer = globalTracer() as ContextualTracer;
+
+  let spanContext = null;
+  if (tracer.currentContext) {
+    spanContext = {};
+    tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
+  }
+
+  const wrappedOptions = omit(options, 'command', 'params') as TaskOpts;
+  wrappedOptions.params = {
+    _traceId: tracer.currentTrace,
+    _parentContext: spanContext,
+    _params: options.params,
+    _command: options.command
+  };
+  wrappedOptions.command = function (params: TaskParams) {
+    const { globalTracer } = require('opentracing');
+
+    const tracer = globalTracer() as ContextualTracer;
+    const rootContext = tracer.extract(FORMAT_TEXT_MAP, params._parentContext);
+
+    setTraceContext(params._traceId, rootContext);
+    params._command(params._params);
+    clearTraceContext();
+  }
+
+  tasks.register(wrappedOptions);
 }
 
 export function attachSpan(

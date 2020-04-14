@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const opentracing_1 = require("opentracing");
 const utils_1 = require("../helpers/utils");
 const __1 = require("..");
+const lodash_1 = require("lodash");
 class ContextualTracer extends opentracing_1.Tracer {
 }
 exports.ContextualTracer = ContextualTracer;
@@ -59,7 +60,7 @@ class FoxxTracer extends ContextualTracer {
         return null;
     }
     _inject(span, format, carrier) {
-        if (format === opentracing_1.FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
+        if (format === opentracing_1.FORMAT_TEXT_MAP && lodash_1.isObjectLike(carrier)) {
             const c = carrier;
             c.span_id = span.toSpanId();
             c.trace_id = span.toTraceId();

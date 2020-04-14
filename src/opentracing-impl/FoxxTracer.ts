@@ -2,6 +2,7 @@ import { FORMAT_HTTP_HEADERS, FORMAT_TEXT_MAP, Span, SpanContext, SpanOptions, T
 import Reporter from "../reporters/Reporter";
 import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
 import { Context, FoxxContext, FoxxSpan } from "..";
+import { isObjectLike } from 'lodash';
 
 export abstract class ContextualTracer extends Tracer {
   abstract currentContext: SpanContext;
@@ -83,8 +84,9 @@ export class FoxxTracer extends ContextualTracer {
   }
 
   protected _inject(span: FoxxContext, format: any, carrier: any): void {
-    if ((format as string) === FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
+    if ((format as string) === FORMAT_TEXT_MAP && isObjectLike(carrier)) {
       const c = carrier as Context;
+
       c.span_id = span.toSpanId();
       c.trace_id = span.toTraceId();
       c.baggage = span.baggage();
