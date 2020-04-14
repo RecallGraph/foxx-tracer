@@ -393,14 +393,16 @@ export function attachSpan(
 }
 
 export function instrumentedQuery(query: Query, operation: string, options: SpanOptions = {}) {
-    defaultsDeep(options, {
+    const optsCopy = cloneDeep(options)
+    defaultsDeep(optsCopy, {
         tags: {
             query: query.query,
             bindVars: query.bindVars,
             options: query.options
         }
     })
-    const span = startSpan(operation, options);
+
+    const span = startSpan(operation, optsCopy);
     const cursor = db._query(query)
 
     span.log(cursor.getExtra())

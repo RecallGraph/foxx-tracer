@@ -314,14 +314,15 @@ function attachSpan(fn, operation, options = {}, onSuccess, onError) {
 }
 exports.attachSpan = attachSpan;
 function instrumentedQuery(query, operation, options = {}) {
-    lodash_1.defaultsDeep(options, {
+    const optsCopy = lodash_1.cloneDeep(options);
+    lodash_1.defaultsDeep(optsCopy, {
         tags: {
             query: query.query,
             bindVars: query.bindVars,
             options: query.options
         }
     });
-    const span = startSpan(operation, options);
+    const span = startSpan(operation, optsCopy);
     const cursor = _arangodb_1.db._query(query);
     span.log(cursor.getExtra());
     span.finish();
