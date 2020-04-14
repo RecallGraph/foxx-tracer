@@ -235,6 +235,19 @@ function executeTransaction(data) {
         spanContext = {};
         tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
     }
+    const spanColl = module.context.dependencies.spanColl;
+    if (Array.isArray(data.collections)) {
+        data.collections.push(spanColl);
+    }
+    else if (lodash_1.isString(data.collections.write)) {
+        data.collections.write = [data.collections.write, spanColl];
+    }
+    else if (Array.isArray(data.collections.write)) {
+        data.collections.write.push(spanColl);
+    }
+    else {
+        data.collections.write = spanColl;
+    }
     const wrappedData = lodash_1.omit(data, 'action', 'params');
     wrappedData.params = {
         _traceId: tracer.currentTrace,

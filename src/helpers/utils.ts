@@ -14,7 +14,7 @@ import {
   SpanOptions,
   Tracer
 } from 'opentracing';
-import { cloneDeep, defaultsDeep, get, mapKeys, omit } from 'lodash';
+import { cloneDeep, defaultsDeep, get, isString, mapKeys, omit } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -311,6 +311,17 @@ export function executeTransaction(data: Transaction) {
   if (tracer.currentContext) {
     spanContext = {};
     tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
+  }
+
+  const spanColl = module.context.dependencies.spanColl
+  if (Array.isArray(data.collections)) {
+    data.collections.push(spanColl);
+  } else if (isString(data.collections.write)) {
+    data.collections.write = [data.collections.write, spanColl];
+  } else if (Array.isArray(data.collections.write)) {
+    data.collections.write.push(spanColl);
+  } else {
+    data.collections.write = spanColl;
   }
 
   const wrappedData = omit(data, 'action', 'params') as Transaction;

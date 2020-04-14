@@ -9,7 +9,7 @@ class FoxxReporter {
         const task = tasks.register({
             command: function (spans) {
                 try {
-                    require('module').context.dependencies.traceCollector.recordSpans(spans);
+                    module.context.dependencies.traceCollector.recordSpans(spans);
                 }
                 catch (e) {
                     console.error(`Collector endpoint error: ${e}`);
