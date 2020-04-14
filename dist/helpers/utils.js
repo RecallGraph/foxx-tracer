@@ -228,7 +228,7 @@ function initTracer() {
     });
 }
 exports.initTracer = initTracer;
-function instrumentedTransaction(data) {
+function executeTransaction(data) {
     const tracer = opentracing_1.globalTracer();
     let spanContext = null;
     if (tracer.currentContext) {
@@ -253,8 +253,8 @@ function instrumentedTransaction(data) {
     };
     return _arangodb_1.db._executeTransaction(wrappedData);
 }
-exports.instrumentedTransaction = instrumentedTransaction;
-function instrumentedTask(options) {
+exports.executeTransaction = executeTransaction;
+function executeTask(options) {
     const tracer = opentracing_1.globalTracer();
     let spanContext = null;
     if (tracer.currentContext) {
@@ -278,7 +278,7 @@ function instrumentedTask(options) {
     };
     tasks.register(wrappedOptions);
 }
-exports.instrumentedTask = instrumentedTask;
+exports.executeTask = executeTask;
 function attachSpan(fn, operation, options = {}, onSuccess, onError) {
     return function () {
         const optsCopy = lodash_1.cloneDeep(options);

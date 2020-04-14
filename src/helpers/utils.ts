@@ -304,7 +304,7 @@ interface TaskParams extends InstrumentedOpts {
   _command: (params: object | undefined) => void;
 }
 
-export function instrumentedTransaction(data: Transaction) {
+export function executeTransaction(data: Transaction) {
   const tracer = globalTracer() as ContextualTracer;
 
   let spanContext = null;
@@ -336,7 +336,7 @@ export function instrumentedTransaction(data: Transaction) {
   return db._executeTransaction(wrappedData);
 }
 
-export function instrumentedTask(options: TaskOpts) {
+export function executeTask(options: TaskOpts) {
   const tracer = globalTracer() as ContextualTracer;
 
   let spanContext = null;
