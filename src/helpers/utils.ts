@@ -23,7 +23,7 @@ import { ContextualTracer } from "../opentracing-impl/FoxxTracer";
 import SpanContext from "opentracing/lib/span_context";
 
 const joi = require('joi');
-const tasks = require('@arangodb/tasks');
+// const tasks = require('@arangodb/tasks');
 
 const noopTracer = new Tracer();
 
@@ -285,10 +285,12 @@ export function initTracer() {
   });
 }
 
+/*
 interface TaskOpts {
   command: Function;
   params?: any;
 }
+*/
 
 export function instrumentEntryPoints() {
   const tracer = globalTracer() as ContextualTracer;
@@ -323,6 +325,7 @@ export function instrumentEntryPoints() {
     return et.call(db, data);
   };
 
+  /*
   const rt = tasks.register;
   tasks.register = function (options: TaskOpts) {
     const spanContext = {};
@@ -351,6 +354,7 @@ export function instrumentEntryPoints() {
     console.debug(options);
     rt.call(tasks, options);
   }
+  */
 }
 
 export function attachSpan(

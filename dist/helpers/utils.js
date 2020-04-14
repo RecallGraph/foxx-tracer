@@ -7,7 +7,7 @@ const _arangodb_1 = require("@arangodb");
 const tags_1 = require("opentracing/lib/ext/tags");
 const reporters_1 = require("../reporters");
 const joi = require('joi');
-const tasks = require('@arangodb/tasks');
+// const tasks = require('@arangodb/tasks');
 const noopTracer = new opentracing_1.Tracer();
 exports.spanIdSchema = joi
     .string()
@@ -228,6 +228,12 @@ function initTracer() {
     });
 }
 exports.initTracer = initTracer;
+/*
+interface TaskOpts {
+  command: Function;
+  params?: any;
+}
+*/
 function instrumentEntryPoints() {
     const tracer = opentracing_1.globalTracer();
     const et = _arangodb_1.db._executeTransaction;
@@ -253,29 +259,36 @@ function instrumentEntryPoints() {
         };
         return et.call(_arangodb_1.db, data);
     };
+    /*
     const rt = tasks.register;
-    tasks.register = function (options) {
-        const spanContext = {};
-        tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
-        options.params = {
-            _traceId: tracer.currentTrace,
-            _parentContext: spanContext,
-            _params: options.params,
-            _cmd: options.command
-        };
-        options.command = function (params) {
-            const { get } = require('lodash');
-            const { globalTracer } = require('opentracing');
-            const tracer = globalTracer();
-            const traceId = get(params, '_traceId');
-            const rootContext = tracer.extract(opentracing_1.FORMAT_TEXT_MAP, get(params, '_parentContext'));
-            setTraceContext(traceId, rootContext);
-            params._cmd(params._params);
-            clearTraceContext();
-        };
-        console.debug(options);
-        rt.call(tasks, options);
-    };
+    tasks.register = function (options: TaskOpts) {
+      const spanContext = {};
+      tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
+  
+      options.params = {
+        _traceId: tracer.currentTrace,
+        _parentContext: spanContext,
+        _params: options.params,
+        _cmd: options.command
+      };
+  
+      options.command = function (params) {
+        const { get } = require('lodash');
+        const { globalTracer } = require('opentracing');
+  
+        const tracer = globalTracer() as ContextualTracer;
+        const traceId = get(params, '_traceId');
+        const rootContext = tracer.extract(FORMAT_TEXT_MAP, get(params, '_parentContext'));
+  
+        setTraceContext(traceId, rootContext);
+        params._cmd(params._params);
+        clearTraceContext();
+      };
+  
+      console.debug(options);
+      rt.call(tasks, options);
+    }
+    */
 }
 exports.instrumentEntryPoints = instrumentEntryPoints;
 function attachSpan(fn, operation, options = {}, onSuccess, onError) {
