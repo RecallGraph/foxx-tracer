@@ -1,15 +1,23 @@
 import Reporter from './Reporter';
 import SpanData from '../helpers/SpanData';
 
-export default class FoxxReporter implements Reporter {
-    report(traces: [[SpanData]]): void {
-        try {
-            const spans = traces.flat();
-            console.debug(spans);
+const tasks = require('@arangodb/tasks');
 
-            module.context.dependencies.traceCollector.recordSpans(spans);
+export default class FoxxReporter implements Reporter {
+  report(traces: [[SpanData]]): void {
+    const spans = traces.flat();
+    console.debug(spans);
+
+    const task = tasks.register({
+      command: function (spans) {
+        try {
+          module.context.dependencies.traceCollector.recordSpans(spans);
         } catch (e) {
-            console.error(`Collector endpoint error: ${e}`);
+          console.error(`Collector endpoint error: ${e}`);
         }
-    }
+      },
+      params: spans
+    });
+    console.debug(task);
+  }
 }

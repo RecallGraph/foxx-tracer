@@ -46,9 +46,6 @@ class FoxxSpan extends opentracing_1.Span {
             type: ref.type()
         });
     }
-    getParent() {
-        return utils_1.getParent(this._refs);
-    }
     _setOperationName(name) {
         this._spanData.operation = name;
     }
@@ -77,6 +74,9 @@ class FoxxSpan extends opentracing_1.Span {
         this._spanData.finishTimeMs = finishTime || _arangodb_1.time() * 1000;
         utils_1.setTraceContext(this._spanData.context.trace_id, this.getParent());
         utils_1.reportSpan(this._spanData);
+    }
+    getParent() {
+        return utils_1.getParent(this._refs);
     }
 }
 exports.FoxxSpan = FoxxSpan;

@@ -4,111 +4,112 @@ import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
 import { Context, FoxxContext, FoxxSpan } from "..";
 
 export abstract class ContextualTracer extends Tracer {
-    abstract currentContext: SpanContext;
-    abstract reporter: Reporter;
-    abstract currentTrace: string;
+  abstract currentContext: SpanContext;
+  abstract reporter: Reporter;
+  abstract currentTrace: string;
 }
 
 export class FoxxTracer extends ContextualTracer {
-    private readonly _reporter: Reporter;
-    private _currentContext: SpanContext;
+  private readonly _reporter: Reporter;
 
-    private _currentTrace: string;
+  constructor(reporter: Reporter) {
+    super();
 
-    get currentTrace(): string {
-        return this._currentTrace;
-    }
+    this._reporter = reporter
+  }
 
-    set currentTrace(value: string) {
-        this._currentTrace = value;
-    }
+  private _currentContext: SpanContext;
 
-    private static isTraceHeaders(carrier: any): carrier is TraceHeaders {
-        const c = carrier as TraceHeaders;
-        const { TRACE_ID } = TRACE_HEADER_KEYS;
+  get currentContext(): SpanContext {
+    return this._currentContext;
+  }
 
-        return !!c[TRACE_ID];
-    }
+  set currentContext(value: SpanContext) {
+    this._currentContext = value;
+  }
 
-    constructor(reporter: Reporter) {
-        super();
+  private _currentTrace: string;
 
-        this._reporter = reporter
-    }
+  get currentTrace(): string {
+    return this._currentTrace;
+  }
 
-    get currentContext(): SpanContext {
-        return this._currentContext;
-    }
+  set currentTrace(value: string) {
+    this._currentTrace = value;
+  }
 
-    set currentContext(value: SpanContext) {
-        this._currentContext = value;
-    }
+  get reporter(): Reporter {
+    return this._reporter;
+  }
 
-    get reporter(): Reporter {
-        return this._reporter;
-    }
+  private static isTraceHeaders(carrier: any): carrier is TraceHeaders {
+    const c = carrier as TraceHeaders;
+    const { TRACE_ID } = TRACE_HEADER_KEYS;
 
-    private static isContext(carrier: any): carrier is Context {
-        const c = carrier as Context;
+    return !!c[TRACE_ID];
+  }
 
-        return !!c.span_id;
-    }
+  private static isContext(carrier: any): carrier is Context {
+    const c = carrier as Context;
 
-    private static _allocSpan(): FoxxSpan {
-        return new FoxxSpan();
-    }
+    return !!c.span_id;
+  }
 
-    protected _extract(format: any, carrier: any): SpanContext {
-        if ((format as string) === FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
-            const c = carrier as TraceHeaders;
-            const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = TRACE_HEADER_KEYS;
+  private static _allocSpan(): FoxxSpan {
+    return new FoxxSpan();
+  }
 
-            if (c[PARENT_SPAN_ID]) {
-                const spanId = c[PARENT_SPAN_ID];
-                const traceId = c[TRACE_ID];
-                const baggage = c[BAGGAGE];
+  protected _extract(format: any, carrier: any): SpanContext {
+    if ((format as string) === FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
+      const c = carrier as TraceHeaders;
+      const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = TRACE_HEADER_KEYS;
 
-                return new FoxxContext(spanId, traceId, baggage);
-            } else {
-                return null;
-            }
-        } else if ((format as string) === FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
-            const c = carrier as Context;
+      if (c[PARENT_SPAN_ID]) {
+        const spanId = c[PARENT_SPAN_ID];
+        const traceId = c[TRACE_ID];
+        const baggage = c[BAGGAGE];
 
-            return new FoxxContext(c.span_id, c.trace_id, c.baggage);
-        }
-
+        return new FoxxContext(spanId, traceId, baggage);
+      } else {
         return null;
+      }
+    } else if ((format as string) === FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
+      const c = carrier as Context;
+
+      return new FoxxContext(c.span_id, c.trace_id, c.baggage);
     }
 
-    protected _inject(span: FoxxContext, format: any, carrier: any): void {
-        if ((format as string) === FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
-            const c = carrier as Context;
-            c.span_id = span.toSpanId();
-            c.trace_id = span.toTraceId();
-            c.baggage = span.baggage();
-        }
+    return null;
+  }
+
+  protected _inject(span: FoxxContext, format: any, carrier: any): void {
+    if ((format as string) === FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
+      const c = carrier as Context;
+      c.span_id = span.toSpanId();
+      c.trace_id = span.toTraceId();
+      c.baggage = span.baggage();
+    }
+  }
+
+  protected _startSpan(name: string, fields: SpanOptions): Span {
+    const span = FoxxTracer._allocSpan();
+    span.setOperationName(name);
+
+    if (fields.references) {
+      for (const ref of fields.references) {
+        span.addReference(ref);
+      }
+    }
+    if (fields.tags) {
+      for (const tagKey in fields.tags) {
+        span.setTag(tagKey, fields.tags[tagKey])
+      }
     }
 
-    protected _startSpan(name: string, fields: SpanOptions): Span {
-        const span = FoxxTracer._allocSpan();
-        span.setOperationName(name);
+    span.initContext(this._currentTrace);
 
-        if (fields.references) {
-            for (const ref of fields.references) {
-                span.addReference(ref);
-            }
-        }
-        if (fields.tags) {
-            for (const tagKey in fields.tags) {
-                span.setTag(tagKey, fields.tags[tagKey])
-            }
-        }
-
-        span.initContext(this._currentTrace);
-
-        return span;
-    }
+    return span;
+  }
 }
 
 export default FoxxTracer;
