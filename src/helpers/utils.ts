@@ -292,8 +292,8 @@ interface TaskOpts {
 
 export function instrumentEntryPoints() {
   const tracer = globalTracer() as ContextualTracer;
-  const et = db._executeTransaction;
 
+  const et = db._executeTransaction;
   db._executeTransaction = function (data: Transaction) {
     const spanContext = {};
     tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
@@ -348,6 +348,7 @@ export function instrumentEntryPoints() {
       clearTraceContext();
     };
 
+    console.debug(options);
     rt.call(tasks, options);
   }
 }

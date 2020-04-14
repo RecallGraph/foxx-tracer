@@ -273,6 +273,7 @@ function instrumentEntryPoints() {
             params._cmd(params._params);
             clearTraceContext();
         };
+        console.debug(options);
         rt.call(tasks, options);
     };
 }
