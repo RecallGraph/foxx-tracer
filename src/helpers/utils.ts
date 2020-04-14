@@ -313,7 +313,7 @@ export function executeTransaction(data: Transaction) {
     tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
   }
 
-  const spanColl = module.context.dependencies.spanColl
+  const spanColl = module.context.dependencies.traceCollector.spanColl;
   if (Array.isArray(data.collections)) {
     data.collections.push(spanColl);
   } else if (isString(data.collections.write)) {

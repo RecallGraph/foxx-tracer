@@ -235,7 +235,7 @@ function executeTransaction(data) {
         spanContext = {};
         tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
     }
-    const spanColl = module.context.dependencies.spanColl;
+    const spanColl = module.context.dependencies.traceCollector.spanColl;
     if (Array.isArray(data.collections)) {
         data.collections.push(spanColl);
     }
