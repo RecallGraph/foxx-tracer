@@ -27,7 +27,7 @@ export default class DatadogReporter implements Reporter {
         this.ddURL = ddURL;
     }
 
-    report(traces: [[SpanData]]): void {
+    report(traces: SpanData[][]): void {
         const ddTraces = traces.map(trace => trace.map(span => {
             const record: Record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),

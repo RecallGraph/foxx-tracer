@@ -11,7 +11,7 @@ export default class ConsoleReporter implements Reporter {
     sorted: true
   };
 
-  report(traces: [[SpanData]]): void {
+  report(traces: SpanData[][]): void {
     console.log(inspect(traces, ConsoleReporter.FORMAT_OPTIONS));
   }
 }
