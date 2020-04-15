@@ -20,7 +20,7 @@ class FoxxTracer extends ContextualTracer {
     }
     static isContext(carrier) {
         const c = carrier;
-        return !!c.span_id;
+        return !!(c && c.span_id);
     }
     static _allocSpan() {
         return new __1.FoxxSpan();

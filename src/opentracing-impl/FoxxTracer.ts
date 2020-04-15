@@ -31,7 +31,7 @@ export class FoxxTracer extends ContextualTracer {
   private static isContext(carrier: any): carrier is Context {
     const c = carrier as Context;
 
-    return !!c.span_id;
+    return !!(c && c.span_id);
   }
 
   private static _allocSpan(): FoxxSpan {
