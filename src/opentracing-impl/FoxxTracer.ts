@@ -61,8 +61,6 @@ export class FoxxTracer extends ContextualTracer {
   }
 
   push(spanData: SpanData): void {
-    console.debug(this);
-
     const traceId = spanData.context.trace_id;
 
     if (!this._finishedSpans[traceId]) {

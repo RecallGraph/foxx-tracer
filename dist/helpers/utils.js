@@ -223,18 +223,17 @@ function initTracer() {
         configurable: false
     });
     Object.defineProperty(gTracer, 'push', {
-        value: tracer.push,
+        value: tracer.push.bind(tracer),
         writable: false,
         enumerable: true,
         configurable: false
     });
     Object.defineProperty(gTracer, 'flush', {
-        value: tracer.flush,
+        value: tracer.flush.bind(tracer),
         writable: false,
         enumerable: true,
         configurable: false
     });
-    console.debug('Intialized global tracer.');
 }
 exports.initTracer = initTracer;
 function executeTransaction(data) {
