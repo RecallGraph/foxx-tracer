@@ -288,11 +288,13 @@ export function initTracer() {
   });
 
   Object.defineProperty(gTracer, 'flush', {
-    value: tracer.push,
+    value: tracer.flush,
     writable: false,
     enumerable: true,
     configurable: false
   });
+
+  console.debug('Intialized global tracer.');
 }
 
 interface TaskOpts {

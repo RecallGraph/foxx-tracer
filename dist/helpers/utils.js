@@ -229,11 +229,12 @@ function initTracer() {
         configurable: false
     });
     Object.defineProperty(gTracer, 'flush', {
-        value: tracer.push,
+        value: tracer.flush,
         writable: false,
         enumerable: true,
         configurable: false
     });
+    console.debug('Intialized global tracer.');
 }
 exports.initTracer = initTracer;
 function executeTransaction(data) {

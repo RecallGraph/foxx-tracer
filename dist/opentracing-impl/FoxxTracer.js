@@ -37,10 +37,8 @@ class FoxxTracer extends ContextualTracer {
     set currentTrace(value) {
         this._currentTrace = value;
     }
-    get reporter() {
-        return this._reporter;
-    }
     push(spanData) {
+        console.debug(this);
         const traceId = spanData.context.trace_id;
         if (!this._finishedSpans[traceId]) {
             this._finishedSpans[traceId] = [spanData];
