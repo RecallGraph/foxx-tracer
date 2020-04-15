@@ -225,7 +225,9 @@ export function clearTraceContext() {
   tracer.currentContext = null;
   tracer.currentTrace = null;
 
-  tracer.flush(traceId);
+  if (traceId) {
+    tracer.flush(traceId);
+  }
 }
 
 export function startSpan(name: string, options: SpanOptions = {}): Span {

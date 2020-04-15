@@ -177,7 +177,9 @@ function clearTraceContext() {
     const traceId = tracer.currentTrace;
     tracer.currentContext = null;
     tracer.currentTrace = null;
-    tracer.flush(traceId);
+    if (traceId) {
+        tracer.flush(traceId);
+    }
 }
 exports.clearTraceContext = clearTraceContext;
 function startSpan(name, options = {}) {

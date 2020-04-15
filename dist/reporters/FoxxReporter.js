@@ -2,7 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class FoxxReporter {
     report(traces) {
-        module.context.dependencies.traceCollector.recordSpans(traces.flat());
+        try {
+            module.context.dependencies.traceCollector.recordSpans(traces.flat());
+        }
+        catch (e) {
+            console.error(e);
+        }
     }
 }
 exports.default = FoxxReporter;
