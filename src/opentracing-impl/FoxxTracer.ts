@@ -7,11 +7,11 @@ import { isObjectLike } from 'lodash';
 export abstract class ContextualTracer extends Tracer {
   abstract currentContext: SpanContext;
 
+  abstract currentTrace: string;
+
   abstract push(spanData: SpanData);
 
   abstract flush(traceId?: string);
-
-  abstract currentTrace: string;
 }
 
 export class FoxxTracer extends ContextualTracer {

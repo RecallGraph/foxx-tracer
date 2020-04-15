@@ -222,8 +222,14 @@ function initTracer() {
         enumerable: true,
         configurable: false
     });
-    Object.defineProperty(gTracer, 'reporter', {
-        value: tracer.reporter,
+    Object.defineProperty(gTracer, 'push', {
+        value: tracer.push,
+        writable: false,
+        enumerable: true,
+        configurable: false
+    });
+    Object.defineProperty(gTracer, 'flush', {
+        value: tracer.push,
         writable: false,
         enumerable: true,
         configurable: false
