@@ -15,7 +15,7 @@ export abstract class ContextualTracer extends Tracer {
 }
 
 export class FoxxTracer extends ContextualTracer {
-  private _finishedSpans: { [key: string]: SpanData[] };
+  private _finishedSpans: { [key: string]: SpanData[] } = {};
   private _currentContext: SpanContext;
   private _currentTrace: string;
 

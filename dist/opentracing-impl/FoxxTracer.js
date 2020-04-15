@@ -10,6 +10,7 @@ exports.ContextualTracer = ContextualTracer;
 class FoxxTracer extends ContextualTracer {
     constructor(reporter) {
         super();
+        this._finishedSpans = {};
         this._reporter = reporter;
     }
     static isTraceHeaders(carrier) {
