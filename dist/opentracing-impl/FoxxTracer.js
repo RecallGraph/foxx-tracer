@@ -12,6 +12,18 @@ class FoxxTracer extends ContextualTracer {
         super();
         this._reporter = reporter;
     }
+    static isTraceHeaders(carrier) {
+        const c = carrier;
+        const { TRACE_ID } = utils_1.TRACE_HEADER_KEYS;
+        return !!c[TRACE_ID];
+    }
+    static isContext(carrier) {
+        const c = carrier;
+        return !!c.span_id;
+    }
+    static _allocSpan() {
+        return new __1.FoxxSpan();
+    }
     get currentContext() {
         return this._currentContext;
     }
@@ -27,17 +39,24 @@ class FoxxTracer extends ContextualTracer {
     get reporter() {
         return this._reporter;
     }
-    static isTraceHeaders(carrier) {
-        const c = carrier;
-        const { TRACE_ID } = utils_1.TRACE_HEADER_KEYS;
-        return !!c[TRACE_ID];
+    push(spanData) {
+        const traceId = spanData.context.trace_id;
+        if (!this._finishedSpans[traceId]) {
+            this._finishedSpans[traceId] = [spanData];
+        }
+        else {
+            this._finishedSpans[traceId].push(spanData);
+        }
     }
-    static isContext(carrier) {
-        const c = carrier;
-        return !!c.span_id;
-    }
-    static _allocSpan() {
-        return new __1.FoxxSpan();
+    flush(traceId) {
+        if (traceId) {
+            this._reporter.report([this._finishedSpans[traceId]]);
+            delete this._finishedSpans[traceId];
+        }
+        else {
+            this._reporter.report(Object.values(this._finishedSpans));
+            this._finishedSpans = {};
+        }
     }
     _extract(format, carrier) {
         if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {

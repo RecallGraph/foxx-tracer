@@ -14,7 +14,7 @@ import {
   SpanOptions,
   Tracer
 } from 'opentracing';
-import { cloneDeep, defaultsDeep, get, isString, mapKeys, omit } from 'lodash';
+import { cloneDeep, defaultsDeep, get, mapKeys, omit } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -220,9 +220,12 @@ export function setTraceContext(traceID?: string, context?: SpanContext) {
 
 export function clearTraceContext() {
   const tracer = globalTracer() as ContextualTracer;
+  const traceId = tracer.currentTrace;
 
   tracer.currentContext = null;
   tracer.currentTrace = null;
+
+  tracer.flush(traceId);
 }
 
 export function startSpan(name: string, options: SpanOptions = {}): Span {
@@ -244,7 +247,7 @@ export function startSpan(name: string, options: SpanOptions = {}): Span {
 export function reportSpan(spanData: SpanData) {
   const tracer = globalTracer() as ContextualTracer;
 
-  tracer.reporter.report([[spanData]]);
+  tracer.push(spanData);
 }
 
 export function initTracer() {
@@ -311,17 +314,6 @@ export function executeTransaction(data: Transaction) {
   if (tracer.currentContext) {
     spanContext = {};
     tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
-  }
-
-  const spanColl = module.context.dependencies.traceCollector.spanColl;
-  if (Array.isArray(data.collections)) {
-    data.collections.push(spanColl);
-  } else if (isString(data.collections.write)) {
-    data.collections.write = [data.collections.write, spanColl];
-  } else if (Array.isArray(data.collections.write)) {
-    data.collections.write.push(spanColl);
-  } else {
-    data.collections.write = spanColl;
   }
 
   const wrappedData = omit(data, 'action', 'params') as Transaction;

@@ -174,8 +174,10 @@ function setTraceContext(traceID, context) {
 exports.setTraceContext = setTraceContext;
 function clearTraceContext() {
     const tracer = opentracing_1.globalTracer();
+    const traceId = tracer.currentTrace;
     tracer.currentContext = null;
     tracer.currentTrace = null;
+    tracer.flush(traceId);
 }
 exports.clearTraceContext = clearTraceContext;
 function startSpan(name, options = {}) {
@@ -192,7 +194,7 @@ function startSpan(name, options = {}) {
 exports.startSpan = startSpan;
 function reportSpan(spanData) {
     const tracer = opentracing_1.globalTracer();
-    tracer.reporter.report([[spanData]]);
+    tracer.push(spanData);
 }
 exports.reportSpan = reportSpan;
 function initTracer() {
@@ -234,19 +236,6 @@ function executeTransaction(data) {
     if (tracer.currentContext) {
         spanContext = {};
         tracer.inject(tracer.currentContext, opentracing_1.FORMAT_TEXT_MAP, spanContext);
-    }
-    const spanColl = module.context.dependencies.traceCollector.spanColl;
-    if (Array.isArray(data.collections)) {
-        data.collections.push(spanColl);
-    }
-    else if (lodash_1.isString(data.collections.write)) {
-        data.collections.write = [data.collections.write, spanColl];
-    }
-    else if (Array.isArray(data.collections.write)) {
-        data.collections.write.push(spanColl);
-    }
-    else {
-        data.collections.write = spanColl;
     }
     const wrappedData = lodash_1.omit(data, 'action', 'params');
     wrappedData.params = {

@@ -1,47 +1,25 @@
 import { FORMAT_HTTP_HEADERS, FORMAT_TEXT_MAP, Span, SpanContext, SpanOptions, Tracer } from "opentracing";
 import Reporter from "../reporters/Reporter";
 import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
-import { Context, FoxxContext, FoxxSpan } from "..";
+import { Context, FoxxContext, FoxxSpan, SpanData } from "..";
 import { isObjectLike } from 'lodash';
 
 export abstract class ContextualTracer extends Tracer {
   abstract currentContext: SpanContext;
-  abstract reporter: Reporter;
+
+  abstract push(spanData: SpanData);
+
+  abstract flush(traceId?: string);
+
   abstract currentTrace: string;
 }
 
 export class FoxxTracer extends ContextualTracer {
-  private readonly _reporter: Reporter;
-
-  constructor(reporter: Reporter) {
-    super();
-
-    this._reporter = reporter
-  }
-
+  private _finishedSpans: { [key: string]: SpanData[] };
   private _currentContext: SpanContext;
-
-  get currentContext(): SpanContext {
-    return this._currentContext;
-  }
-
-  set currentContext(value: SpanContext) {
-    this._currentContext = value;
-  }
-
   private _currentTrace: string;
 
-  get currentTrace(): string {
-    return this._currentTrace;
-  }
-
-  set currentTrace(value: string) {
-    this._currentTrace = value;
-  }
-
-  get reporter(): Reporter {
-    return this._reporter;
-  }
+  private readonly _reporter: Reporter;
 
   private static isTraceHeaders(carrier: any): carrier is TraceHeaders {
     const c = carrier as TraceHeaders;
@@ -58,6 +36,52 @@ export class FoxxTracer extends ContextualTracer {
 
   private static _allocSpan(): FoxxSpan {
     return new FoxxSpan();
+  }
+
+  constructor(reporter: Reporter) {
+    super();
+
+    this._reporter = reporter
+  }
+
+  get currentContext(): SpanContext {
+    return this._currentContext;
+  }
+
+  set currentContext(value: SpanContext) {
+    this._currentContext = value;
+  }
+
+  get currentTrace(): string {
+    return this._currentTrace;
+  }
+
+  set currentTrace(value: string) {
+    this._currentTrace = value;
+  }
+
+  get reporter(): Reporter {
+    return this._reporter;
+  }
+
+  push(spanData: SpanData): void {
+    const traceId = spanData.context.trace_id;
+
+    if (!this._finishedSpans[traceId]) {
+      this._finishedSpans[traceId] = [spanData];
+    } else {
+      this._finishedSpans[traceId].push(spanData);
+    }
+  }
+
+  flush(traceId?: string) {
+    if (traceId) {
+      this._reporter.report([this._finishedSpans[traceId]]);
+      delete this._finishedSpans[traceId];
+    } else {
+      this._reporter.report(Object.values(this._finishedSpans));
+      this._finishedSpans = {};
+    }
   }
 
   protected _extract(format: any, carrier: any): SpanContext {
