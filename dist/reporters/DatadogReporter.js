@@ -45,7 +45,6 @@ class DatadogReporter {
             }
             return record;
         }));
-        console.log(ddTraces);
         request.put(this.ddURL, {
             json: true,
             body: ddTraces,
