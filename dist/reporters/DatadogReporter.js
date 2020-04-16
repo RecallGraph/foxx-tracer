@@ -12,7 +12,7 @@ class DatadogReporter {
             const record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
                 name: span.operation,
-                resource: (span.tags[tags_1.COMPONENT] ? `${span.tags[tags_1.COMPONENT]}-` : '') + span.operation,
+                resource: span.tags[tags_1.COMPONENT],
                 service: span.tags.service || 'UNKNOWN',
                 span_id: parseInt(span.context.span_id, 16),
                 start: Math.floor(span.startTimeMs * 1e6),

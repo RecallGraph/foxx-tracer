@@ -9,6 +9,8 @@ const reporters_1 = require("../reporters");
 const joi = require('joi');
 const tasks = require('@arangodb/tasks');
 const noopTracer = new opentracing_1.Tracer();
+const { name, version } = module.context.manifest;
+const service = `${name}-${version}`;
 exports.spanIdSchema = joi
     .string()
     .length(16);
@@ -291,7 +293,7 @@ function executeTask(options) {
 exports.executeTask = executeTask;
 function attachSpan(fn, operation, options = {}, onSuccess, onError) {
     return function () {
-        const optsCopy = lodash_1.cloneDeep(options);
+        const optsCopy = lodash_1.defaultsDeep({}, options, { tags: { service } });
         const span = startSpan(operation, optsCopy);
         try {
             let result;
@@ -326,7 +328,7 @@ function attachSpan(fn, operation, options = {}, onSuccess, onError) {
 }
 exports.attachSpan = attachSpan;
 function instrumentedQuery(query, operation, options = {}) {
-    const optsCopy = lodash_1.cloneDeep(options);
+    const optsCopy = lodash_1.defaultsDeep({}, options, { tags: { service } });
     lodash_1.defaultsDeep(optsCopy, {
         tags: {
             query: query.query,

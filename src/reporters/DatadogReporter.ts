@@ -32,7 +32,7 @@ export default class DatadogReporter implements Reporter {
             const record: Record = {
                 duration: Math.floor((span.finishTimeMs - span.startTimeMs) * 1e6),
                 name: span.operation,
-                resource: (span.tags[COMPONENT] ? `${span.tags[COMPONENT]}-` : '') + span.operation,
+                resource: <string>span.tags[COMPONENT],
                 service: <string>span.tags.service || 'UNKNOWN',
                 span_id: parseInt(span.context.span_id, 16),
                 start: Math.floor(span.startTimeMs * 1e6),

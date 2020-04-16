@@ -14,7 +14,7 @@ import {
   SpanOptions,
   Tracer
 } from 'opentracing';
-import { cloneDeep, defaultsDeep, get, mapKeys, omit } from 'lodash';
+import { defaultsDeep, get, mapKeys, omit } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -26,6 +26,8 @@ const joi = require('joi');
 const tasks = require('@arangodb/tasks');
 
 const noopTracer = new Tracer();
+const { name, version } = module.context.manifest;
+const service = `${name}-${version}`;
 
 export const spanIdSchema: StringSchema = joi
   .string()
@@ -383,7 +385,7 @@ export function attachSpan(
   onSuccess?: (result: any, span: Span) => void, onError?: (err: Error, span: Span) => void
 ) {
   return function () {
-    const optsCopy = cloneDeep(options);
+    const optsCopy = defaultsDeep({}, options, { tags: { service } });
     const span = startSpan(operation, optsCopy);
 
     try {
@@ -419,7 +421,7 @@ export function attachSpan(
 }
 
 export function instrumentedQuery(query: Query, operation: string, options: SpanOptions = {}) {
-  const optsCopy = cloneDeep(options)
+  const optsCopy = defaultsDeep({}, options, { tags: { service } });
   defaultsDeep(optsCopy, {
     tags: {
       query: query.query,
