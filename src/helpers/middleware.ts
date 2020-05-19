@@ -21,7 +21,7 @@ export default function trace(req: Request, res: Response, next: NextFunction) {
     (result, span) => {
       span.setTag(HTTP_STATUS_CODE, res.statusCode);
       span.log({
-        size: res.body.toString().length
+        size: res.body ? res.body.toString().length : 0
       });
       span.finish();
     }, (err, span) => {

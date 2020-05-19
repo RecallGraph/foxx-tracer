@@ -17,7 +17,7 @@ function trace(req, res, next) {
     utils_1.attachSpan(next, `api${req.path}`, options, (result, span) => {
         span.setTag(tags_1.HTTP_STATUS_CODE, res.statusCode);
         span.log({
-            size: res.body.toString().length
+            size: res.body ? res.body.toString().length : 0
         });
         span.finish();
     }, (err, span) => {
