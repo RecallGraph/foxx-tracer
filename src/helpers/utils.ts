@@ -436,8 +436,5 @@ export function instrumentedQuery(query: Query, operation: string, options: Span
   span.log(cursor.getExtra())
   span.finish()
 
-  const results = cursor.toArray()
-  cursor.dispose()
-
-  return results;
+  return cursor;
 }

@@ -340,9 +340,7 @@ function instrumentedQuery(query, operation, options = {}) {
     const cursor = _arangodb_1.db._query(query);
     span.log(cursor.getExtra());
     span.finish();
-    const results = cursor.toArray();
-    cursor.dispose();
-    return results;
+    return cursor;
 }
 exports.instrumentedQuery = instrumentedQuery;
 //# sourceMappingURL=utils.js.map
