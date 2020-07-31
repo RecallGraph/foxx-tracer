@@ -16,6 +16,7 @@
     "excludeProtected": true,
     "theme": "minimal",
     "includeVersion": true,
-    "readme": "README.md"
+    "readme": "README.md",
+    "hideGenerator": true
   }
 }
