@@ -7,5 +7,15 @@
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "docs",
+    "excludeNotExported": true,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "theme": "minimal",
+    "includeVersion": true,
+    "readme": "README.md"
+  }
 }
