@@ -1,0 +1,403 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <title>ConsoleReporter | foxx-tracer</title>
+    <meta content="Documentation for foxx-tracer" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../assets/css/main.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="tsd-page-toolbar">
+        <div class="container">
+            <div class="table-wrap">
+                <div class="table-cell" data-base=".." data-index="../assets/js/search.json" id="tsd-search">
+                    <div class="field">
+                        <label class="tsd-widget search no-caption" for="tsd-search-field">Search</label>
+                        <input id="tsd-search-field" type="text"/>
+                    </div>
+                    <ul class="results">
+                        <li class="state loading">Preparing search index...</li>
+                        <li class="state failure">The search index is not available</li>
+                    </ul>
+                    <a class="title" href="../index.html">foxx-tracer</a>
+                </div>
+                <div class="table-cell" id="tsd-widgets">
+                    <div id="tsd-filter">
+                        <a class="tsd-widget options no-caption" data-toggle="options" href="#">Options</a>
+                        <div class="tsd-filter-group">
+                            <div class="tsd-select" id="tsd-filter-visibility">
+                                <span class="tsd-select-label">All</span>
+                                <ul class="tsd-select-list">
+                                    <li data-value="public">Public</li>
+                                    <li data-value="protected">Public/Protected</li>
+                                    <li class="selected" data-value="private">All</li>
+                                </ul>
+                            </div>
+                            <input checked id="tsd-filter-inherited" type="checkbox"/>
+                            <label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+                            <input checked id="tsd-filter-externals" type="checkbox"/>
+                            <label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+                            <input id="tsd-filter-only-exported" type="checkbox"/>
+                            <label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+                        </div>
+                    </div>
+                    <a class="tsd-widget menu no-caption" data-toggle="menu" href="#">Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tsd-page-title">
+        <div class="container">
+            <ul class="tsd-breadcrumb">
+                <li>
+                    <a href="../globals.html">Globals</a>
+                </li>
+                <li>
+                    <a href="../modules/_reporters_consolereporter_.html">&quot;reporters/ConsoleReporter&quot;</a>
+                </li>
+                <li>
+                    <a href="_reporters_consolereporter_.consolereporter.html">ConsoleReporter</a>
+                </li>
+            </ul>
+            <h1>Class ConsoleReporter</h1>
+        </div>
+    </div>
+</header>
+<div class="container container-main">
+    <div class="row">
+        <div class="col-8 col-content">
+            <section class="tsd-panel tsd-hierarchy">
+                <h3>Hierarchy</h3>
+                <ul class="tsd-hierarchy">
+                    <li>
+                        <span class="target">ConsoleReporter</span>
+                    </li>
+                </ul>
+            </section>
+            <section class="tsd-panel">
+                <h3>Implements</h3>
+                <ul class="tsd-hierarchy">
+                    <li><a class="tsd-signature-type"
+                           href="../interfaces/_reporters_reporter_.reporter.html">Reporter</a></li>
+                </ul>
+            </section>
+            <section class="tsd-panel-group tsd-index-group">
+                <h2>Index</h2>
+                <section class="tsd-panel tsd-index-panel">
+                    <div class="tsd-index-content">
+                        <section class="tsd-index-section ">
+                            <h3>Methods</h3>
+                            <ul class="tsd-index-list">
+                                <li class="tsd-kind-method tsd-parent-kind-class"><a class="tsd-kind-icon"
+                                                                                     href="_reporters_consolereporter_.consolereporter.html#report">report</a>
+                                </li>
+                            </ul>
+                        </section>
+                        <section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+                            <h3>Object literals</h3>
+                            <ul class="tsd-index-list">
+                                <li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-private tsd-is-static">
+                                    <a class="tsd-kind-icon"
+                                       href="_reporters_consolereporter_.consolereporter.html#format_options">FORMAT_
+                                        <wbr>
+                                        OPTIONS</a></li>
+                            </ul>
+                        </section>
+                    </div>
+                </section>
+            </section>
+            <section class="tsd-panel-group tsd-member-group ">
+                <h2>Methods</h2>
+                <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+                    <a class="tsd-anchor" name="report"></a>
+                    <h3>report</h3>
+                    <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+                        <li class="tsd-signature tsd-kind-icon">report<span
+                                class="tsd-signature-symbol">(</span>traces<span
+                                class="tsd-signature-symbol">: </span><a class="tsd-signature-type"
+                                                                         href="../interfaces/_helpers_spandata_.spandata.html">SpanData</a><span
+                                class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span
+                                class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span
+                                class="tsd-signature-type">void</span></li>
+                    </ul>
+                    <ul class="tsd-descriptions">
+                        <li class="tsd-description">
+                            <aside class="tsd-sources">
+                                <p>Implementation of <a
+                                        href="../interfaces/_reporters_reporter_.reporter.html">Reporter</a>.<a
+                                        href="../interfaces/_reporters_reporter_.reporter.html#report">report</a></p>
+                                <ul>
+                                    <li>Defined in <a
+                                            href="https://github.com/RecallGraph/foxx-tracer/blob/dcfd4da/src/reporters/ConsoleReporter.ts#L14">src/reporters/ConsoleReporter.ts:14</a>
+                                    </li>
+                                </ul>
+                            </aside>
+                            <h4 class="tsd-parameters-title">Parameters</h4>
+                            <ul class="tsd-parameters">
+                                <li>
+                                    <h5>traces: <a class="tsd-signature-type"
+                                                   href="../interfaces/_helpers_spandata_.spandata.html">SpanData</a><span
+                                            class="tsd-signature-symbol">[]</span><span
+                                            class="tsd-signature-symbol">[]</span></h5>
+                                </li>
+                            </ul>
+                            <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+                <h2>Object literals</h2>
+                <section
+                        class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-private tsd-is-static">
+                    <a class="tsd-anchor" name="format_options"></a>
+                    <h3><span class="tsd-flag ts-flagStatic">Static</span> <span
+                            class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagReadonly">Readonly</span>
+                        FORMAT_
+                        <wbr>
+                        OPTIONS
+                    </h3>
+                    <div class="tsd-signature tsd-kind-icon">FORMAT_
+                        <wbr>
+                        OPTIONS<span class="tsd-signature-symbol">:</span> <span
+                                class="tsd-signature-type">object</span></div>
+                    <aside class="tsd-sources">
+                        <ul>
+                            <li>Defined in <a
+                                    href="https://github.com/RecallGraph/foxx-tracer/blob/dcfd4da/src/reporters/ConsoleReporter.ts#L6">src/reporters/ConsoleReporter.ts:6</a>
+                            </li>
+                        </ul>
+                    </aside>
+                    <section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+                        <a class="tsd-anchor" name="format_options.breaklength"></a>
+                        <h3>break
+                            <wbr>
+                            Length
+                        </h3>
+                        <div class="tsd-signature tsd-kind-icon">break
+                            <wbr>
+                            Length<span class="tsd-signature-symbol">:</span> <span
+                                    class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = Infinity</span>
+                        </div>
+                        <aside class="tsd-sources">
+                            <ul>
+                                <li>Defined in <a
+                                        href="https://github.com/RecallGraph/foxx-tracer/blob/dcfd4da/src/reporters/ConsoleReporter.ts#L9">src/reporters/ConsoleReporter.ts:9</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+                        <a class="tsd-anchor" name="format_options.compact"></a>
+                        <h3>compact</h3>
+                        <div class="tsd-signature tsd-kind-icon">compact<span class="tsd-signature-symbol">:</span>
+                            <span class="tsd-signature-type">boolean</span><span
+                                    class="tsd-signature-symbol"> = true</span></div>
+                        <aside class="tsd-sources">
+                            <ul>
+                                <li>Defined in <a
+                                        href="https://github.com/RecallGraph/foxx-tracer/blob/dcfd4da/src/reporters/ConsoleReporter.ts#L10">src/reporters/ConsoleReporter.ts:10</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+                        <a class="tsd-anchor" name="format_options.depth"></a>
+                        <h3>depth</h3>
+                        <div class="tsd-signature tsd-kind-icon">depth<span class="tsd-signature-symbol">:</span> <span
+                                class="tsd-signature-type">number</span><span
+                                class="tsd-signature-symbol"> = Infinity</span></div>
+                        <aside class="tsd-sources">
+                            <ul>
+                                <li>Defined in <a
+                                        href="https://github.com/RecallGraph/foxx-tracer/blob/dcfd4da/src/reporters/ConsoleReporter.ts#L7">src/reporters/ConsoleReporter.ts:7</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+                        <a class="tsd-anchor" name="format_options.maxarraylength"></a>
+                        <h3>max
+                            <wbr>
+                            Array
+                            <wbr>
+                            Length
+                        </h3>
+                        <div class="tsd-signature tsd-kind-icon">max
+                            <wbr>
+                            Array
+                            <wbr>
+                            Length<span class="tsd-signature-symbol">:</span> <span
+                                    class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = Infinity</span>
+                        </div>
+                        <aside class="tsd-sources">
+                            <ul>
+                                <li>Defined in <a
+                                        href="https://github.com/RecallGraph/foxx-tracer/blob/dcfd4da/src/reporters/ConsoleReporter.ts#L8">src/reporters/ConsoleReporter.ts:8</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+                        <a class="tsd-anchor" name="format_options.sorted"></a>
+                        <h3>sorted</h3>
+                        <div class="tsd-signature tsd-kind-icon">sorted<span class="tsd-signature-symbol">:</span> <span
+                                class="tsd-signature-type">boolean</span><span
+                                class="tsd-signature-symbol"> = true</span></div>
+                        <aside class="tsd-sources">
+                            <ul>
+                                <li>Defined in <a
+                                        href="https://github.com/RecallGraph/foxx-tracer/blob/dcfd4da/src/reporters/ConsoleReporter.ts#L11">src/reporters/ConsoleReporter.ts:11</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </section>
+                </section>
+            </section>
+        </div>
+        <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+            <nav class="tsd-navigation primary">
+                <ul>
+                    <li class="globals  ">
+                        <a href="../globals.html"><em>Globals</em></a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_helpers_spandata_.html">&quot;helpers/
+                            <wbr>
+                            Span
+                            <wbr>
+                            Data&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_helpers_middleware_.html">&quot;helpers/middleware&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_index_.html">&quot;index&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_opentracing_impl_foxxcontext_.html">&quot;opentracing-
+                            <wbr>
+                            impl/
+                            <wbr>
+                            Foxx
+                            <wbr>
+                            Context&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_opentracing_impl_foxxspan_.html">&quot;opentracing-
+                            <wbr>
+                            impl/
+                            <wbr>
+                            Foxx
+                            <wbr>
+                            Span&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_opentracing_impl_foxxtracer_.html">&quot;opentracing-
+                            <wbr>
+                            impl/
+                            <wbr>
+                            Foxx
+                            <wbr>
+                            Tracer&quot;</a>
+                    </li>
+                    <li class="current tsd-kind-module">
+                        <a href="../modules/_reporters_consolereporter_.html">&quot;reporters/
+                            <wbr>
+                            Console
+                            <wbr>
+                            Reporter&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_reporters_datadogreporter_.html">&quot;reporters/
+                            <wbr>
+                            Datadog
+                            <wbr>
+                            Reporter&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_reporters_foxxreporter_.html">&quot;reporters/
+                            <wbr>
+                            Foxx
+                            <wbr>
+                            Reporter&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_reporters_noopreporter_.html">&quot;reporters/
+                            <wbr>
+                            Noop
+                            <wbr>
+                            Reporter&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_reporters_reporter_.html">&quot;reporters/
+                            <wbr>
+                            Reporter&quot;</a>
+                    </li>
+                    <li class=" tsd-kind-module">
+                        <a href="../modules/_reporters_index_.html">&quot;reporters/index&quot;</a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="tsd-navigation secondary menu-sticky">
+                <ul class="before-current">
+                </ul>
+                <ul class="current">
+                    <li class="current tsd-kind-class tsd-parent-kind-module">
+                        <a class="tsd-kind-icon" href="_reporters_consolereporter_.consolereporter.html">Console
+                            <wbr>
+                            Reporter</a>
+                        <ul>
+                            <li class=" tsd-kind-method tsd-parent-kind-class">
+                                <a class="tsd-kind-icon" href="_reporters_consolereporter_.consolereporter.html#report">report</a>
+                            </li>
+                            <li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-private tsd-is-static">
+                                <a class="tsd-kind-icon"
+                                   href="_reporters_consolereporter_.consolereporter.html#format_options">FORMAT_
+                                    <wbr>
+                                    OPTIONS</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="after-current">
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<footer class="with-border-bottom">
+    <div class="container">
+        <h2>Legend</h2>
+        <div class="tsd-legend-group">
+            <ul class="tsd-legend">
+                <li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+                <li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+                <li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+            </ul>
+            <ul class="tsd-legend">
+                <li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+                <li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+            </ul>
+            <ul class="tsd-legend">
+                <li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+            </ul>
+            <ul class="tsd-legend">
+                <li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<div class="container tsd-generator">
+    <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

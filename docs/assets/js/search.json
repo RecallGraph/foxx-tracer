@@ -1,0 +1,6720 @@
+{
+  "kinds": {
+    "1": "Module",
+    "4": "Enumeration",
+    "16": "Enumeration member",
+    "32": "Variable",
+    "64": "Function",
+    "128": "Class",
+    "256": "Interface",
+    "512": "Constructor",
+    "1024": "Property",
+    "2048": "Method",
+    "65536": "Type literal",
+    "262144": "Accessor",
+    "2097152": "Object literal",
+    "4194304": "Type alias"
+  },
+  "rows": [
+    {
+      "id": 0,
+      "kind": 1,
+      "name": "\"helpers/SpanData\"",
+      "url": "modules/_helpers_spandata_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 1,
+      "kind": 256,
+      "name": "Tags",
+      "url": "interfaces/_helpers_spandata_.tags.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module",
+      "parent": "\"helpers/SpanData\""
+    },
+    {
+      "id": 2,
+      "kind": 256,
+      "name": "Log",
+      "url": "interfaces/_helpers_spandata_.log.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module",
+      "parent": "\"helpers/SpanData\""
+    },
+    {
+      "id": 3,
+      "kind": 1024,
+      "name": "fields",
+      "url": "interfaces/_helpers_spandata_.log.html#fields",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".Log"
+    },
+    {
+      "id": 4,
+      "kind": 65536,
+      "name": "__type",
+      "url": "interfaces/_helpers_spandata_.log.html#fields.__type",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-property",
+      "parent": "\"helpers/SpanData\".Log.fields"
+    },
+    {
+      "id": 5,
+      "kind": 1024,
+      "name": "timestamp",
+      "url": "interfaces/_helpers_spandata_.log.html#timestamp",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".Log"
+    },
+    {
+      "id": 6,
+      "kind": 256,
+      "name": "Context",
+      "url": "interfaces/_helpers_spandata_.context.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module",
+      "parent": "\"helpers/SpanData\""
+    },
+    {
+      "id": 7,
+      "kind": 1024,
+      "name": "span_id",
+      "url": "interfaces/_helpers_spandata_.context.html#span_id",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".Context"
+    },
+    {
+      "id": 8,
+      "kind": 1024,
+      "name": "trace_id",
+      "url": "interfaces/_helpers_spandata_.context.html#trace_id",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".Context"
+    },
+    {
+      "id": 9,
+      "kind": 1024,
+      "name": "baggage",
+      "url": "interfaces/_helpers_spandata_.context.html#baggage",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".Context"
+    },
+    {
+      "id": 10,
+      "kind": 256,
+      "name": "Reference",
+      "url": "interfaces/_helpers_spandata_.reference.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module",
+      "parent": "\"helpers/SpanData\""
+    },
+    {
+      "id": 11,
+      "kind": 1024,
+      "name": "type",
+      "url": "interfaces/_helpers_spandata_.reference.html#type",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".Reference"
+    },
+    {
+      "id": 12,
+      "kind": 1024,
+      "name": "context",
+      "url": "interfaces/_helpers_spandata_.reference.html#context",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".Reference"
+    },
+    {
+      "id": 13,
+      "kind": 256,
+      "name": "SpanData",
+      "url": "interfaces/_helpers_spandata_.spandata.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module",
+      "parent": "\"helpers/SpanData\""
+    },
+    {
+      "id": 14,
+      "kind": 1024,
+      "name": "operation",
+      "url": "interfaces/_helpers_spandata_.spandata.html#operation",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".SpanData"
+    },
+    {
+      "id": 15,
+      "kind": 1024,
+      "name": "context",
+      "url": "interfaces/_helpers_spandata_.spandata.html#context",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".SpanData"
+    },
+    {
+      "id": 16,
+      "kind": 1024,
+      "name": "startTimeMs",
+      "url": "interfaces/_helpers_spandata_.spandata.html#starttimems",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".SpanData"
+    },
+    {
+      "id": 17,
+      "kind": 1024,
+      "name": "finishTimeMs",
+      "url": "interfaces/_helpers_spandata_.spandata.html#finishtimems",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".SpanData"
+    },
+    {
+      "id": 18,
+      "kind": 1024,
+      "name": "tags",
+      "url": "interfaces/_helpers_spandata_.spandata.html#tags",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".SpanData"
+    },
+    {
+      "id": 19,
+      "kind": 1024,
+      "name": "logs",
+      "url": "interfaces/_helpers_spandata_.spandata.html#logs",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".SpanData"
+    },
+    {
+      "id": 20,
+      "kind": 1024,
+      "name": "references",
+      "url": "interfaces/_helpers_spandata_.spandata.html#references",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/SpanData\".SpanData"
+    },
+    {
+      "id": 21,
+      "kind": 4194304,
+      "name": "TagValue",
+      "url": "modules/_helpers_spandata_.html#tagvalue",
+      "classes": "tsd-kind-type-alias tsd-parent-kind-module",
+      "parent": "\"helpers/SpanData\""
+    },
+    {
+      "id": 22,
+      "kind": 1,
+      "name": "\"opentracing-impl/FoxxContext\"",
+      "url": "modules/_opentracing_impl_foxxcontext_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 23,
+      "kind": 128,
+      "name": "FoxxContext",
+      "url": "classes/_opentracing_impl_foxxcontext_.foxxcontext.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"opentracing-impl/FoxxContext\""
+    },
+    {
+      "id": 24,
+      "kind": 1024,
+      "name": "context",
+      "url": "classes/_opentracing_impl_foxxcontext_.foxxcontext.html#context",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxContext\".FoxxContext"
+    },
+    {
+      "id": 25,
+      "kind": 512,
+      "name": "constructor",
+      "url": "classes/_opentracing_impl_foxxcontext_.foxxcontext.html#constructor",
+      "classes": "tsd-kind-constructor tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxContext\".FoxxContext"
+    },
+    {
+      "id": 26,
+      "kind": 2048,
+      "name": "toTraceId",
+      "url": "classes/_opentracing_impl_foxxcontext_.foxxcontext.html#totraceid",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite",
+      "parent": "\"opentracing-impl/FoxxContext\".FoxxContext"
+    },
+    {
+      "id": 27,
+      "kind": 2048,
+      "name": "toSpanId",
+      "url": "classes/_opentracing_impl_foxxcontext_.foxxcontext.html#tospanid",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite",
+      "parent": "\"opentracing-impl/FoxxContext\".FoxxContext"
+    },
+    {
+      "id": 28,
+      "kind": 2048,
+      "name": "baggage",
+      "url": "classes/_opentracing_impl_foxxcontext_.foxxcontext.html#baggage",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxContext\".FoxxContext"
+    },
+    {
+      "id": 29,
+      "kind": 1,
+      "name": "\"opentracing-impl/FoxxSpan\"",
+      "url": "modules/_opentracing_impl_foxxspan_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 30,
+      "kind": 128,
+      "name": "FoxxSpan",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"opentracing-impl/FoxxSpan\""
+    },
+    {
+      "id": 31,
+      "kind": 1024,
+      "name": "_spanData",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_spandata",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 32,
+      "kind": 1024,
+      "name": "_refs",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_refs",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 33,
+      "kind": 1024,
+      "name": "_foxxContext",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_foxxcontext",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 34,
+      "kind": 512,
+      "name": "constructor",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#constructor",
+      "classes": "tsd-kind-constructor tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 35,
+      "kind": 262144,
+      "name": "spanData",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#spandata",
+      "classes": "tsd-kind-get-signature tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 36,
+      "kind": 2048,
+      "name": "generateUUID",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#generateuuid",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-static",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 37,
+      "kind": 2048,
+      "name": "initContext",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#initcontext",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 38,
+      "kind": 2048,
+      "name": "addReference",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#addreference",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 39,
+      "kind": 2048,
+      "name": "_setOperationName",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_setoperationname",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 40,
+      "kind": 2048,
+      "name": "_addTags",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_addtags",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 41,
+      "kind": 2048,
+      "name": "_setBaggageItem",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_setbaggageitem",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 42,
+      "kind": 2048,
+      "name": "_getBaggageItem",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_getbaggageitem",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 43,
+      "kind": 2048,
+      "name": "_log",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_log",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 44,
+      "kind": 2048,
+      "name": "_context",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_context",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 45,
+      "kind": 2048,
+      "name": "_finish",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_finish",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 46,
+      "kind": 2048,
+      "name": "getParent",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#getparent",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 47,
+      "kind": 2048,
+      "name": "context",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#context",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 48,
+      "kind": 2048,
+      "name": "tracer",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#tracer",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 49,
+      "kind": 2048,
+      "name": "setOperationName",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#setoperationname",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 50,
+      "kind": 2048,
+      "name": "setBaggageItem",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#setbaggageitem",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 51,
+      "kind": 2048,
+      "name": "getBaggageItem",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#getbaggageitem",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 52,
+      "kind": 2048,
+      "name": "setTag",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#settag",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 53,
+      "kind": 2048,
+      "name": "addTags",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#addtags",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 54,
+      "kind": 2048,
+      "name": "log",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#log",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 55,
+      "kind": 2048,
+      "name": "logEvent",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#logevent",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 56,
+      "kind": 2048,
+      "name": "finish",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#finish",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 57,
+      "kind": 2048,
+      "name": "_tracer",
+      "url": "classes/_opentracing_impl_foxxspan_.foxxspan.html#_tracer",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxSpan\".FoxxSpan"
+    },
+    {
+      "id": 58,
+      "kind": 1,
+      "name": "\"reporters/Reporter\"",
+      "url": "modules/_reporters_reporter_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 59,
+      "kind": 256,
+      "name": "Reporter",
+      "url": "interfaces/_reporters_reporter_.reporter.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module",
+      "parent": "\"reporters/Reporter\""
+    },
+    {
+      "id": 60,
+      "kind": 2048,
+      "name": "report",
+      "url": "interfaces/_reporters_reporter_.reporter.html#report",
+      "classes": "tsd-kind-method tsd-parent-kind-interface",
+      "parent": "\"reporters/Reporter\".Reporter"
+    },
+    {
+      "id": 61,
+      "kind": 1,
+      "name": "\"opentracing-impl/FoxxTracer\"",
+      "url": "modules/_opentracing_impl_foxxtracer_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 62,
+      "kind": 128,
+      "name": "ContextualTracer",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"opentracing-impl/FoxxTracer\""
+    },
+    {
+      "id": 63,
+      "kind": 1024,
+      "name": "currentContext",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#currentcontext",
+      "classes": "tsd-kind-property tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 64,
+      "kind": 1024,
+      "name": "currentTrace",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#currenttrace",
+      "classes": "tsd-kind-property tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 65,
+      "kind": 2048,
+      "name": "push",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#push",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 66,
+      "kind": 2048,
+      "name": "flush",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#flush",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 67,
+      "kind": 2048,
+      "name": "startSpan",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#startspan",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 68,
+      "kind": 2048,
+      "name": "inject",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#inject",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 69,
+      "kind": 2048,
+      "name": "extract",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#extract",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 70,
+      "kind": 2048,
+      "name": "_startSpan",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#_startspan",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 71,
+      "kind": 2048,
+      "name": "_inject",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#_inject",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 72,
+      "kind": 2048,
+      "name": "_extract",
+      "url": "classes/_opentracing_impl_foxxtracer_.contextualtracer.html#_extract",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxTracer\".ContextualTracer"
+    },
+    {
+      "id": 73,
+      "kind": 128,
+      "name": "FoxxTracer",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"opentracing-impl/FoxxTracer\""
+    },
+    {
+      "id": 74,
+      "kind": 1024,
+      "name": "_finishedSpans",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_finishedspans",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 75,
+      "kind": 65536,
+      "name": "__type",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_finishedspans.__type",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-property",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer._finishedSpans"
+    },
+    {
+      "id": 76,
+      "kind": 1024,
+      "name": "_currentContext",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_currentcontext",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 77,
+      "kind": 1024,
+      "name": "_currentTrace",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_currenttrace",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 78,
+      "kind": 1024,
+      "name": "_reporter",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_reporter",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 79,
+      "kind": 2048,
+      "name": "isTraceHeaders",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#istraceheaders",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 80,
+      "kind": 2048,
+      "name": "isContext",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#iscontext",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 81,
+      "kind": 2048,
+      "name": "_allocSpan",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_allocspan",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 82,
+      "kind": 512,
+      "name": "constructor",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#constructor",
+      "classes": "tsd-kind-constructor tsd-parent-kind-class",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 83,
+      "kind": 262144,
+      "name": "currentContext",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#currentcontext",
+      "classes": "tsd-kind-accessor tsd-parent-kind-class tsd-is-overwrite",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 84,
+      "kind": 262144,
+      "name": "currentTrace",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#currenttrace",
+      "classes": "tsd-kind-accessor tsd-parent-kind-class tsd-is-overwrite",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 85,
+      "kind": 2048,
+      "name": "push",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#push",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 86,
+      "kind": 2048,
+      "name": "flush",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#flush",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 87,
+      "kind": 2048,
+      "name": "_extract",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_extract",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 88,
+      "kind": 2048,
+      "name": "_inject",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_inject",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 89,
+      "kind": 2048,
+      "name": "_startSpan",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#_startspan",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 90,
+      "kind": 2048,
+      "name": "startSpan",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#startspan",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 91,
+      "kind": 2048,
+      "name": "inject",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#inject",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 92,
+      "kind": 2048,
+      "name": "extract",
+      "url": "classes/_opentracing_impl_foxxtracer_.foxxtracer.html#extract",
+      "classes": "tsd-kind-method tsd-parent-kind-class tsd-is-inherited",
+      "parent": "\"opentracing-impl/FoxxTracer\".FoxxTracer"
+    },
+    {
+      "id": 93,
+      "kind": 1,
+      "name": "\"reporters/ConsoleReporter\"",
+      "url": "modules/_reporters_consolereporter_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 94,
+      "kind": 128,
+      "name": "ConsoleReporter",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"reporters/ConsoleReporter\""
+    },
+    {
+      "id": 95,
+      "kind": 2097152,
+      "name": "FORMAT_OPTIONS",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html#format_options",
+      "classes": "tsd-kind-object-literal tsd-parent-kind-class tsd-is-private tsd-is-static",
+      "parent": "\"reporters/ConsoleReporter\".ConsoleReporter"
+    },
+    {
+      "id": 96,
+      "kind": 32,
+      "name": "depth",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html#format_options.depth",
+      "classes": "tsd-kind-variable tsd-parent-kind-object-literal",
+      "parent": "\"reporters/ConsoleReporter\".ConsoleReporter.FORMAT_OPTIONS"
+    },
+    {
+      "id": 97,
+      "kind": 32,
+      "name": "maxArrayLength",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html#format_options.maxarraylength",
+      "classes": "tsd-kind-variable tsd-parent-kind-object-literal",
+      "parent": "\"reporters/ConsoleReporter\".ConsoleReporter.FORMAT_OPTIONS"
+    },
+    {
+      "id": 98,
+      "kind": 32,
+      "name": "breakLength",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html#format_options.breaklength",
+      "classes": "tsd-kind-variable tsd-parent-kind-object-literal",
+      "parent": "\"reporters/ConsoleReporter\".ConsoleReporter.FORMAT_OPTIONS"
+    },
+    {
+      "id": 99,
+      "kind": 32,
+      "name": "compact",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html#format_options.compact",
+      "classes": "tsd-kind-variable tsd-parent-kind-object-literal",
+      "parent": "\"reporters/ConsoleReporter\".ConsoleReporter.FORMAT_OPTIONS"
+    },
+    {
+      "id": 100,
+      "kind": 32,
+      "name": "sorted",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html#format_options.sorted",
+      "classes": "tsd-kind-variable tsd-parent-kind-object-literal",
+      "parent": "\"reporters/ConsoleReporter\".ConsoleReporter.FORMAT_OPTIONS"
+    },
+    {
+      "id": 101,
+      "kind": 2048,
+      "name": "report",
+      "url": "classes/_reporters_consolereporter_.consolereporter.html#report",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"reporters/ConsoleReporter\".ConsoleReporter"
+    },
+    {
+      "id": 102,
+      "kind": 1,
+      "name": "\"reporters/DatadogReporter\"",
+      "url": "modules/_reporters_datadogreporter_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 103,
+      "kind": 128,
+      "name": "DatadogReporter",
+      "url": "classes/_reporters_datadogreporter_.datadogreporter.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"reporters/DatadogReporter\""
+    },
+    {
+      "id": 104,
+      "kind": 1024,
+      "name": "ddURL",
+      "url": "classes/_reporters_datadogreporter_.datadogreporter.html#ddurl",
+      "classes": "tsd-kind-property tsd-parent-kind-class tsd-is-private",
+      "parent": "\"reporters/DatadogReporter\".DatadogReporter"
+    },
+    {
+      "id": 105,
+      "kind": 512,
+      "name": "constructor",
+      "url": "classes/_reporters_datadogreporter_.datadogreporter.html#constructor",
+      "classes": "tsd-kind-constructor tsd-parent-kind-class",
+      "parent": "\"reporters/DatadogReporter\".DatadogReporter"
+    },
+    {
+      "id": 106,
+      "kind": 2048,
+      "name": "report",
+      "url": "classes/_reporters_datadogreporter_.datadogreporter.html#report",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"reporters/DatadogReporter\".DatadogReporter"
+    },
+    {
+      "id": 107,
+      "kind": 32,
+      "name": "request",
+      "url": "modules/_reporters_datadogreporter_.html#request",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\""
+    },
+    {
+      "id": 108,
+      "kind": 4194304,
+      "name": "Record",
+      "url": "modules/_reporters_datadogreporter_.html#record",
+      "classes": "tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\""
+    },
+    {
+      "id": 109,
+      "kind": 65536,
+      "name": "__type",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record"
+    },
+    {
+      "id": 110,
+      "kind": 32,
+      "name": "trace_id",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.trace_id",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 111,
+      "kind": 32,
+      "name": "span_id",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.span_id",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 112,
+      "kind": 32,
+      "name": "name",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.name",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 113,
+      "kind": 32,
+      "name": "resource",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.resource",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 114,
+      "kind": 32,
+      "name": "service",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.service",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 115,
+      "kind": 32,
+      "name": "type",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.type",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 116,
+      "kind": 32,
+      "name": "start",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.start",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 117,
+      "kind": 32,
+      "name": "duration",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.duration",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 118,
+      "kind": 32,
+      "name": "parent_id",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.parent_id",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 119,
+      "kind": 32,
+      "name": "error",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.error",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 120,
+      "kind": 32,
+      "name": "meta",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.meta",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 121,
+      "kind": 65536,
+      "name": "__type",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.meta.__type-1",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type.meta"
+    },
+    {
+      "id": 122,
+      "kind": 32,
+      "name": "metrics",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.metrics",
+      "classes": "tsd-kind-variable tsd-parent-kind-type-literal tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type"
+    },
+    {
+      "id": 123,
+      "kind": 65536,
+      "name": "__type",
+      "url": "modules/_reporters_datadogreporter_.html#record.__type.metrics.__type-2",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported",
+      "parent": "\"reporters/DatadogReporter\".Record.__type.metrics"
+    },
+    {
+      "id": 124,
+      "kind": 1,
+      "name": "\"reporters/FoxxReporter\"",
+      "url": "modules/_reporters_foxxreporter_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 125,
+      "kind": 128,
+      "name": "FoxxReporter",
+      "url": "classes/_reporters_foxxreporter_.foxxreporter.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"reporters/FoxxReporter\""
+    },
+    {
+      "id": 126,
+      "kind": 2048,
+      "name": "report",
+      "url": "classes/_reporters_foxxreporter_.foxxreporter.html#report",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"reporters/FoxxReporter\".FoxxReporter"
+    },
+    {
+      "id": 127,
+      "kind": 1,
+      "name": "\"reporters/NoopReporter\"",
+      "url": "modules/_reporters_noopreporter_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 128,
+      "kind": 128,
+      "name": "NoopReporter",
+      "url": "classes/_reporters_noopreporter_.noopreporter.html",
+      "classes": "tsd-kind-class tsd-parent-kind-module",
+      "parent": "\"reporters/NoopReporter\""
+    },
+    {
+      "id": 129,
+      "kind": 2048,
+      "name": "report",
+      "url": "classes/_reporters_noopreporter_.noopreporter.html#report",
+      "classes": "tsd-kind-method tsd-parent-kind-class",
+      "parent": "\"reporters/NoopReporter\".NoopReporter"
+    },
+    {
+      "id": 130,
+      "kind": 1,
+      "name": "\"reporters/index\"",
+      "url": "modules/_reporters_index_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 131,
+      "kind": 1,
+      "name": "\"index\"",
+      "url": "modules/_index_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 132,
+      "kind": 1,
+      "name": "\"helpers/utils\"",
+      "url": "modules/_helpers_utils_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 133,
+      "kind": 4,
+      "name": "TRACE_HEADER_KEYS",
+      "url": "enums/_helpers_utils_.trace_header_keys.html",
+      "classes": "tsd-kind-enum tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 134,
+      "kind": 16,
+      "name": "TRACE_ID",
+      "url": "enums/_helpers_utils_.trace_header_keys.html#trace_id",
+      "classes": "tsd-kind-enum-member tsd-parent-kind-enum",
+      "parent": "\"helpers/utils\".TRACE_HEADER_KEYS"
+    },
+    {
+      "id": 135,
+      "kind": 16,
+      "name": "PARENT_SPAN_ID",
+      "url": "enums/_helpers_utils_.trace_header_keys.html#parent_span_id",
+      "classes": "tsd-kind-enum-member tsd-parent-kind-enum",
+      "parent": "\"helpers/utils\".TRACE_HEADER_KEYS"
+    },
+    {
+      "id": 136,
+      "kind": 16,
+      "name": "BAGGAGE",
+      "url": "enums/_helpers_utils_.trace_header_keys.html#baggage",
+      "classes": "tsd-kind-enum-member tsd-parent-kind-enum",
+      "parent": "\"helpers/utils\".TRACE_HEADER_KEYS"
+    },
+    {
+      "id": 137,
+      "kind": 16,
+      "name": "FORCE_SAMPLE",
+      "url": "enums/_helpers_utils_.trace_header_keys.html#force_sample",
+      "classes": "tsd-kind-enum-member tsd-parent-kind-enum",
+      "parent": "\"helpers/utils\".TRACE_HEADER_KEYS"
+    },
+    {
+      "id": 138,
+      "kind": 256,
+      "name": "TraceHeaders",
+      "url": "interfaces/_helpers_utils_.traceheaders.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 139,
+      "kind": 1024,
+      "name": "[TRACE_HEADER_KEYS.TRACE_ID]",
+      "url": "interfaces/_helpers_utils_.traceheaders.html#_trace_header_keys_trace_id_",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/utils\".TraceHeaders"
+    },
+    {
+      "id": 140,
+      "kind": 1024,
+      "name": "[TRACE_HEADER_KEYS.PARENT_SPAN_ID]",
+      "url": "interfaces/_helpers_utils_.traceheaders.html#_trace_header_keys_parent_span_id_",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/utils\".TraceHeaders"
+    },
+    {
+      "id": 141,
+      "kind": 1024,
+      "name": "[TRACE_HEADER_KEYS.BAGGAGE]",
+      "url": "interfaces/_helpers_utils_.traceheaders.html#_trace_header_keys_baggage_",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/utils\".TraceHeaders"
+    },
+    {
+      "id": 142,
+      "kind": 1024,
+      "name": "[TRACE_HEADER_KEYS.FORCE_SAMPLE]",
+      "url": "interfaces/_helpers_utils_.traceheaders.html#_trace_header_keys_force_sample_",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "\"helpers/utils\".TraceHeaders"
+    },
+    {
+      "id": 143,
+      "kind": 256,
+      "name": "TaskOpts",
+      "url": "interfaces/_helpers_utils_.taskopts.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 144,
+      "kind": 1024,
+      "name": "command",
+      "url": "interfaces/_helpers_utils_.taskopts.html#command",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TaskOpts"
+    },
+    {
+      "id": 145,
+      "kind": 1024,
+      "name": "params",
+      "url": "interfaces/_helpers_utils_.taskopts.html#params",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TaskOpts"
+    },
+    {
+      "id": 146,
+      "kind": 256,
+      "name": "InstrumentedOpts",
+      "url": "interfaces/_helpers_utils_.instrumentedopts.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 147,
+      "kind": 1024,
+      "name": "_traceId",
+      "url": "interfaces/_helpers_utils_.instrumentedopts.html#_traceid",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported",
+      "parent": "\"helpers/utils\".InstrumentedOpts"
+    },
+    {
+      "id": 148,
+      "kind": 1024,
+      "name": "_parentContext",
+      "url": "interfaces/_helpers_utils_.instrumentedopts.html#_parentcontext",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported",
+      "parent": "\"helpers/utils\".InstrumentedOpts"
+    },
+    {
+      "id": 149,
+      "kind": 1024,
+      "name": "_params",
+      "url": "interfaces/_helpers_utils_.instrumentedopts.html#_params",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported",
+      "parent": "\"helpers/utils\".InstrumentedOpts"
+    },
+    {
+      "id": 150,
+      "kind": 256,
+      "name": "TxnParams",
+      "url": "interfaces/_helpers_utils_.txnparams.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 151,
+      "kind": 1024,
+      "name": "_action",
+      "url": "interfaces/_helpers_utils_.txnparams.html#_action",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TxnParams"
+    },
+    {
+      "id": 152,
+      "kind": 65536,
+      "name": "__type",
+      "url": "interfaces/_helpers_utils_.txnparams.html#_action.__type",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TxnParams._action"
+    },
+    {
+      "id": 153,
+      "kind": 1024,
+      "name": "_traceId",
+      "url": "interfaces/_helpers_utils_.txnparams.html#_traceid",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TxnParams"
+    },
+    {
+      "id": 154,
+      "kind": 1024,
+      "name": "_parentContext",
+      "url": "interfaces/_helpers_utils_.txnparams.html#_parentcontext",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TxnParams"
+    },
+    {
+      "id": 155,
+      "kind": 1024,
+      "name": "_params",
+      "url": "interfaces/_helpers_utils_.txnparams.html#_params",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TxnParams"
+    },
+    {
+      "id": 156,
+      "kind": 256,
+      "name": "TaskParams",
+      "url": "interfaces/_helpers_utils_.taskparams.html",
+      "classes": "tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 157,
+      "kind": 1024,
+      "name": "_command",
+      "url": "interfaces/_helpers_utils_.taskparams.html#_command",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TaskParams"
+    },
+    {
+      "id": 158,
+      "kind": 65536,
+      "name": "__type",
+      "url": "interfaces/_helpers_utils_.taskparams.html#_command.__type",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TaskParams._command"
+    },
+    {
+      "id": 159,
+      "kind": 1024,
+      "name": "_traceId",
+      "url": "interfaces/_helpers_utils_.taskparams.html#_traceid",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TaskParams"
+    },
+    {
+      "id": 160,
+      "kind": 1024,
+      "name": "_parentContext",
+      "url": "interfaces/_helpers_utils_.taskparams.html#_parentcontext",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TaskParams"
+    },
+    {
+      "id": 161,
+      "kind": 1024,
+      "name": "_params",
+      "url": "interfaces/_helpers_utils_.taskparams.html#_params",
+      "classes": "tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TaskParams"
+    },
+    {
+      "id": 162,
+      "kind": 32,
+      "name": "Endpoint",
+      "url": "modules/_helpers_utils_.html#endpoint",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 163,
+      "kind": 32,
+      "name": "Transaction",
+      "url": "modules/_helpers_utils_.html#transaction",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 164,
+      "kind": 32,
+      "name": "Query",
+      "url": "modules/_helpers_utils_.html#query",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 165,
+      "kind": 32,
+      "name": "joi",
+      "url": "modules/_helpers_utils_.html#joi",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 166,
+      "kind": 32,
+      "name": "tasks",
+      "url": "modules/_helpers_utils_.html#tasks",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 167,
+      "kind": 32,
+      "name": "noopTracer",
+      "url": "modules/_helpers_utils_.html#nooptracer",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 168,
+      "kind": 32,
+      "name": "name",
+      "url": "modules/_helpers_utils_.html#name",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 169,
+      "kind": 32,
+      "name": "version",
+      "url": "modules/_helpers_utils_.html#version",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 170,
+      "kind": 32,
+      "name": "service",
+      "url": "modules/_helpers_utils_.html#service",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 171,
+      "kind": 32,
+      "name": "spanIdSchema",
+      "url": "modules/_helpers_utils_.html#spanidschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 172,
+      "kind": 32,
+      "name": "traceIdSchema",
+      "url": "modules/_helpers_utils_.html#traceidschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 173,
+      "kind": 32,
+      "name": "baggageSchema",
+      "url": "modules/_helpers_utils_.html#baggageschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 174,
+      "kind": 32,
+      "name": "contextSchema",
+      "url": "modules/_helpers_utils_.html#contextschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 175,
+      "kind": 32,
+      "name": "tagsSchema",
+      "url": "modules/_helpers_utils_.html#tagsschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 176,
+      "kind": 32,
+      "name": "logSchema",
+      "url": "modules/_helpers_utils_.html#logschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 177,
+      "kind": 32,
+      "name": "referenceSchema",
+      "url": "modules/_helpers_utils_.html#referenceschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 178,
+      "kind": 32,
+      "name": "spanSchema",
+      "url": "modules/_helpers_utils_.html#spanschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 179,
+      "kind": 32,
+      "name": "spanArrSchema",
+      "url": "modules/_helpers_utils_.html#spanarrschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 180,
+      "kind": 32,
+      "name": "spanReqSchema",
+      "url": "modules/_helpers_utils_.html#spanreqschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 181,
+      "kind": 32,
+      "name": "forceSampleSchema",
+      "url": "modules/_helpers_utils_.html#forcesampleschema",
+      "classes": "tsd-kind-variable tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 182,
+      "kind": 32,
+      "name": "TRACE_HEADER_SCHEMAS",
+      "url": "modules/_helpers_utils_.html#trace_header_schemas",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 183,
+      "kind": 65536,
+      "name": "__type",
+      "url": "modules/_helpers_utils_.html#trace_header_schemas.__type",
+      "classes": "tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported",
+      "parent": "\"helpers/utils\".TRACE_HEADER_SCHEMAS"
+    },
+    {
+      "id": 184,
+      "kind": 64,
+      "name": "setEndpointTraceHeaders",
+      "url": "modules/_helpers_utils_.html#setendpointtraceheaders",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 185,
+      "kind": 64,
+      "name": "parseTraceHeaders",
+      "url": "modules/_helpers_utils_.html#parsetraceheaders",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 186,
+      "kind": 64,
+      "name": "setTrace",
+      "url": "modules/_helpers_utils_.html#settrace",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 187,
+      "kind": 64,
+      "name": "setTraceContextFromHeaders",
+      "url": "modules/_helpers_utils_.html#settracecontextfromheaders",
+      "classes": "tsd-kind-function tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 188,
+      "kind": 64,
+      "name": "getParent",
+      "url": "modules/_helpers_utils_.html#getparent",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 189,
+      "kind": 64,
+      "name": "setTraceContext",
+      "url": "modules/_helpers_utils_.html#settracecontext",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 190,
+      "kind": 64,
+      "name": "clearTraceContext",
+      "url": "modules/_helpers_utils_.html#cleartracecontext",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 191,
+      "kind": 64,
+      "name": "startSpan",
+      "url": "modules/_helpers_utils_.html#startspan",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 192,
+      "kind": 64,
+      "name": "reportSpan",
+      "url": "modules/_helpers_utils_.html#reportspan",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 193,
+      "kind": 64,
+      "name": "initTracer",
+      "url": "modules/_helpers_utils_.html#inittracer",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 194,
+      "kind": 64,
+      "name": "executeTransaction",
+      "url": "modules/_helpers_utils_.html#executetransaction",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 195,
+      "kind": 64,
+      "name": "executeTask",
+      "url": "modules/_helpers_utils_.html#executetask",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 196,
+      "kind": 64,
+      "name": "attachSpan",
+      "url": "modules/_helpers_utils_.html#attachspan",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 197,
+      "kind": 64,
+      "name": "instrumentedQuery",
+      "url": "modules/_helpers_utils_.html#instrumentedquery",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/utils\""
+    },
+    {
+      "id": 198,
+      "kind": 1,
+      "name": "\"helpers/middleware\"",
+      "url": "modules/_helpers_middleware_.html",
+      "classes": "tsd-kind-module"
+    },
+    {
+      "id": 199,
+      "kind": 32,
+      "name": "Request",
+      "url": "modules/_helpers_middleware_.html#request",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/middleware\""
+    },
+    {
+      "id": 200,
+      "kind": 32,
+      "name": "Response",
+      "url": "modules/_helpers_middleware_.html#response",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/middleware\""
+    },
+    {
+      "id": 201,
+      "kind": 32,
+      "name": "NextFunction",
+      "url": "modules/_helpers_middleware_.html#nextfunction",
+      "classes": "tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported",
+      "parent": "\"helpers/middleware\""
+    },
+    {
+      "id": 202,
+      "kind": 64,
+      "name": "trace",
+      "url": "modules/_helpers_middleware_.html#trace",
+      "classes": "tsd-kind-function tsd-parent-kind-module",
+      "parent": "\"helpers/middleware\""
+    }
+  ],
+  "index": {
+    "version": "2.3.8",
+    "fields": [
+      "name",
+      "parent"
+    ],
+    "fieldVectors": [
+      [
+        "name/0",
+        [
+          0,
+          33.23
+        ]
+      ],
+      [
+        "parent/0",
+        []
+      ],
+      [
+        "name/1",
+        [
+          1,
+          44.282
+        ]
+      ],
+      [
+        "parent/1",
+        [
+          0,
+          3.604
+        ]
+      ],
+      [
+        "name/2",
+        [
+          2,
+          44.282
+        ]
+      ],
+      [
+        "parent/2",
+        [
+          0,
+          3.604
+        ]
+      ],
+      [
+        "name/3",
+        [
+          3,
+          49.421
+        ]
+      ],
+      [
+        "parent/3",
+        [
+          4,
+          4.802
+        ]
+      ],
+      [
+        "name/4",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/4",
+        [
+          6,
+          5.36
+        ]
+      ],
+      [
+        "name/5",
+        [
+          7,
+          49.421
+        ]
+      ],
+      [
+        "parent/5",
+        [
+          4,
+          4.802
+        ]
+      ],
+      [
+        "name/6",
+        [
+          8,
+          36.35
+        ]
+      ],
+      [
+        "parent/6",
+        [
+          0,
+          3.604
+        ]
+      ],
+      [
+        "name/7",
+        [
+          9,
+          44.282
+        ]
+      ],
+      [
+        "parent/7",
+        [
+          10,
+          4.435
+        ]
+      ],
+      [
+        "name/8",
+        [
+          11,
+          40.897
+        ]
+      ],
+      [
+        "parent/8",
+        [
+          10,
+          4.435
+        ]
+      ],
+      [
+        "name/9",
+        [
+          12,
+          40.897
+        ]
+      ],
+      [
+        "parent/9",
+        [
+          10,
+          4.435
+        ]
+      ],
+      [
+        "name/10",
+        [
+          13,
+          49.421
+        ]
+      ],
+      [
+        "parent/10",
+        [
+          0,
+          3.604
+        ]
+      ],
+      [
+        "name/11",
+        [
+          14,
+          44.282
+        ]
+      ],
+      [
+        "parent/11",
+        [
+          15,
+          4.802
+        ]
+      ],
+      [
+        "name/12",
+        [
+          8,
+          36.35
+        ]
+      ],
+      [
+        "parent/12",
+        [
+          15,
+          4.802
+        ]
+      ],
+      [
+        "name/13",
+        [
+          16,
+          44.282
+        ]
+      ],
+      [
+        "parent/13",
+        [
+          0,
+          3.604
+        ]
+      ],
+      [
+        "name/14",
+        [
+          17,
+          49.421
+        ]
+      ],
+      [
+        "parent/14",
+        [
+          18,
+          3.604
+        ]
+      ],
+      [
+        "name/15",
+        [
+          8,
+          36.35
+        ]
+      ],
+      [
+        "parent/15",
+        [
+          18,
+          3.604
+        ]
+      ],
+      [
+        "name/16",
+        [
+          19,
+          49.421
+        ]
+      ],
+      [
+        "parent/16",
+        [
+          18,
+          3.604
+        ]
+      ],
+      [
+        "name/17",
+        [
+          20,
+          49.421
+        ]
+      ],
+      [
+        "parent/17",
+        [
+          18,
+          3.604
+        ]
+      ],
+      [
+        "name/18",
+        [
+          1,
+          44.282
+        ]
+      ],
+      [
+        "parent/18",
+        [
+          18,
+          3.604
+        ]
+      ],
+      [
+        "name/19",
+        [
+          21,
+          49.421
+        ]
+      ],
+      [
+        "parent/19",
+        [
+          18,
+          3.604
+        ]
+      ],
+      [
+        "name/20",
+        [
+          22,
+          49.421
+        ]
+      ],
+      [
+        "parent/20",
+        [
+          18,
+          3.604
+        ]
+      ],
+      [
+        "name/21",
+        [
+          23,
+          49.421
+        ]
+      ],
+      [
+        "parent/21",
+        [
+          0,
+          3.604
+        ]
+      ],
+      [
+        "name/22",
+        [
+          24,
+          7.811,
+          25,
+          31.505
+        ]
+      ],
+      [
+        "parent/22",
+        []
+      ],
+      [
+        "name/23",
+        [
+          26,
+          49.421
+        ]
+      ],
+      [
+        "parent/23",
+        [
+          24,
+          0.878,
+          25,
+          3.543
+        ]
+      ],
+      [
+        "name/24",
+        [
+          8,
+          36.35
+        ]
+      ],
+      [
+        "parent/24",
+        [
+          24,
+          0.878,
+          27,
+          2.909
+        ]
+      ],
+      [
+        "name/25",
+        [
+          28,
+          38.369
+        ]
+      ],
+      [
+        "parent/25",
+        [
+          24,
+          0.878,
+          27,
+          2.909
+        ]
+      ],
+      [
+        "name/26",
+        [
+          29,
+          49.421
+        ]
+      ],
+      [
+        "parent/26",
+        [
+          24,
+          0.878,
+          27,
+          2.909
+        ]
+      ],
+      [
+        "name/27",
+        [
+          30,
+          49.421
+        ]
+      ],
+      [
+        "parent/27",
+        [
+          24,
+          0.878,
+          27,
+          2.909
+        ]
+      ],
+      [
+        "name/28",
+        [
+          12,
+          40.897
+        ]
+      ],
+      [
+        "parent/28",
+        [
+          24,
+          0.878,
+          27,
+          2.909
+        ]
+      ],
+      [
+        "name/29",
+        [
+          24,
+          7.811,
+          31,
+          31.505
+        ]
+      ],
+      [
+        "parent/29",
+        []
+      ],
+      [
+        "name/30",
+        [
+          32,
+          49.421
+        ]
+      ],
+      [
+        "parent/30",
+        [
+          24,
+          0.878,
+          31,
+          3.543
+        ]
+      ],
+      [
+        "name/31",
+        [
+          33,
+          49.421
+        ]
+      ],
+      [
+        "parent/31",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/32",
+        [
+          35,
+          49.421
+        ]
+      ],
+      [
+        "parent/32",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/33",
+        [
+          36,
+          49.421
+        ]
+      ],
+      [
+        "parent/33",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/34",
+        [
+          28,
+          38.369
+        ]
+      ],
+      [
+        "parent/34",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/35",
+        [
+          16,
+          44.282
+        ]
+      ],
+      [
+        "parent/35",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/36",
+        [
+          37,
+          49.421
+        ]
+      ],
+      [
+        "parent/36",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/37",
+        [
+          38,
+          49.421
+        ]
+      ],
+      [
+        "parent/37",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/38",
+        [
+          39,
+          49.421
+        ]
+      ],
+      [
+        "parent/38",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/39",
+        [
+          40,
+          49.421
+        ]
+      ],
+      [
+        "parent/39",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/40",
+        [
+          41,
+          49.421
+        ]
+      ],
+      [
+        "parent/40",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/41",
+        [
+          42,
+          49.421
+        ]
+      ],
+      [
+        "parent/41",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/42",
+        [
+          43,
+          49.421
+        ]
+      ],
+      [
+        "parent/42",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/43",
+        [
+          44,
+          49.421
+        ]
+      ],
+      [
+        "parent/43",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/44",
+        [
+          45,
+          49.421
+        ]
+      ],
+      [
+        "parent/44",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/45",
+        [
+          46,
+          49.421
+        ]
+      ],
+      [
+        "parent/45",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/46",
+        [
+          47,
+          44.282
+        ]
+      ],
+      [
+        "parent/46",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/47",
+        [
+          8,
+          36.35
+        ]
+      ],
+      [
+        "parent/47",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/48",
+        [
+          48,
+          49.421
+        ]
+      ],
+      [
+        "parent/48",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/49",
+        [
+          49,
+          49.421
+        ]
+      ],
+      [
+        "parent/49",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/50",
+        [
+          50,
+          49.421
+        ]
+      ],
+      [
+        "parent/50",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/51",
+        [
+          51,
+          49.421
+        ]
+      ],
+      [
+        "parent/51",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/52",
+        [
+          52,
+          49.421
+        ]
+      ],
+      [
+        "parent/52",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/53",
+        [
+          53,
+          49.421
+        ]
+      ],
+      [
+        "parent/53",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/54",
+        [
+          2,
+          44.282
+        ]
+      ],
+      [
+        "parent/54",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/55",
+        [
+          54,
+          49.421
+        ]
+      ],
+      [
+        "parent/55",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/56",
+        [
+          55,
+          49.421
+        ]
+      ],
+      [
+        "parent/56",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/57",
+        [
+          56,
+          49.421
+        ]
+      ],
+      [
+        "parent/57",
+        [
+          24,
+          0.878,
+          34,
+          1.613
+        ]
+      ],
+      [
+        "name/58",
+        [
+          57,
+          44.282
+        ]
+      ],
+      [
+        "parent/58",
+        []
+      ],
+      [
+        "name/59",
+        [
+          58,
+          49.421
+        ]
+      ],
+      [
+        "parent/59",
+        [
+          57,
+          4.802
+        ]
+      ],
+      [
+        "name/60",
+        [
+          59,
+          36.35
+        ]
+      ],
+      [
+        "parent/60",
+        [
+          60,
+          5.36
+        ]
+      ],
+      [
+        "name/61",
+        [
+          24,
+          7.811,
+          61,
+          29.097
+        ]
+      ],
+      [
+        "parent/61",
+        []
+      ],
+      [
+        "name/62",
+        [
+          62,
+          49.421
+        ]
+      ],
+      [
+        "parent/62",
+        [
+          24,
+          0.878,
+          61,
+          3.273
+        ]
+      ],
+      [
+        "name/63",
+        [
+          63,
+          44.282
+        ]
+      ],
+      [
+        "parent/63",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/64",
+        [
+          65,
+          44.282
+        ]
+      ],
+      [
+        "parent/64",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/65",
+        [
+          66,
+          44.282
+        ]
+      ],
+      [
+        "parent/65",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/66",
+        [
+          67,
+          44.282
+        ]
+      ],
+      [
+        "parent/66",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/67",
+        [
+          68,
+          40.897
+        ]
+      ],
+      [
+        "parent/67",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/68",
+        [
+          69,
+          44.282
+        ]
+      ],
+      [
+        "parent/68",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/69",
+        [
+          70,
+          44.282
+        ]
+      ],
+      [
+        "parent/69",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/70",
+        [
+          71,
+          44.282
+        ]
+      ],
+      [
+        "parent/70",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/71",
+        [
+          72,
+          44.282
+        ]
+      ],
+      [
+        "parent/71",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/72",
+        [
+          73,
+          44.282
+        ]
+      ],
+      [
+        "parent/72",
+        [
+          24,
+          0.878,
+          64,
+          2.388
+        ]
+      ],
+      [
+        "name/73",
+        [
+          74,
+          49.421
+        ]
+      ],
+      [
+        "parent/73",
+        [
+          24,
+          0.878,
+          61,
+          3.273
+        ]
+      ],
+      [
+        "name/74",
+        [
+          75,
+          49.421
+        ]
+      ],
+      [
+        "parent/74",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/75",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/75",
+        [
+          24,
+          0.878,
+          77,
+          3.955
+        ]
+      ],
+      [
+        "name/76",
+        [
+          78,
+          49.421
+        ]
+      ],
+      [
+        "parent/76",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/77",
+        [
+          79,
+          49.421
+        ]
+      ],
+      [
+        "parent/77",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/78",
+        [
+          80,
+          49.421
+        ]
+      ],
+      [
+        "parent/78",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/79",
+        [
+          81,
+          49.421
+        ]
+      ],
+      [
+        "parent/79",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/80",
+        [
+          82,
+          49.421
+        ]
+      ],
+      [
+        "parent/80",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/81",
+        [
+          83,
+          49.421
+        ]
+      ],
+      [
+        "parent/81",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/82",
+        [
+          28,
+          38.369
+        ]
+      ],
+      [
+        "parent/82",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/83",
+        [
+          63,
+          44.282
+        ]
+      ],
+      [
+        "parent/83",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/84",
+        [
+          65,
+          44.282
+        ]
+      ],
+      [
+        "parent/84",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/85",
+        [
+          66,
+          44.282
+        ]
+      ],
+      [
+        "parent/85",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/86",
+        [
+          67,
+          44.282
+        ]
+      ],
+      [
+        "parent/86",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/87",
+        [
+          73,
+          44.282
+        ]
+      ],
+      [
+        "parent/87",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/88",
+        [
+          72,
+          44.282
+        ]
+      ],
+      [
+        "parent/88",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/89",
+        [
+          71,
+          44.282
+        ]
+      ],
+      [
+        "parent/89",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/90",
+        [
+          68,
+          40.897
+        ]
+      ],
+      [
+        "parent/90",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/91",
+        [
+          69,
+          44.282
+        ]
+      ],
+      [
+        "parent/91",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/92",
+        [
+          70,
+          44.282
+        ]
+      ],
+      [
+        "parent/92",
+        [
+          24,
+          0.878,
+          76,
+          1.932
+        ]
+      ],
+      [
+        "name/93",
+        [
+          84,
+          44.282
+        ]
+      ],
+      [
+        "parent/93",
+        []
+      ],
+      [
+        "name/94",
+        [
+          85,
+          49.421
+        ]
+      ],
+      [
+        "parent/94",
+        [
+          84,
+          4.802
+        ]
+      ],
+      [
+        "name/95",
+        [
+          86,
+          49.421
+        ]
+      ],
+      [
+        "parent/95",
+        [
+          87,
+          4.802
+        ]
+      ],
+      [
+        "name/96",
+        [
+          88,
+          49.421
+        ]
+      ],
+      [
+        "parent/96",
+        [
+          89,
+          3.942
+        ]
+      ],
+      [
+        "name/97",
+        [
+          90,
+          49.421
+        ]
+      ],
+      [
+        "parent/97",
+        [
+          89,
+          3.942
+        ]
+      ],
+      [
+        "name/98",
+        [
+          91,
+          49.421
+        ]
+      ],
+      [
+        "parent/98",
+        [
+          89,
+          3.942
+        ]
+      ],
+      [
+        "name/99",
+        [
+          92,
+          49.421
+        ]
+      ],
+      [
+        "parent/99",
+        [
+          89,
+          3.942
+        ]
+      ],
+      [
+        "name/100",
+        [
+          93,
+          49.421
+        ]
+      ],
+      [
+        "parent/100",
+        [
+          89,
+          3.942
+        ]
+      ],
+      [
+        "name/101",
+        [
+          59,
+          36.35
+        ]
+      ],
+      [
+        "parent/101",
+        [
+          87,
+          4.802
+        ]
+      ],
+      [
+        "name/102",
+        [
+          94,
+          38.369
+        ]
+      ],
+      [
+        "parent/102",
+        []
+      ],
+      [
+        "name/103",
+        [
+          95,
+          49.421
+        ]
+      ],
+      [
+        "parent/103",
+        [
+          94,
+          4.161
+        ]
+      ],
+      [
+        "name/104",
+        [
+          96,
+          49.421
+        ]
+      ],
+      [
+        "parent/104",
+        [
+          97,
+          4.435
+        ]
+      ],
+      [
+        "name/105",
+        [
+          28,
+          38.369
+        ]
+      ],
+      [
+        "parent/105",
+        [
+          97,
+          4.435
+        ]
+      ],
+      [
+        "name/106",
+        [
+          59,
+          36.35
+        ]
+      ],
+      [
+        "parent/106",
+        [
+          97,
+          4.435
+        ]
+      ],
+      [
+        "name/107",
+        [
+          98,
+          44.282
+        ]
+      ],
+      [
+        "parent/107",
+        [
+          94,
+          4.161
+        ]
+      ],
+      [
+        "name/108",
+        [
+          99,
+          49.421
+        ]
+      ],
+      [
+        "parent/108",
+        [
+          94,
+          4.161
+        ]
+      ],
+      [
+        "name/109",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/109",
+        [
+          100,
+          5.36
+        ]
+      ],
+      [
+        "name/110",
+        [
+          11,
+          40.897
+        ]
+      ],
+      [
+        "parent/110",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/111",
+        [
+          9,
+          44.282
+        ]
+      ],
+      [
+        "parent/111",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/112",
+        [
+          102,
+          44.282
+        ]
+      ],
+      [
+        "parent/112",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/113",
+        [
+          103,
+          49.421
+        ]
+      ],
+      [
+        "parent/113",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/114",
+        [
+          104,
+          44.282
+        ]
+      ],
+      [
+        "parent/114",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/115",
+        [
+          14,
+          44.282
+        ]
+      ],
+      [
+        "parent/115",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/116",
+        [
+          105,
+          49.421
+        ]
+      ],
+      [
+        "parent/116",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/117",
+        [
+          106,
+          49.421
+        ]
+      ],
+      [
+        "parent/117",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/118",
+        [
+          107,
+          49.421
+        ]
+      ],
+      [
+        "parent/118",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/119",
+        [
+          108,
+          49.421
+        ]
+      ],
+      [
+        "parent/119",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/120",
+        [
+          109,
+          49.421
+        ]
+      ],
+      [
+        "parent/120",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/121",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/121",
+        [
+          110,
+          5.36
+        ]
+      ],
+      [
+        "name/122",
+        [
+          111,
+          49.421
+        ]
+      ],
+      [
+        "parent/122",
+        [
+          101,
+          3.047
+        ]
+      ],
+      [
+        "name/123",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/123",
+        [
+          112,
+          5.36
+        ]
+      ],
+      [
+        "name/124",
+        [
+          113,
+          44.282
+        ]
+      ],
+      [
+        "parent/124",
+        []
+      ],
+      [
+        "name/125",
+        [
+          114,
+          49.421
+        ]
+      ],
+      [
+        "parent/125",
+        [
+          113,
+          4.802
+        ]
+      ],
+      [
+        "name/126",
+        [
+          59,
+          36.35
+        ]
+      ],
+      [
+        "parent/126",
+        [
+          115,
+          5.36
+        ]
+      ],
+      [
+        "name/127",
+        [
+          116,
+          44.282
+        ]
+      ],
+      [
+        "parent/127",
+        []
+      ],
+      [
+        "name/128",
+        [
+          117,
+          49.421
+        ]
+      ],
+      [
+        "parent/128",
+        [
+          116,
+          4.802
+        ]
+      ],
+      [
+        "name/129",
+        [
+          59,
+          36.35
+        ]
+      ],
+      [
+        "parent/129",
+        [
+          118,
+          5.36
+        ]
+      ],
+      [
+        "name/130",
+        [
+          119,
+          49.421
+        ]
+      ],
+      [
+        "parent/130",
+        []
+      ],
+      [
+        "name/131",
+        [
+          120,
+          49.421
+        ]
+      ],
+      [
+        "parent/131",
+        []
+      ],
+      [
+        "name/132",
+        [
+          121,
+          15.78
+        ]
+      ],
+      [
+        "parent/132",
+        []
+      ],
+      [
+        "name/133",
+        [
+          122,
+          49.421
+        ]
+      ],
+      [
+        "parent/133",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/134",
+        [
+          11,
+          40.897
+        ]
+      ],
+      [
+        "parent/134",
+        [
+          123,
+          4.161
+        ]
+      ],
+      [
+        "name/135",
+        [
+          124,
+          49.421
+        ]
+      ],
+      [
+        "parent/135",
+        [
+          123,
+          4.161
+        ]
+      ],
+      [
+        "name/136",
+        [
+          12,
+          40.897
+        ]
+      ],
+      [
+        "parent/136",
+        [
+          123,
+          4.161
+        ]
+      ],
+      [
+        "name/137",
+        [
+          125,
+          49.421
+        ]
+      ],
+      [
+        "parent/137",
+        [
+          123,
+          4.161
+        ]
+      ],
+      [
+        "name/138",
+        [
+          126,
+          49.421
+        ]
+      ],
+      [
+        "parent/138",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/139",
+        [
+          127,
+          49.421
+        ]
+      ],
+      [
+        "parent/139",
+        [
+          128,
+          4.161
+        ]
+      ],
+      [
+        "name/140",
+        [
+          129,
+          49.421
+        ]
+      ],
+      [
+        "parent/140",
+        [
+          128,
+          4.161
+        ]
+      ],
+      [
+        "name/141",
+        [
+          130,
+          49.421
+        ]
+      ],
+      [
+        "parent/141",
+        [
+          128,
+          4.161
+        ]
+      ],
+      [
+        "name/142",
+        [
+          131,
+          49.421
+        ]
+      ],
+      [
+        "parent/142",
+        [
+          128,
+          4.161
+        ]
+      ],
+      [
+        "name/143",
+        [
+          132,
+          49.421
+        ]
+      ],
+      [
+        "parent/143",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/144",
+        [
+          133,
+          49.421
+        ]
+      ],
+      [
+        "parent/144",
+        [
+          134,
+          4.802
+        ]
+      ],
+      [
+        "name/145",
+        [
+          135,
+          49.421
+        ]
+      ],
+      [
+        "parent/145",
+        [
+          134,
+          4.802
+        ]
+      ],
+      [
+        "name/146",
+        [
+          136,
+          49.421
+        ]
+      ],
+      [
+        "parent/146",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/147",
+        [
+          137,
+          40.897
+        ]
+      ],
+      [
+        "parent/147",
+        [
+          138,
+          4.435
+        ]
+      ],
+      [
+        "name/148",
+        [
+          139,
+          40.897
+        ]
+      ],
+      [
+        "parent/148",
+        [
+          138,
+          4.435
+        ]
+      ],
+      [
+        "name/149",
+        [
+          140,
+          40.897
+        ]
+      ],
+      [
+        "parent/149",
+        [
+          138,
+          4.435
+        ]
+      ],
+      [
+        "name/150",
+        [
+          141,
+          49.421
+        ]
+      ],
+      [
+        "parent/150",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/151",
+        [
+          142,
+          49.421
+        ]
+      ],
+      [
+        "parent/151",
+        [
+          143,
+          4.161
+        ]
+      ],
+      [
+        "name/152",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/152",
+        [
+          144,
+          5.36
+        ]
+      ],
+      [
+        "name/153",
+        [
+          137,
+          40.897
+        ]
+      ],
+      [
+        "parent/153",
+        [
+          143,
+          4.161
+        ]
+      ],
+      [
+        "name/154",
+        [
+          139,
+          40.897
+        ]
+      ],
+      [
+        "parent/154",
+        [
+          143,
+          4.161
+        ]
+      ],
+      [
+        "name/155",
+        [
+          140,
+          40.897
+        ]
+      ],
+      [
+        "parent/155",
+        [
+          143,
+          4.161
+        ]
+      ],
+      [
+        "name/156",
+        [
+          145,
+          49.421
+        ]
+      ],
+      [
+        "parent/156",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/157",
+        [
+          146,
+          49.421
+        ]
+      ],
+      [
+        "parent/157",
+        [
+          147,
+          4.161
+        ]
+      ],
+      [
+        "name/158",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/158",
+        [
+          148,
+          5.36
+        ]
+      ],
+      [
+        "name/159",
+        [
+          137,
+          40.897
+        ]
+      ],
+      [
+        "parent/159",
+        [
+          147,
+          4.161
+        ]
+      ],
+      [
+        "name/160",
+        [
+          139,
+          40.897
+        ]
+      ],
+      [
+        "parent/160",
+        [
+          147,
+          4.161
+        ]
+      ],
+      [
+        "name/161",
+        [
+          140,
+          40.897
+        ]
+      ],
+      [
+        "parent/161",
+        [
+          147,
+          4.161
+        ]
+      ],
+      [
+        "name/162",
+        [
+          149,
+          49.421
+        ]
+      ],
+      [
+        "parent/162",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/163",
+        [
+          150,
+          49.421
+        ]
+      ],
+      [
+        "parent/163",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/164",
+        [
+          151,
+          49.421
+        ]
+      ],
+      [
+        "parent/164",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/165",
+        [
+          152,
+          49.421
+        ]
+      ],
+      [
+        "parent/165",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/166",
+        [
+          153,
+          49.421
+        ]
+      ],
+      [
+        "parent/166",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/167",
+        [
+          154,
+          49.421
+        ]
+      ],
+      [
+        "parent/167",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/168",
+        [
+          102,
+          44.282
+        ]
+      ],
+      [
+        "parent/168",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/169",
+        [
+          155,
+          49.421
+        ]
+      ],
+      [
+        "parent/169",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/170",
+        [
+          104,
+          44.282
+        ]
+      ],
+      [
+        "parent/170",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/171",
+        [
+          156,
+          49.421
+        ]
+      ],
+      [
+        "parent/171",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/172",
+        [
+          157,
+          49.421
+        ]
+      ],
+      [
+        "parent/172",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/173",
+        [
+          158,
+          49.421
+        ]
+      ],
+      [
+        "parent/173",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/174",
+        [
+          159,
+          49.421
+        ]
+      ],
+      [
+        "parent/174",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/175",
+        [
+          160,
+          49.421
+        ]
+      ],
+      [
+        "parent/175",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/176",
+        [
+          161,
+          49.421
+        ]
+      ],
+      [
+        "parent/176",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/177",
+        [
+          162,
+          49.421
+        ]
+      ],
+      [
+        "parent/177",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/178",
+        [
+          163,
+          49.421
+        ]
+      ],
+      [
+        "parent/178",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/179",
+        [
+          164,
+          49.421
+        ]
+      ],
+      [
+        "parent/179",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/180",
+        [
+          165,
+          49.421
+        ]
+      ],
+      [
+        "parent/180",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/181",
+        [
+          166,
+          49.421
+        ]
+      ],
+      [
+        "parent/181",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/182",
+        [
+          167,
+          49.421
+        ]
+      ],
+      [
+        "parent/182",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/183",
+        [
+          5,
+          31.971
+        ]
+      ],
+      [
+        "parent/183",
+        [
+          168,
+          5.36
+        ]
+      ],
+      [
+        "name/184",
+        [
+          169,
+          49.421
+        ]
+      ],
+      [
+        "parent/184",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/185",
+        [
+          170,
+          49.421
+        ]
+      ],
+      [
+        "parent/185",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/186",
+        [
+          171,
+          49.421
+        ]
+      ],
+      [
+        "parent/186",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/187",
+        [
+          172,
+          49.421
+        ]
+      ],
+      [
+        "parent/187",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/188",
+        [
+          47,
+          44.282
+        ]
+      ],
+      [
+        "parent/188",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/189",
+        [
+          173,
+          49.421
+        ]
+      ],
+      [
+        "parent/189",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/190",
+        [
+          174,
+          49.421
+        ]
+      ],
+      [
+        "parent/190",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/191",
+        [
+          68,
+          40.897
+        ]
+      ],
+      [
+        "parent/191",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/192",
+        [
+          175,
+          49.421
+        ]
+      ],
+      [
+        "parent/192",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/193",
+        [
+          176,
+          49.421
+        ]
+      ],
+      [
+        "parent/193",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/194",
+        [
+          177,
+          49.421
+        ]
+      ],
+      [
+        "parent/194",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/195",
+        [
+          178,
+          49.421
+        ]
+      ],
+      [
+        "parent/195",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/196",
+        [
+          179,
+          49.421
+        ]
+      ],
+      [
+        "parent/196",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/197",
+        [
+          180,
+          49.421
+        ]
+      ],
+      [
+        "parent/197",
+        [
+          121,
+          1.711
+        ]
+      ],
+      [
+        "name/198",
+        [
+          181,
+          36.35
+        ]
+      ],
+      [
+        "parent/198",
+        []
+      ],
+      [
+        "name/199",
+        [
+          98,
+          44.282
+        ]
+      ],
+      [
+        "parent/199",
+        [
+          181,
+          3.942
+        ]
+      ],
+      [
+        "name/200",
+        [
+          182,
+          49.421
+        ]
+      ],
+      [
+        "parent/200",
+        [
+          181,
+          3.942
+        ]
+      ],
+      [
+        "name/201",
+        [
+          183,
+          49.421
+        ]
+      ],
+      [
+        "parent/201",
+        [
+          181,
+          3.942
+        ]
+      ],
+      [
+        "name/202",
+        [
+          184,
+          49.421
+        ]
+      ],
+      [
+        "parent/202",
+        [
+          181,
+          3.942
+        ]
+      ]
+    ],
+    "invertedIndex": [
+      [
+        "__type",
+        {
+          "_index": 5,
+          "name": {
+            "4": {},
+            "75": {},
+            "109": {},
+            "121": {},
+            "123": {},
+            "152": {},
+            "158": {},
+            "183": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_action",
+        {
+          "_index": 142,
+          "name": {
+            "151": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_addtags",
+        {
+          "_index": 41,
+          "name": {
+            "40": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_allocspan",
+        {
+          "_index": 83,
+          "name": {
+            "81": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_command",
+        {
+          "_index": 146,
+          "name": {
+            "157": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_context",
+        {
+          "_index": 45,
+          "name": {
+            "44": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_currentcontext",
+        {
+          "_index": 78,
+          "name": {
+            "76": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_currenttrace",
+        {
+          "_index": 79,
+          "name": {
+            "77": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_extract",
+        {
+          "_index": 73,
+          "name": {
+            "72": {},
+            "87": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_finish",
+        {
+          "_index": 46,
+          "name": {
+            "45": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_finishedspans",
+        {
+          "_index": 75,
+          "name": {
+            "74": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_foxxcontext",
+        {
+          "_index": 36,
+          "name": {
+            "33": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_getbaggageitem",
+        {
+          "_index": 43,
+          "name": {
+            "42": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_inject",
+        {
+          "_index": 72,
+          "name": {
+            "71": {},
+            "88": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_log",
+        {
+          "_index": 44,
+          "name": {
+            "43": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_params",
+        {
+          "_index": 140,
+          "name": {
+            "149": {},
+            "155": {},
+            "161": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_parentcontext",
+        {
+          "_index": 139,
+          "name": {
+            "148": {},
+            "154": {},
+            "160": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_refs",
+        {
+          "_index": 35,
+          "name": {
+            "32": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_reporter",
+        {
+          "_index": 80,
+          "name": {
+            "78": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_setbaggageitem",
+        {
+          "_index": 42,
+          "name": {
+            "41": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_setoperationname",
+        {
+          "_index": 40,
+          "name": {
+            "39": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_spandata",
+        {
+          "_index": 33,
+          "name": {
+            "31": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_startspan",
+        {
+          "_index": 71,
+          "name": {
+            "70": {},
+            "89": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_traceid",
+        {
+          "_index": 137,
+          "name": {
+            "147": {},
+            "153": {},
+            "159": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "_tracer",
+        {
+          "_index": 56,
+          "name": {
+            "57": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "addreference",
+        {
+          "_index": 39,
+          "name": {
+            "38": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "addtags",
+        {
+          "_index": 53,
+          "name": {
+            "53": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "attachspan",
+        {
+          "_index": 179,
+          "name": {
+            "196": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "baggage",
+        {
+          "_index": 12,
+          "name": {
+            "9": {},
+            "28": {},
+            "136": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "baggageschema",
+        {
+          "_index": 158,
+          "name": {
+            "173": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "breaklength",
+        {
+          "_index": 91,
+          "name": {
+            "98": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "cleartracecontext",
+        {
+          "_index": 174,
+          "name": {
+            "190": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "command",
+        {
+          "_index": 133,
+          "name": {
+            "144": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "compact",
+        {
+          "_index": 92,
+          "name": {
+            "99": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "consolereporter",
+        {
+          "_index": 85,
+          "name": {
+            "94": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "constructor",
+        {
+          "_index": 28,
+          "name": {
+            "25": {},
+            "34": {},
+            "82": {},
+            "105": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "context",
+        {
+          "_index": 8,
+          "name": {
+            "6": {},
+            "12": {},
+            "15": {},
+            "24": {},
+            "47": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "contextschema",
+        {
+          "_index": 159,
+          "name": {
+            "174": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "contextualtracer",
+        {
+          "_index": 62,
+          "name": {
+            "62": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "currentcontext",
+        {
+          "_index": 63,
+          "name": {
+            "63": {},
+            "83": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "currenttrace",
+        {
+          "_index": 65,
+          "name": {
+            "64": {},
+            "84": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "datadogreporter",
+        {
+          "_index": 95,
+          "name": {
+            "103": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "ddurl",
+        {
+          "_index": 96,
+          "name": {
+            "104": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "depth",
+        {
+          "_index": 88,
+          "name": {
+            "96": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "duration",
+        {
+          "_index": 106,
+          "name": {
+            "117": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "endpoint",
+        {
+          "_index": 149,
+          "name": {
+            "162": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "error",
+        {
+          "_index": 108,
+          "name": {
+            "119": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "executetask",
+        {
+          "_index": 178,
+          "name": {
+            "195": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "executetransaction",
+        {
+          "_index": 177,
+          "name": {
+            "194": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "extract",
+        {
+          "_index": 70,
+          "name": {
+            "69": {},
+            "92": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "fields",
+        {
+          "_index": 3,
+          "name": {
+            "3": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "finish",
+        {
+          "_index": 55,
+          "name": {
+            "56": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "finishtimems",
+        {
+          "_index": 20,
+          "name": {
+            "17": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "flush",
+        {
+          "_index": 67,
+          "name": {
+            "66": {},
+            "86": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "force_sample",
+        {
+          "_index": 125,
+          "name": {
+            "137": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "forcesampleschema",
+        {
+          "_index": 166,
+          "name": {
+            "181": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "format_options",
+        {
+          "_index": 86,
+          "name": {
+            "95": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "foxxcontext",
+        {
+          "_index": 26,
+          "name": {
+            "23": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "foxxreporter",
+        {
+          "_index": 114,
+          "name": {
+            "125": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "foxxspan",
+        {
+          "_index": 32,
+          "name": {
+            "30": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "foxxtracer",
+        {
+          "_index": 74,
+          "name": {
+            "73": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "generateuuid",
+        {
+          "_index": 37,
+          "name": {
+            "36": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "getbaggageitem",
+        {
+          "_index": 51,
+          "name": {
+            "51": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "getparent",
+        {
+          "_index": 47,
+          "name": {
+            "46": {},
+            "188": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "helpers/middleware",
+        {
+          "_index": 181,
+          "name": {
+            "198": {}
+          },
+          "parent": {
+            "199": {},
+            "200": {},
+            "201": {},
+            "202": {}
+          }
+        }
+      ],
+      [
+        "helpers/spandata",
+        {
+          "_index": 0,
+          "name": {
+            "0": {}
+          },
+          "parent": {
+            "1": {},
+            "2": {},
+            "6": {},
+            "10": {},
+            "13": {},
+            "21": {}
+          }
+        }
+      ],
+      [
+        "helpers/spandata\".context",
+        {
+          "_index": 10,
+          "name": {},
+          "parent": {
+            "7": {},
+            "8": {},
+            "9": {}
+          }
+        }
+      ],
+      [
+        "helpers/spandata\".log",
+        {
+          "_index": 4,
+          "name": {},
+          "parent": {
+            "3": {},
+            "5": {}
+          }
+        }
+      ],
+      [
+        "helpers/spandata\".log.fields",
+        {
+          "_index": 6,
+          "name": {},
+          "parent": {
+            "4": {}
+          }
+        }
+      ],
+      [
+        "helpers/spandata\".reference",
+        {
+          "_index": 15,
+          "name": {},
+          "parent": {
+            "11": {},
+            "12": {}
+          }
+        }
+      ],
+      [
+        "helpers/spandata\".spandata",
+        {
+          "_index": 18,
+          "name": {},
+          "parent": {
+            "14": {},
+            "15": {},
+            "16": {},
+            "17": {},
+            "18": {},
+            "19": {},
+            "20": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils",
+        {
+          "_index": 121,
+          "name": {
+            "132": {}
+          },
+          "parent": {
+            "133": {},
+            "138": {},
+            "143": {},
+            "146": {},
+            "150": {},
+            "156": {},
+            "162": {},
+            "163": {},
+            "164": {},
+            "165": {},
+            "166": {},
+            "167": {},
+            "168": {},
+            "169": {},
+            "170": {},
+            "171": {},
+            "172": {},
+            "173": {},
+            "174": {},
+            "175": {},
+            "176": {},
+            "177": {},
+            "178": {},
+            "179": {},
+            "180": {},
+            "181": {},
+            "182": {},
+            "184": {},
+            "185": {},
+            "186": {},
+            "187": {},
+            "188": {},
+            "189": {},
+            "190": {},
+            "191": {},
+            "192": {},
+            "193": {},
+            "194": {},
+            "195": {},
+            "196": {},
+            "197": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".instrumentedopts",
+        {
+          "_index": 138,
+          "name": {},
+          "parent": {
+            "147": {},
+            "148": {},
+            "149": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".taskopts",
+        {
+          "_index": 134,
+          "name": {},
+          "parent": {
+            "144": {},
+            "145": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".taskparams",
+        {
+          "_index": 147,
+          "name": {},
+          "parent": {
+            "157": {},
+            "159": {},
+            "160": {},
+            "161": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".taskparams._command",
+        {
+          "_index": 148,
+          "name": {},
+          "parent": {
+            "158": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".trace_header_keys",
+        {
+          "_index": 123,
+          "name": {},
+          "parent": {
+            "134": {},
+            "135": {},
+            "136": {},
+            "137": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".trace_header_schemas",
+        {
+          "_index": 168,
+          "name": {},
+          "parent": {
+            "183": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".traceheaders",
+        {
+          "_index": 128,
+          "name": {},
+          "parent": {
+            "139": {},
+            "140": {},
+            "141": {},
+            "142": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".txnparams",
+        {
+          "_index": 143,
+          "name": {},
+          "parent": {
+            "151": {},
+            "153": {},
+            "154": {},
+            "155": {}
+          }
+        }
+      ],
+      [
+        "helpers/utils\".txnparams._action",
+        {
+          "_index": 144,
+          "name": {},
+          "parent": {
+            "152": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxcontext",
+        {
+          "_index": 25,
+          "name": {
+            "22": {}
+          },
+          "parent": {
+            "23": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxcontext\".foxxcontext",
+        {
+          "_index": 27,
+          "name": {},
+          "parent": {
+            "24": {},
+            "25": {},
+            "26": {},
+            "27": {},
+            "28": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxspan",
+        {
+          "_index": 31,
+          "name": {
+            "29": {}
+          },
+          "parent": {
+            "30": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxspan\".foxxspan",
+        {
+          "_index": 34,
+          "name": {},
+          "parent": {
+            "31": {},
+            "32": {},
+            "33": {},
+            "34": {},
+            "35": {},
+            "36": {},
+            "37": {},
+            "38": {},
+            "39": {},
+            "40": {},
+            "41": {},
+            "42": {},
+            "43": {},
+            "44": {},
+            "45": {},
+            "46": {},
+            "47": {},
+            "48": {},
+            "49": {},
+            "50": {},
+            "51": {},
+            "52": {},
+            "53": {},
+            "54": {},
+            "55": {},
+            "56": {},
+            "57": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxtracer",
+        {
+          "_index": 61,
+          "name": {
+            "61": {}
+          },
+          "parent": {
+            "62": {},
+            "73": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxtracer\".contextualtracer",
+        {
+          "_index": 64,
+          "name": {},
+          "parent": {
+            "63": {},
+            "64": {},
+            "65": {},
+            "66": {},
+            "67": {},
+            "68": {},
+            "69": {},
+            "70": {},
+            "71": {},
+            "72": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxtracer\".foxxtracer",
+        {
+          "_index": 76,
+          "name": {},
+          "parent": {
+            "74": {},
+            "76": {},
+            "77": {},
+            "78": {},
+            "79": {},
+            "80": {},
+            "81": {},
+            "82": {},
+            "83": {},
+            "84": {},
+            "85": {},
+            "86": {},
+            "87": {},
+            "88": {},
+            "89": {},
+            "90": {},
+            "91": {},
+            "92": {}
+          }
+        }
+      ],
+      [
+        "impl/foxxtracer\".foxxtracer._finishedspans",
+        {
+          "_index": 77,
+          "name": {},
+          "parent": {
+            "75": {}
+          }
+        }
+      ],
+      [
+        "index",
+        {
+          "_index": 120,
+          "name": {
+            "131": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "initcontext",
+        {
+          "_index": 38,
+          "name": {
+            "37": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "inittracer",
+        {
+          "_index": 176,
+          "name": {
+            "193": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "inject",
+        {
+          "_index": 69,
+          "name": {
+            "68": {},
+            "91": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "instrumentedopts",
+        {
+          "_index": 136,
+          "name": {
+            "146": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "instrumentedquery",
+        {
+          "_index": 180,
+          "name": {
+            "197": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "iscontext",
+        {
+          "_index": 82,
+          "name": {
+            "80": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "istraceheaders",
+        {
+          "_index": 81,
+          "name": {
+            "79": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "joi",
+        {
+          "_index": 152,
+          "name": {
+            "165": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "log",
+        {
+          "_index": 2,
+          "name": {
+            "2": {},
+            "54": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "logevent",
+        {
+          "_index": 54,
+          "name": {
+            "55": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "logs",
+        {
+          "_index": 21,
+          "name": {
+            "19": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "logschema",
+        {
+          "_index": 161,
+          "name": {
+            "176": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "maxarraylength",
+        {
+          "_index": 90,
+          "name": {
+            "97": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "meta",
+        {
+          "_index": 109,
+          "name": {
+            "120": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "metrics",
+        {
+          "_index": 111,
+          "name": {
+            "122": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "name",
+        {
+          "_index": 102,
+          "name": {
+            "112": {},
+            "168": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "nextfunction",
+        {
+          "_index": 183,
+          "name": {
+            "201": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "noopreporter",
+        {
+          "_index": 117,
+          "name": {
+            "128": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "nooptracer",
+        {
+          "_index": 154,
+          "name": {
+            "167": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "opentracing",
+        {
+          "_index": 24,
+          "name": {
+            "22": {},
+            "29": {},
+            "61": {}
+          },
+          "parent": {
+            "23": {},
+            "24": {},
+            "25": {},
+            "26": {},
+            "27": {},
+            "28": {},
+            "30": {},
+            "31": {},
+            "32": {},
+            "33": {},
+            "34": {},
+            "35": {},
+            "36": {},
+            "37": {},
+            "38": {},
+            "39": {},
+            "40": {},
+            "41": {},
+            "42": {},
+            "43": {},
+            "44": {},
+            "45": {},
+            "46": {},
+            "47": {},
+            "48": {},
+            "49": {},
+            "50": {},
+            "51": {},
+            "52": {},
+            "53": {},
+            "54": {},
+            "55": {},
+            "56": {},
+            "57": {},
+            "62": {},
+            "63": {},
+            "64": {},
+            "65": {},
+            "66": {},
+            "67": {},
+            "68": {},
+            "69": {},
+            "70": {},
+            "71": {},
+            "72": {},
+            "73": {},
+            "74": {},
+            "75": {},
+            "76": {},
+            "77": {},
+            "78": {},
+            "79": {},
+            "80": {},
+            "81": {},
+            "82": {},
+            "83": {},
+            "84": {},
+            "85": {},
+            "86": {},
+            "87": {},
+            "88": {},
+            "89": {},
+            "90": {},
+            "91": {},
+            "92": {}
+          }
+        }
+      ],
+      [
+        "operation",
+        {
+          "_index": 17,
+          "name": {
+            "14": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "params",
+        {
+          "_index": 135,
+          "name": {
+            "145": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "parent_id",
+        {
+          "_index": 107,
+          "name": {
+            "118": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "parent_span_id",
+        {
+          "_index": 124,
+          "name": {
+            "135": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "parsetraceheaders",
+        {
+          "_index": 170,
+          "name": {
+            "185": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "push",
+        {
+          "_index": 66,
+          "name": {
+            "65": {},
+            "85": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "query",
+        {
+          "_index": 151,
+          "name": {
+            "164": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "record",
+        {
+          "_index": 99,
+          "name": {
+            "108": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "reference",
+        {
+          "_index": 13,
+          "name": {
+            "10": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "references",
+        {
+          "_index": 22,
+          "name": {
+            "20": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "referenceschema",
+        {
+          "_index": 162,
+          "name": {
+            "177": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "report",
+        {
+          "_index": 59,
+          "name": {
+            "60": {},
+            "101": {},
+            "106": {},
+            "126": {},
+            "129": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "reporter",
+        {
+          "_index": 58,
+          "name": {
+            "59": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "reporters/consolereporter",
+        {
+          "_index": 84,
+          "name": {
+            "93": {}
+          },
+          "parent": {
+            "94": {}
+          }
+        }
+      ],
+      [
+        "reporters/consolereporter\".consolereporter",
+        {
+          "_index": 87,
+          "name": {},
+          "parent": {
+            "95": {},
+            "101": {}
+          }
+        }
+      ],
+      [
+        "reporters/consolereporter\".consolereporter.format_options",
+        {
+          "_index": 89,
+          "name": {},
+          "parent": {
+            "96": {},
+            "97": {},
+            "98": {},
+            "99": {},
+            "100": {}
+          }
+        }
+      ],
+      [
+        "reporters/datadogreporter",
+        {
+          "_index": 94,
+          "name": {
+            "102": {}
+          },
+          "parent": {
+            "103": {},
+            "107": {},
+            "108": {}
+          }
+        }
+      ],
+      [
+        "reporters/datadogreporter\".datadogreporter",
+        {
+          "_index": 97,
+          "name": {},
+          "parent": {
+            "104": {},
+            "105": {},
+            "106": {}
+          }
+        }
+      ],
+      [
+        "reporters/datadogreporter\".record",
+        {
+          "_index": 100,
+          "name": {},
+          "parent": {
+            "109": {}
+          }
+        }
+      ],
+      [
+        "reporters/datadogreporter\".record.__type",
+        {
+          "_index": 101,
+          "name": {},
+          "parent": {
+            "110": {},
+            "111": {},
+            "112": {},
+            "113": {},
+            "114": {},
+            "115": {},
+            "116": {},
+            "117": {},
+            "118": {},
+            "119": {},
+            "120": {},
+            "122": {}
+          }
+        }
+      ],
+      [
+        "reporters/datadogreporter\".record.__type.meta",
+        {
+          "_index": 110,
+          "name": {},
+          "parent": {
+            "121": {}
+          }
+        }
+      ],
+      [
+        "reporters/datadogreporter\".record.__type.metrics",
+        {
+          "_index": 112,
+          "name": {},
+          "parent": {
+            "123": {}
+          }
+        }
+      ],
+      [
+        "reporters/foxxreporter",
+        {
+          "_index": 113,
+          "name": {
+            "124": {}
+          },
+          "parent": {
+            "125": {}
+          }
+        }
+      ],
+      [
+        "reporters/foxxreporter\".foxxreporter",
+        {
+          "_index": 115,
+          "name": {},
+          "parent": {
+            "126": {}
+          }
+        }
+      ],
+      [
+        "reporters/index",
+        {
+          "_index": 119,
+          "name": {
+            "130": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "reporters/noopreporter",
+        {
+          "_index": 116,
+          "name": {
+            "127": {}
+          },
+          "parent": {
+            "128": {}
+          }
+        }
+      ],
+      [
+        "reporters/noopreporter\".noopreporter",
+        {
+          "_index": 118,
+          "name": {},
+          "parent": {
+            "129": {}
+          }
+        }
+      ],
+      [
+        "reporters/reporter",
+        {
+          "_index": 57,
+          "name": {
+            "58": {}
+          },
+          "parent": {
+            "59": {}
+          }
+        }
+      ],
+      [
+        "reporters/reporter\".reporter",
+        {
+          "_index": 60,
+          "name": {},
+          "parent": {
+            "60": {}
+          }
+        }
+      ],
+      [
+        "reportspan",
+        {
+          "_index": 175,
+          "name": {
+            "192": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "request",
+        {
+          "_index": 98,
+          "name": {
+            "107": {},
+            "199": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "resource",
+        {
+          "_index": 103,
+          "name": {
+            "113": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "response",
+        {
+          "_index": 182,
+          "name": {
+            "200": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "service",
+        {
+          "_index": 104,
+          "name": {
+            "114": {},
+            "170": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "setbaggageitem",
+        {
+          "_index": 50,
+          "name": {
+            "50": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "setendpointtraceheaders",
+        {
+          "_index": 169,
+          "name": {
+            "184": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "setoperationname",
+        {
+          "_index": 49,
+          "name": {
+            "49": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "settag",
+        {
+          "_index": 52,
+          "name": {
+            "52": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "settrace",
+        {
+          "_index": 171,
+          "name": {
+            "186": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "settracecontext",
+        {
+          "_index": 173,
+          "name": {
+            "189": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "settracecontextfromheaders",
+        {
+          "_index": 172,
+          "name": {
+            "187": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "sorted",
+        {
+          "_index": 93,
+          "name": {
+            "100": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "span_id",
+        {
+          "_index": 9,
+          "name": {
+            "7": {},
+            "111": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "spanarrschema",
+        {
+          "_index": 164,
+          "name": {
+            "179": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "spandata",
+        {
+          "_index": 16,
+          "name": {
+            "13": {},
+            "35": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "spanidschema",
+        {
+          "_index": 156,
+          "name": {
+            "171": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "spanreqschema",
+        {
+          "_index": 165,
+          "name": {
+            "180": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "spanschema",
+        {
+          "_index": 163,
+          "name": {
+            "178": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "start",
+        {
+          "_index": 105,
+          "name": {
+            "116": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "startspan",
+        {
+          "_index": 68,
+          "name": {
+            "67": {},
+            "90": {},
+            "191": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "starttimems",
+        {
+          "_index": 19,
+          "name": {
+            "16": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "tags",
+        {
+          "_index": 1,
+          "name": {
+            "1": {},
+            "18": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "tagsschema",
+        {
+          "_index": 160,
+          "name": {
+            "175": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "tagvalue",
+        {
+          "_index": 23,
+          "name": {
+            "21": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "taskopts",
+        {
+          "_index": 132,
+          "name": {
+            "143": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "taskparams",
+        {
+          "_index": 145,
+          "name": {
+            "156": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "tasks",
+        {
+          "_index": 153,
+          "name": {
+            "166": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "timestamp",
+        {
+          "_index": 7,
+          "name": {
+            "5": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "tospanid",
+        {
+          "_index": 30,
+          "name": {
+            "27": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "totraceid",
+        {
+          "_index": 29,
+          "name": {
+            "26": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace",
+        {
+          "_index": 184,
+          "name": {
+            "202": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace_header_keys",
+        {
+          "_index": 122,
+          "name": {
+            "133": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace_header_keys.baggage",
+        {
+          "_index": 130,
+          "name": {
+            "141": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace_header_keys.force_sample",
+        {
+          "_index": 131,
+          "name": {
+            "142": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace_header_keys.parent_span_id",
+        {
+          "_index": 129,
+          "name": {
+            "140": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace_header_keys.trace_id",
+        {
+          "_index": 127,
+          "name": {
+            "139": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace_header_schemas",
+        {
+          "_index": 167,
+          "name": {
+            "182": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "trace_id",
+        {
+          "_index": 11,
+          "name": {
+            "8": {},
+            "110": {},
+            "134": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "traceheaders",
+        {
+          "_index": 126,
+          "name": {
+            "138": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "traceidschema",
+        {
+          "_index": 157,
+          "name": {
+            "172": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "tracer",
+        {
+          "_index": 48,
+          "name": {
+            "48": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "transaction",
+        {
+          "_index": 150,
+          "name": {
+            "163": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "txnparams",
+        {
+          "_index": 141,
+          "name": {
+            "150": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "type",
+        {
+          "_index": 14,
+          "name": {
+            "11": {},
+            "115": {}
+          },
+          "parent": {}
+        }
+      ],
+      [
+        "version",
+        {
+          "_index": 155,
+          "name": {
+            "169": {}
+          },
+          "parent": {}
+        }
+      ]
+    ],
+    "pipeline": []
+  }
+}
