@@ -2865,7 +2865,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">baggage<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = joi.object()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L43">src/helpers/utils.ts:43</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L43">src/helpers/utils.ts:43</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2875,7 +2875,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">context<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({trace_id: traceIdSchema.required(),span_id: spanIdSchema.required(),baggage: baggageSchema.required()}).unknown(true).optionalKeys(&#x27;baggage&#x27;, &#x27;trace_id&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L45">src/helpers/utils.ts:45</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L45">src/helpers/utils.ts:45</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2885,7 +2885,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">force<wbr>Sample<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BooleanSchema</span><span class="tsd-signature-symbol"> = joi.boolean()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L121">src/helpers/utils.ts:121</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L121">src/helpers/utils.ts:121</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2895,7 +2895,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">log<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({fields: joi.object().pattern(/.+/, joi.any()).required(),timestamp: joi.number().required()}).optionalKeys(&#x27;timestamp&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L63">src/helpers/utils.ts:63</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L63">src/helpers/utils.ts:63</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2905,7 +2905,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">reference<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({type: joi.string().valid(REFERENCE_CHILD_OF, REFERENCE_FOLLOWS_FROM).required(),context: contextSchema.required()})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L76">src/helpers/utils.ts:76</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L76">src/helpers/utils.ts:76</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2915,7 +2915,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">span<wbr>Arr<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ArraySchema</span><span class="tsd-signature-symbol"> = joi.array().items(spanSchema.required()).min(1)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L111">src/helpers/utils.ts:111</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L111">src/helpers/utils.ts:111</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2925,7 +2925,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">span<wbr>IdSchema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StringSchema</span><span class="tsd-signature-symbol"> = joi.string().length(16)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L32">src/helpers/utils.ts:32</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L32">src/helpers/utils.ts:32</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2935,7 +2935,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">span<wbr>Req<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AlternativesSchema</span><span class="tsd-signature-symbol"> = joi.alternatives().try(spanSchema, spanArrSchema).required()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L116">src/helpers/utils.ts:116</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L116">src/helpers/utils.ts:116</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2945,7 +2945,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">span<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({operation: joi.string().required(),context: contextSchema.required(),startTimeMs: joi.number().required(),finishTimeMs: joi.number().required().min(joi.ref(&#x27;startTimeMs&#x27;)),tags: tagsSchema.required(),logs: joi.array().items(logSchema.required()).required(),references: joi.array().items(referenceSchema.required()).required()}).optionalKeys(&#x27;tags&#x27;, &#x27;logs&#x27;, &#x27;references&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L85">src/helpers/utils.ts:85</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L85">src/helpers/utils.ts:85</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2955,7 +2955,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">tags<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().pattern(/.+/, joi.alternatives().try(joi.string(), joi.boolean(), joi.number()).required())</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L55">src/helpers/utils.ts:55</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L55">src/helpers/utils.ts:55</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2965,7 +2965,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">trace<wbr>IdSchema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AlternativesSchema</span><span class="tsd-signature-symbol"> = joi.alternatives().try(spanIdSchema, joi.string().length(32))</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L36">src/helpers/utils.ts:36</a></li>
+						<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L36">src/helpers/utils.ts:36</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2982,7 +2982,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L383">src/helpers/utils.ts:383</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L383">src/helpers/utils.ts:383</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3059,7 +3059,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L223">src/helpers/utils.ts:223</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L223">src/helpers/utils.ts:223</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -3076,7 +3076,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L353">src/helpers/utils.ts:353</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L353">src/helpers/utils.ts:353</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3099,7 +3099,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L321">src/helpers/utils.ts:321</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L321">src/helpers/utils.ts:321</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3122,7 +3122,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L210">src/helpers/utils.ts:210</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L210">src/helpers/utils.ts:210</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3145,7 +3145,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L257">src/helpers/utils.ts:257</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L257">src/helpers/utils.ts:257</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -3162,7 +3162,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L423">src/helpers/utils.ts:423</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L423">src/helpers/utils.ts:423</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3191,7 +3191,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L162">src/helpers/utils.ts:162</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L162">src/helpers/utils.ts:162</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3219,7 +3219,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L251">src/helpers/utils.ts:251</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L251">src/helpers/utils.ts:251</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3242,7 +3242,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L156">src/helpers/utils.ts:156</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L156">src/helpers/utils.ts:156</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3265,7 +3265,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L181">src/helpers/utils.ts:181</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L181">src/helpers/utils.ts:181</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3288,7 +3288,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L216">src/helpers/utils.ts:216</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L216">src/helpers/utils.ts:216</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3314,7 +3314,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c109bcc/src/helpers/utils.ts#L235">src/helpers/utils.ts:235</a></li>
+								<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/44eef76/src/helpers/utils.ts#L235">src/helpers/utils.ts:235</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
