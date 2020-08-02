@@ -9,13 +9,23 @@
     "node_modules"
   ],
   "typedocOptions": {
+    "inputFiles": [
+      "./src"
+    ],
     "mode": "modules",
     "out": "docs",
     "excludeNotExported": true,
     "excludePrivate": true,
     "excludeProtected": true,
+    "excludeExternals": true,
+    "stripInternal": true,
     "includeVersion": true,
     "readme": "README.md",
-    "hideGenerator": true
+    "hideGenerator": true,
+    "exclude": [
+      "**/index.ts",
+      "src/opentracing-impl/FoxxTracer.ts",
+      "src/helpers/SpanData.ts"
+    ]
   }
 }

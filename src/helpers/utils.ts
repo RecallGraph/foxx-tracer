@@ -1,3 +1,13 @@
+/**
+ * This module exports a number of utility functions that are used throughout the application
+ * being traced. Some functions are specifically meant to be called at application startup to initialize the
+ * global tracer, set up trace headers, etc.
+ *
+ * See the [quickstart](../index.html#quickstart) for a primer on how
+ * to set up your application for tracing.
+ * @packageDocumentation
+ */
+
 import Endpoint = Foxx.Endpoint;
 import Transaction = ArangoDB.Transaction;
 import Query = ArangoDB.Query;
@@ -29,10 +39,12 @@ const noopTracer = new Tracer();
 const { name, version } = module.context.manifest;
 const service = `${name}-${version}`;
 
+/** A 16 character string representing a span ID. */
 export const spanIdSchema: StringSchema = joi
   .string()
   .length(16);
 
+/** A 16 or 32 character string representing a trace ID. */
 export const traceIdSchema: AlternativesSchema = joi
   .alternatives()
   .try(spanIdSchema, joi
@@ -40,8 +52,10 @@ export const traceIdSchema: AlternativesSchema = joi
     .length(32)
   );
 
+/** A valid JSON object. */
 export const baggageSchema = joi.object();
 
+/** A JSON object encoding a [span context](https://opentracing.io/specification/#spancontext). */
 export const contextSchema: ObjectSchema = joi
   .object()
   .keys({
@@ -52,6 +66,7 @@ export const contextSchema: ObjectSchema = joi
   .unknown(true)
   .optionalKeys('baggage', 'trace_id');
 
+/** A JSON object representing a [span tag](https://opentracing.io/specification/#set-a-span-tag). */
 export const tagsSchema: ObjectSchema = joi
   .object()
   .pattern(/.+/, joi
@@ -60,6 +75,7 @@ export const tagsSchema: ObjectSchema = joi
     .required()
   );
 
+/** A JSON object representing a [span log](https://opentracing.io/specification/#log-structured-data). */
 export const logSchema: ObjectSchema = joi
   .object()
   .keys({
@@ -73,6 +89,10 @@ export const logSchema: ObjectSchema = joi
   })
   .optionalKeys('timestamp');
 
+/**
+ * A JSON object representing a
+ * [span reference](https://opentracing.io/specification/#references-between-spans).
+ */
 export const referenceSchema: ObjectSchema = joi
   .object()
   .keys({
@@ -82,6 +102,8 @@ export const referenceSchema: ObjectSchema = joi
       .required(),
     context: contextSchema.required()
   });
+
+/** A JSON object representing a [span](https://opentracing.io/specification/#the-opentracing-data-model). */
 export const spanSchema: ObjectSchema = joi
   .object()
   .keys({
@@ -108,25 +130,61 @@ export const spanSchema: ObjectSchema = joi
   })
   .optionalKeys('tags', 'logs', 'references');
 
+/** An array of span objects, each adhering to the [[spanSchema | span schema]]. */
 export const spanArrSchema: ArraySchema = joi
   .array()
   .items(spanSchema.required())
   .min(1);
 
+/**
+ * A single span or an array of spans, adhering to the [[spanSchema | span schema]] or the
+ * [[spanArrSchema | span array schema]] respectively.
+ */
 export const spanReqSchema: AlternativesSchema = joi
   .alternatives()
   .try(spanSchema, spanArrSchema)
   .required();
 
+/** A boolean representing whether to force record or force suppress a trace. */
 export const forceSampleSchema: BooleanSchema = joi.boolean();
 
+/** The HTTP header keys that are used to control tracing behaviour and for setting trace context. */
 export enum TRACE_HEADER_KEYS {
+  /**
+   * The trace ID under which to record all new spans. If unspecified, a new trace is started and is
+   * assigned a randomly generated [[FoxxSpan.generateUUID | UUID]].
+   *
+   * Note that if a new trace is started by *foxx-tracer*, the subsequent root span's span ID will **not**
+   * be same as the generated trace ID.
+   */
   TRACE_ID = 'x-trace-id',
+
+  /**
+   * A span ID (belonging to an ongoing trace) under which to create the top level span of the traced request.
+   * This header **must be accompanied** by a non-emtpy [[TRACE_HEADER_KEYS.TRACE_ID | TRACE_ID]] header.
+   * All spans generated with the application will now have this span ID as an ancestor.
+   */
   PARENT_SPAN_ID = 'x-parent-span-id',
+
+  /**
+   * A JSON object containing key-value pairs that will set as the
+   * [baggage](https://opentracing.io/specification/#set-a-baggage-item) for all spans recorded for this
+   * request.
+   */
   BAGGAGE = 'x-baggage',
+
+  /**
+   * An optional boolean that control whether the decision to record a trace should be forced,
+   * suppressed or be left to the application to decide. If `true` a sample is forced. If `false` no sample
+   * is taken. If left blank, the application decides based on the `sampling-probability` configuration
+   * parameter (TODO: Add link to param docs).
+   */
   FORCE_SAMPLE = 'x-force-sample'
 }
 
+/**
+ * @ignore
+ */
 export interface TraceHeaders {
   [TRACE_HEADER_KEYS.TRACE_ID]?: string;
   [TRACE_HEADER_KEYS.PARENT_SPAN_ID]?: string;

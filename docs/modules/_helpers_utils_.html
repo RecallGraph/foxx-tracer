@@ -38,8 +38,6 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -64,6 +62,17 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This module exports a number of utility functions that are used throughout the application
+							being traced. Some functions are specifically meant to be called at application startup to initialize the
+						global tracer, set up trace headers, etc.</p>
+					</div>
+					<p>See the <a href="../index.html#quickstart">quickstart</a> for a primer on how
+					to set up your application for tracing.</p>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -72,12 +81,6 @@
 							<h3>Enumerations</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/_helpers_utils_.trace_header_keys.html" class="tsd-kind-icon">TRACE_<wbr>HEADER_<wbr>KEYS</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_helpers_utils_.traceheaders.html" class="tsd-kind-icon">Trace<wbr>Headers</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -125,9 +128,14 @@
 					<div class="tsd-signature tsd-kind-icon">baggage<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = joi.object()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L43">src/helpers/utils.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L56">src/helpers/utils.ts:56</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A valid JSON object.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="contextschema" class="tsd-anchor"></a>
@@ -135,9 +143,14 @@
 					<div class="tsd-signature tsd-kind-icon">context<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({trace_id: traceIdSchema.required(),span_id: spanIdSchema.required(),baggage: baggageSchema.required()}).unknown(true).optionalKeys(&#x27;baggage&#x27;, &#x27;trace_id&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L45">src/helpers/utils.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L59">src/helpers/utils.ts:59</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A JSON object encoding a <a href="https://opentracing.io/specification/#spancontext">span context</a>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="forcesampleschema" class="tsd-anchor"></a>
@@ -145,9 +158,14 @@
 					<div class="tsd-signature tsd-kind-icon">force<wbr>Sample<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BooleanSchema</span><span class="tsd-signature-symbol"> = joi.boolean()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L121">src/helpers/utils.ts:121</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L149">src/helpers/utils.ts:149</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A boolean representing whether to force record or force suppress a trace.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="logschema" class="tsd-anchor"></a>
@@ -155,9 +173,14 @@
 					<div class="tsd-signature tsd-kind-icon">log<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({fields: joi.object().pattern(/.+/, joi.any()).required(),timestamp: joi.number().required()}).optionalKeys(&#x27;timestamp&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L63">src/helpers/utils.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L79">src/helpers/utils.ts:79</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A JSON object representing a <a href="https://opentracing.io/specification/#log-structured-data">span log</a>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="referenceschema" class="tsd-anchor"></a>
@@ -165,9 +188,15 @@
 					<div class="tsd-signature tsd-kind-icon">reference<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({type: joi.string().valid(REFERENCE_CHILD_OF, REFERENCE_FOLLOWS_FROM).required(),context: contextSchema.required()})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L76">src/helpers/utils.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L96">src/helpers/utils.ts:96</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A JSON object representing a
+							<a href="https://opentracing.io/specification/#references-between-spans">span reference</a>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="spanarrschema" class="tsd-anchor"></a>
@@ -175,9 +204,14 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>Arr<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ArraySchema</span><span class="tsd-signature-symbol"> = joi.array().items(spanSchema.required()).min(1)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L111">src/helpers/utils.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L134">src/helpers/utils.ts:134</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of span objects, each adhering to the <a href="_helpers_utils_.html#spanschema">span schema</a>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="spanidschema" class="tsd-anchor"></a>
@@ -185,9 +219,14 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>IdSchema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StringSchema</span><span class="tsd-signature-symbol"> = joi.string().length(16)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L32">src/helpers/utils.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L43">src/helpers/utils.ts:43</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A 16 character string representing a span ID.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="spanreqschema" class="tsd-anchor"></a>
@@ -195,9 +234,15 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>Req<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AlternativesSchema</span><span class="tsd-signature-symbol"> = joi.alternatives().try(spanSchema, spanArrSchema).required()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L116">src/helpers/utils.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L143">src/helpers/utils.ts:143</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A single span or an array of spans, adhering to the <a href="_helpers_utils_.html#spanschema">span schema</a> or the
+							<a href="_helpers_utils_.html#spanarrschema">span array schema</a> respectively.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="spanschema" class="tsd-anchor"></a>
@@ -205,9 +250,14 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().keys({operation: joi.string().required(),context: contextSchema.required(),startTimeMs: joi.number().required(),finishTimeMs: joi.number().required().min(joi.ref(&#x27;startTimeMs&#x27;)),tags: tagsSchema.required(),logs: joi.array().items(logSchema.required()).required(),references: joi.array().items(referenceSchema.required()).required()}).optionalKeys(&#x27;tags&#x27;, &#x27;logs&#x27;, &#x27;references&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L85">src/helpers/utils.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L107">src/helpers/utils.ts:107</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A JSON object representing a <a href="https://opentracing.io/specification/#the-opentracing-data-model">span</a>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="tagsschema" class="tsd-anchor"></a>
@@ -215,9 +265,14 @@
 					<div class="tsd-signature tsd-kind-icon">tags<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = joi.object().pattern(/.+/, joi.alternatives().try(joi.string(), joi.boolean(), joi.number()).required())</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L55">src/helpers/utils.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L70">src/helpers/utils.ts:70</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A JSON object representing a <a href="https://opentracing.io/specification/#set-a-span-tag">span tag</a>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="traceidschema" class="tsd-anchor"></a>
@@ -225,9 +280,14 @@
 					<div class="tsd-signature tsd-kind-icon">trace<wbr>IdSchema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AlternativesSchema</span><span class="tsd-signature-symbol"> = joi.alternatives().try(spanIdSchema, joi.string().length(32))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L36">src/helpers/utils.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L48">src/helpers/utils.ts:48</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A 16 or 32 character string representing a trace ID.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -242,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L383">src/helpers/utils.ts:383</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L441">src/helpers/utils.ts:441</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -319,7 +379,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L223">src/helpers/utils.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L281">src/helpers/utils.ts:281</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -336,7 +396,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L353">src/helpers/utils.ts:353</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L411">src/helpers/utils.ts:411</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -359,7 +419,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L321">src/helpers/utils.ts:321</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L379">src/helpers/utils.ts:379</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -382,7 +442,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L210">src/helpers/utils.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L268">src/helpers/utils.ts:268</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -405,7 +465,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L257">src/helpers/utils.ts:257</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L315">src/helpers/utils.ts:315</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -422,7 +482,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L423">src/helpers/utils.ts:423</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L481">src/helpers/utils.ts:481</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -445,13 +505,13 @@
 					<a name="parsetraceheaders" class="tsd-anchor"></a>
 					<h3>parse<wbr>Trace<wbr>Headers</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Trace<wbr>Headers<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_helpers_utils_.traceheaders.html" class="tsd-signature-type">TraceHeaders</a></li>
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Trace<wbr>Headers<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TraceHeaders</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L162">src/helpers/utils.ts:162</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L220">src/helpers/utils.ts:220</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -465,7 +525,7 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_helpers_utils_.traceheaders.html" class="tsd-signature-type">TraceHeaders</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TraceHeaders</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -473,19 +533,19 @@
 					<a name="reportspan" class="tsd-anchor"></a>
 					<h3>report<wbr>Span</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">report<wbr>Span<span class="tsd-signature-symbol">(</span>spanData<span class="tsd-signature-symbol">: </span><a href="../interfaces/_helpers_spandata_.spandata.html" class="tsd-signature-type">SpanData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">report<wbr>Span<span class="tsd-signature-symbol">(</span>spanData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SpanData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L251">src/helpers/utils.ts:251</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L309">src/helpers/utils.ts:309</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>spanData: <a href="../interfaces/_helpers_spandata_.spandata.html" class="tsd-signature-type">SpanData</a></h5>
+									<h5>spanData: <span class="tsd-signature-type">SpanData</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -502,7 +562,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L156">src/helpers/utils.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L214">src/helpers/utils.ts:214</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -519,19 +579,19 @@
 					<a name="settrace" class="tsd-anchor"></a>
 					<h3>set<wbr>Trace</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Trace<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><a href="../interfaces/_helpers_utils_.traceheaders.html" class="tsd-signature-type">TraceHeaders</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Trace<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TraceHeaders</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L181">src/helpers/utils.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L239">src/helpers/utils.ts:239</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>headers: <a href="../interfaces/_helpers_utils_.traceheaders.html" class="tsd-signature-type">TraceHeaders</a></h5>
+									<h5>headers: <span class="tsd-signature-type">TraceHeaders</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -548,7 +608,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L216">src/helpers/utils.ts:216</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L274">src/helpers/utils.ts:274</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -574,7 +634,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/456bbdc/src/helpers/utils.ts#L235">src/helpers/utils.ts:235</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/23dca1f/src/helpers/utils.ts#L293">src/helpers/utils.ts:293</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -599,25 +659,16 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="_helpers_spandata_.html">&quot;helpers/<wbr>Span<wbr>Data&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
 						<a href="_helpers_middleware_.html">&quot;helpers/middleware&quot;</a>
 					</li>
 					<li class="current tsd-kind-module">
 						<a href="_helpers_utils_.html">&quot;helpers/utils&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
 						<a href="_opentracing_impl_foxxcontext_.html">&quot;opentracing-<wbr>impl/<wbr>Foxx<wbr>Context&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="_opentracing_impl_foxxspan_.html">&quot;opentracing-<wbr>impl/<wbr>Foxx<wbr>Span&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="_opentracing_impl_foxxtracer_.html">&quot;opentracing-<wbr>impl/<wbr>Foxx<wbr>Tracer&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="_reporters_consolereporter_.html">&quot;reporters/<wbr>Console<wbr>Reporter&quot;</a>
@@ -634,18 +685,12 @@
 					<li class=" tsd-kind-module">
 						<a href="_reporters_reporter_.html">&quot;reporters/<wbr>Reporter&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="_reporters_index_.html">&quot;reporters/index&quot;</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
 						<a href="../enums/_helpers_utils_.trace_header_keys.html" class="tsd-kind-icon">TRACE_<wbr>HEADER_<wbr>KEYS</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/_helpers_utils_.traceheaders.html" class="tsd-kind-icon">Trace<wbr>Headers</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
 						<a href="_helpers_utils_.html#baggageschema" class="tsd-kind-icon">baggage<wbr>Schema</a>
@@ -731,7 +776,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>

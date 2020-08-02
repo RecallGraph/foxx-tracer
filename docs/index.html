@@ -38,8 +38,6 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -84,7 +82,7 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 					<li><p>Install the <a href="https://github.com/RecallGraph/foxx-tracer-collector">collector service</a> and follow its setup instructions.</p>
 					</li>
 					<li><p>In your service, before mounting any trace-enabled routes, you need to initialize the tracer, trace headers and middleware. This is best done in your service&#39;s startup module (usually <code>main.js</code>).</p>
-						<pre><code class="language-javascript"> <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { setEndpointTraceHeaders, initTracer }, middleware } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracing&#x27;</span>)
+						<pre><code class="language-javascript"> <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { setEndpointTraceHeaders, initTracer }, middleware } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  <span class="hljs-comment">// Initialize the tracer</span>
  initTracer()
@@ -104,23 +102,23 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
  setEndpointTraceHeaders(endpoint)</code></pre>
 					</li>
 					<li><p>To wrap a function in a new <a href="modules/_opentracing_impl_foxxspan_.html">span</a>, use <a href="modules/_helpers_utils_.html#attachspan"><code>attachSpan</code></a>.</p>
-						<pre><code class="language-javascript"> <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { attachSpan } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracing&#x27;</span>)
+						<pre><code class="language-javascript"> <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { attachSpan } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  attachSpan(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{}, <span class="hljs-string">&#x27;opName&#x27;</span>, {<span class="hljs-comment">/* options */</span>}, onSuccess <span class="hljs-comment">/* optional */</span>, onError <span class="hljs-comment">/* optional */</span>)</code></pre>
 					</li>
 					<li><p>To instrument a <a href="https://www.arangodb.com/docs/stable/aql/invocation-with-arangosh.html#with-db_query">db query</a> (with query stats collection and reporting), use <a href="modules/_helpers_utils_.html#instrumentedquery"><code>instrumentedQuery</code></a>.</p>
-						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { instrumentedQuery } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracing&#x27;</span>)
+						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { instrumentedQuery } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  <span class="hljs-keyword">const</span> query = aql.query(<span class="hljs-comment">/* query */</span>)
  <span class="hljs-keyword">const</span> cursor = instrumentedQuery(query, <span class="hljs-string">&#x27;queryName&#x27;</span>, {<span class="hljs-comment">/* options */</span>})</code></pre>
 					</li>
-					<li><p>To correctly propagate the current <a href="modules/_opentracing_impl_foxxcontext_.html">span context</a> across <a href="https://www.arangodb.com/docs/3.6/transactions-transaction-invocation.html">transaction</a> boundaries, use <a href="modules/_helpers_utils_.html#executetransaction"><code>executeTransaction</code></a>.</p>
-						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { executeTransaction } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracing&#x27;</span>)
+					<li><p>To correctly propagate the current <a href="https://opentracing.io/specification/#spancontext">span context</a> across <a href="https://www.arangodb.com/docs/3.6/transactions-transaction-invocation.html">transaction</a> boundaries, use <a href="modules/_helpers_utils_.html#executetransaction"><code>executeTransaction</code></a>.</p>
+						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { executeTransaction } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  <span class="hljs-keyword">const</span> result = executeTransaction({<span class="hljs-comment">/* transaction specification */</span>})</code></pre>
 					</li>
-					<li><p>To correctly propagate the current <a href="modules/_opentracing_impl_foxxcontext_.html">span context</a> across <a href="https://www.arangodb.com/docs/3.6/appendix-java-script-modules-tasks.html">task</a> invocations, use <a href="modules/_helpers_utils_.html#executetask"><code>executeTask</code></a>.</p>
-						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { executeTask } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracing&#x27;</span>)
+					<li><p>To correctly propagate the current <a href="https://opentracing.io/specification/#spancontext">span context</a> across <a href="https://www.arangodb.com/docs/3.6/appendix-java-script-modules-tasks.html">task</a> invocations, use <a href="modules/_helpers_utils_.html#executetask"><code>executeTask</code></a>.</p>
+						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { executeTask } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  executeTask({<span class="hljs-comment">/* task options */</span>})</code></pre>
 					</li>
@@ -134,25 +132,16 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_helpers_spandata_.html">&quot;helpers/<wbr>Span<wbr>Data&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
 						<a href="modules/_helpers_middleware_.html">&quot;helpers/middleware&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
 						<a href="modules/_opentracing_impl_foxxcontext_.html">&quot;opentracing-<wbr>impl/<wbr>Foxx<wbr>Context&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_opentracing_impl_foxxspan_.html">&quot;opentracing-<wbr>impl/<wbr>Foxx<wbr>Span&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_opentracing_impl_foxxtracer_.html">&quot;opentracing-<wbr>impl/<wbr>Foxx<wbr>Tracer&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_reporters_consolereporter_.html">&quot;reporters/<wbr>Console<wbr>Reporter&quot;</a>
@@ -168,9 +157,6 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_reporters_reporter_.html">&quot;reporters/<wbr>Reporter&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_reporters_index_.html">&quot;reporters/index&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -188,7 +174,6 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
