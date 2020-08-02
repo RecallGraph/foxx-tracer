@@ -2730,7 +2730,45 @@ img {
 			<a href="#foxx-tracer" id="foxx-tracer" style="color: inherit; text-decoration: none;">
 				<h1>foxx-tracer</h1>
 			</a>
-			<p>An OpenTracing implementation for Foxx</p>
+			<p>An <a href="https://opentracing.io/">OpenTracing</a> library for <a href="https://www.arangodb.com/docs/stable/foxx.html">Foxx Microservices</a>.</p>
+			<pre><code class="language-bash"><span class="hljs-comment"># In your foxx application root</span>
+npm install --save @recallgraph/foxx-tracer</code></pre>
+			<p>See <a href="https://recallgraph.github.io/foxx-tracer/">https://recallgraph.github.io/foxx-tracer/</a> for the full API documentation. A quickstart guide is <a href="#quickstart">given below</a>.</p>
+			<a href="#why-foxx-tracer" id="why-foxx-tracer" style="color: inherit; text-decoration: none;">
+				<h2>Why foxx-tracer</h2>
+			</a>
+			<p>Most tracing libraries in the <em>nodeverse</em> are asynchronous, meaning they do not work in the synchronous V8 runtime that <a href="https://www.arangodb.com/docs/stable/foxx.html#compatibility-caveats">ArangoDB uses</a> to run its Foxx services. <em>foxx-tracer</em> bridges this gap by being a 100% synchronous, dedicated module built for the Foxx runtime.</p>
+			<p>However, as a consequence, it relies on a number of features only available in a Foxx environment. It also depends on a <a href="https://github.com/RecallGraph/foxx-tracer-collector">companion collector service</a> which itself is a Foxx microservice. These dependencies make this module <strong>incompatible with Node.js and browser-based runtimes</strong>, despite being delivered as an <em>npm</em> package.</p>
+			<a href="#quickstart" id="quickstart" style="color: inherit; text-decoration: none;">
+				<h2>Quickstart</h2>
+			</a>
+			<ol>
+				<li><p>Add <em>foxx-tracer</em> as a dependency of the service for which you want to enable tracing.</p>
+					<pre><code class="language-bash"> npm install --save @recallgraph/foxx-tracer</code></pre>
+				</li>
+				<li><p>Install the <a href="https://github.com/RecallGraph/foxx-tracer-collector">collector service</a> and follow its setup instructions.</p>
+				</li>
+				<li><p>In your service, before mounting any trace-enabled routes, you need to initialize the tracer, trace headers and middleware. This is best done in your service&#39;s startup module (usually <code>main.js</code>).</p>
+					<pre><code class="language-javascript"> <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { setEndpointTraceHeaders, initTracer }, middleware } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracing&#x27;</span>)
+
+ <span class="hljs-comment">// Initialize the tracer</span>
+ initTracer()
+
+ <span class="hljs-comment">// Use the tracing middleware for all endpoints.</span>
+ <span class="hljs-comment">// You may also do this selectively for only those endpoints that you want to trace.</span>
+ <span class="hljs-built_in">module</span>.context.use(middleware)
+
+ <span class="hljs-comment">// Create a router somewhere later...</span>
+ <span class="hljs-keyword">const</span> router = createRouter()
+ <span class="hljs-comment">/*
+    Create a request handler endpoint using one of the router&#x27;s several instance methods:
+    const endpoint = router.[get|post|put|patch|delete|all|use](...)
+ */</span>
+
+ <span class="hljs-comment">// Attach trace headers to the endpoint</span>
+ setEndpointTraceHeaders(endpoint)</code></pre>
+				</li>
+			</ol>
 		</div>
 		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
