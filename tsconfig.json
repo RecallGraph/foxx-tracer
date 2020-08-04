@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
+    "declaration": true,
+    "declarationMap": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "allowUnreachableCode": false,

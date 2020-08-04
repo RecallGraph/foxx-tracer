@@ -21,6 +21,10 @@
   ],
   "author": "Aditya Mukhopadhyay",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RecallGraph/foxx-tracer/issues"
+  },
+  "homepage": "https://recallgraph.github.io/foxx-tracer/",
   "dependencies": {
     "opentracing": "^0.14.4"
   },
