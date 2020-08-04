@@ -12,7 +12,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p .",
-    "docgen": "rimraf docs && typedoc && touch docs/.nojekyll"
+    "docgen": "rm -rf docs && typedoc && touch docs/.nojekyll"
   },
   "keywords": [
     "foxx",
@@ -29,8 +29,6 @@
     "@types/joi": "^14.3.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.9.8",
-    "rimraf": "^3.0.2",
-    "touch": "^3.1.0",
     "typedoc": "^0.17.8",
     "typescript": "^3.9.7"
   }

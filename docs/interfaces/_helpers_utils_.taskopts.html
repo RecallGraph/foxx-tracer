@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TRACE_HEADER_KEYS | foxx-tracer - v0.0.1</title>
+	<title>TaskOpts | foxx-tracer - v0.0.1</title>
 	<meta name="description" content="Documentation for foxx-tracer - v0.0.1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,110 +55,59 @@
 					<a href="../modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
 				</li>
 				<li>
-					<a href="_helpers_utils_.trace_header_keys.html">TRACE_HEADER_KEYS</a>
+					<a href="_helpers_utils_.taskopts.html">TaskOpts</a>
 				</li>
 			</ul>
-			<h1>Enumeration TRACE_HEADER_KEYS</h1>
+			<h1>Interface TaskOpts</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The HTTP header keys that are used to control tracing behaviour and for setting trace context.</p>
-					</div>
-				</div>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">TaskOpts</span>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_helpers_utils_.trace_header_keys.html#baggage" class="tsd-kind-icon">BAGGAGE</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_helpers_utils_.trace_header_keys.html#force_sample" class="tsd-kind-icon">FORCE_<wbr>SAMPLE</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_helpers_utils_.trace_header_keys.html#parent_span_id" class="tsd-kind-icon">PARENT_<wbr>SPAN_<wbr>ID</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_helpers_utils_.trace_header_keys.html#trace_id" class="tsd-kind-icon">TRACE_<wbr>ID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_helpers_utils_.taskopts.html#command" class="tsd-kind-icon">command</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_helpers_utils_.taskopts.html#params" class="tsd-kind-icon">params</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="baggage" class="tsd-anchor"></a>
-					<h3>BAGGAGE</h3>
-					<div class="tsd-signature tsd-kind-icon">BAGGAGE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;x-baggage&quot;</span></div>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="command" class="tsd-anchor"></a>
+					<h3>command</h3>
+					<div class="tsd-signature tsd-kind-icon">command<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/ffc493d/src/helpers/utils.ts#L176">helpers/utils.ts:176</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/ffc493d/src/helpers/utils.ts#L199">helpers/utils.ts:199</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A JSON object containing key-value pairs that will set as the
-								<a href="https://opentracing.io/specification/#set-a-baggage-item">baggage</a> for all spans recorded for this
-							request.</p>
-						</div>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="force_sample" class="tsd-anchor"></a>
-					<h3>FORCE_<wbr>SAMPLE</h3>
-					<div class="tsd-signature tsd-kind-icon">FORCE_<wbr>SAMPLE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;x-force-sample&quot;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="params" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> params</h3>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/ffc493d/src/helpers/utils.ts#L184">helpers/utils.ts:184</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/ffc493d/src/helpers/utils.ts#L200">helpers/utils.ts:200</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>An optional boolean that control whether the decision to record a trace should be forced,
-								suppressed or be left to the application to decide. If <code>true</code> a sample is forced. If <code>false</code> no sample
-								is taken. If left blank, the application decides based on the <code>sampling-probability</code> configuration
-							parameter (TODO: Add link to param docs).</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="parent_span_id" class="tsd-anchor"></a>
-					<h3>PARENT_<wbr>SPAN_<wbr>ID</h3>
-					<div class="tsd-signature tsd-kind-icon">PARENT_<wbr>SPAN_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;x-parent-span-id&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/ffc493d/src/helpers/utils.ts#L169">helpers/utils.ts:169</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A span ID (belonging to an ongoing trace) under which to create the top level span of the traced request.
-								This header <strong>must be accompanied</strong> by a non-emtpy <a href="_helpers_utils_.trace_header_keys.html#trace_id">TRACE_ID</a> header.
-							All spans generated with the application will now have this span ID as an ancestor.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="trace_id" class="tsd-anchor"></a>
-					<h3>TRACE_<wbr>ID</h3>
-					<div class="tsd-signature tsd-kind-icon">TRACE_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;x-trace-id&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/ffc493d/src/helpers/utils.ts#L162">helpers/utils.ts:162</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The trace ID under which to record all new spans. If unspecified, a new trace is started and is
-							assigned a randomly generated [[FoxxSpan.generateUUID | UUID]].</p>
-						</div>
-						<p>Note that if a new trace is started by <em>foxx-tracer</em>, the subsequent root span&#39;s span ID will <strong>not</strong>
-						be same as the generated trace ID.</p>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -193,30 +142,24 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/_helpers_utils_.trace_header_keys.html" class="tsd-kind-icon">TRACE_<wbr>HEADER_<wbr>KEYS</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-enum tsd-parent-kind-module">
-						<a href="_helpers_utils_.trace_header_keys.html" class="tsd-kind-icon">TRACE_<wbr>HEADER_<wbr>KEYS</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="_helpers_utils_.taskopts.html" class="tsd-kind-icon">Task<wbr>Opts</a>
 						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="_helpers_utils_.trace_header_keys.html#baggage" class="tsd-kind-icon">BAGGAGE</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_helpers_utils_.taskopts.html#command" class="tsd-kind-icon">command</a>
 							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="_helpers_utils_.trace_header_keys.html#force_sample" class="tsd-kind-icon">FORCE_<wbr>SAMPLE</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="_helpers_utils_.trace_header_keys.html#parent_span_id" class="tsd-kind-icon">PARENT_<wbr>SPAN_<wbr>ID</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="_helpers_utils_.trace_header_keys.html#trace_id" class="tsd-kind-icon">TRACE_<wbr>ID</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_helpers_utils_.taskopts.html#params" class="tsd-kind-icon">params</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/_helpers_utils_.taskopts.html" class="tsd-kind-icon">Task<wbr>Opts</a>
-					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
 						<a href="../modules/_helpers_utils_.html#baggageschema" class="tsd-kind-icon">baggage<wbr>Schema</a>
 					</li>
@@ -288,10 +231,11 @@
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>

@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "allowUnreachableCode": false,
     "module": "commonjs",
     "target": "es2019",
     "sourceMap": true,
@@ -21,10 +25,8 @@
     "stripInternal": true,
     "includeVersion": true,
     "readme": "README.md",
-    "hideGenerator": true,
     "exclude": [
-      "**/index.ts",
-      "src/opentracing-impl/FoxxTracer.ts",
+      "src/opentracing-impl",
       "src/helpers/SpanData.ts"
     ]
   }
