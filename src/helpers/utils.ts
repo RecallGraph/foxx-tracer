@@ -3,6 +3,8 @@
  * being traced. Some functions are specifically meant to be called at application startup to initialize the
  * global tracer, set up trace headers, etc.
  *
+ * **This module is re-exported as a top-level export.**
+ *
  * See the [quickstart](../index.html#quickstart) for a primer on how
  * to set up your application for tracing.
  * @packageDocumentation
@@ -192,6 +194,12 @@ export interface TraceHeaders {
   [TRACE_HEADER_KEYS.FORCE_SAMPLE]?: boolean;
 }
 
+
+export interface TaskOpts {
+  command: Function;
+  params?: any;
+}
+
 const TRACE_HEADER_SCHEMAS = Object.freeze({
   [TRACE_HEADER_KEYS.TRACE_ID]: {
     schema: traceIdSchema,
@@ -211,12 +219,18 @@ const TRACE_HEADER_SCHEMAS = Object.freeze({
   }
 });
 
+/**
+ * @ignore
+ */
 export function setEndpointTraceHeaders(endpoint: Endpoint): void {
   for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
     endpoint.header(key, value.schema, value.description);
   }
 }
 
+/**
+ * @ignore
+ */
 export function parseTraceHeaders(headers: { [key: string]: string | undefined }): TraceHeaders {
   headers = mapKeys(headers, (v, k) => k.toLowerCase());
 
@@ -236,6 +250,9 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
   return traceHeaders;
 }
 
+/**
+ * @ignore
+ */
 export function setTrace(headers: TraceHeaders): void {
   const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
   const forceSample = headers[FORCE_SAMPLE];
@@ -265,12 +282,23 @@ function setTraceContextFromHeaders(headers: TraceHeaders) {
   setTraceContext(traceId, rootContext);
 }
 
+/**
+ * Returns a parent context (if found) from the input array of references.
+ *
+ * @param refs The [Reference](https://opentracing-javascript.surge.sh/classes/reference.html) array.
+ *
+ * @return The [SpanContext](https://opentracing-javascript.surge.sh/classes/spancontext.html) of the
+ * reference representing the parent, if found, `null` otherwise.
+ */
 export function getParent(refs: Reference[]): SpanContext {
   const parent = refs ? refs.find(ref => ref.type() === REFERENCE_CHILD_OF) : null;
 
   return parent ? parent.referencedContext() : null;
 }
 
+/**
+ * @ignore
+ */
 export function setTraceContext(traceID?: string, context?: SpanContext) {
   const tracer = globalTracer() as ContextualTracer;
 
@@ -278,6 +306,10 @@ export function setTraceContext(traceID?: string, context?: SpanContext) {
   tracer.currentTrace = traceID;
 }
 
+/**
+ * Clears the global tracer's memory of all trace and span context. Useful when it is desired to manually
+ * start a fresh trace. Normally required only in test suite runs.
+ */
 export function clearTraceContext() {
   const tracer = globalTracer() as ContextualTracer;
   const traceId = tracer.currentTrace;
@@ -290,6 +322,17 @@ export function clearTraceContext() {
   }
 }
 
+/**
+ * Start a new span. Useful when it is desired to manually start a fresh trace. Normally required only in
+ * test suite runs.
+ *
+ * @param name The operation name to be recorded in the span.
+ * @param options The
+ * optional [SpanOptions](https://opentracing-javascript.surge.sh/interfaces/spanoptions.html) object that
+ * describes the span.
+ *
+ * @return The created [Span](https://opentracing-javascript.surge.sh/classes/span.html).
+ */
 export function startSpan(name: string, options: SpanOptions = {}): Span {
   const tracer = globalTracer() as ContextualTracer;
 
@@ -306,12 +349,19 @@ export function startSpan(name: string, options: SpanOptions = {}): Span {
   return noopTracer.startSpan(name, options);
 }
 
+/**
+ * @ignore
+ */
 export function reportSpan(spanData: SpanData) {
   const tracer = globalTracer() as ContextualTracer;
 
   tracer.push(spanData);
 }
 
+/**
+ * Initializes the global tracer at application startup. This should be called as early as possible (and only
+ * once) when application starts.
+ */
 export function initTracer() {
   const reporter = new FoxxReporter();
   const tracer = new FoxxTracer(reporter);
@@ -357,15 +407,12 @@ export function initTracer() {
   });
 }
 
-interface TaskOpts {
-  command: Function;
-  params?: any;
-}
-
 interface InstrumentedOpts {
   _traceId: string;
   _parentContext: object;
   _params: object;
+  _operation: string;
+  _options?: SpanOptions;
 }
 
 interface TxnParams extends InstrumentedOpts {
@@ -376,7 +423,21 @@ interface TaskParams extends InstrumentedOpts {
   _command: (params: object | undefined) => void;
 }
 
-export function executeTransaction(data: Transaction) {
+/**
+ * Start a [transaction](https://www.arangodb.com/docs/3.6/transactions-transaction-invocation.html) while
+ * ensuring that the trace context is correctly propagated over to the V8 context where the transaction is
+ * actually run. The command executed by the transaction is wrapped in a new span which carries the same
+ * trace context that was active in the V8 context that invoked the transaction.
+ *
+ * @param data The
+ * [Transaction](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/bbc8c7c7b7e92ba094ea349d56977e00f6f7f42d/types/arangodb/index.d.ts#L910)
+ * description.
+ * @param operation The operation name to be recorded in the span.
+ * @param options The
+ * optional [SpanOptions](https://opentracing-javascript.surge.sh/interfaces/spanoptions.html) object that
+ * describes the span.
+ */
+export function executeTransaction(data: Transaction, operation: string, options: SpanOptions = {}) {
   const tracer = globalTracer() as ContextualTracer;
 
   let spanContext = null;
@@ -390,16 +451,19 @@ export function executeTransaction(data: Transaction) {
     _traceId: tracer.currentTrace,
     _parentContext: spanContext,
     _params: data.params,
-    _action: data.action
+    _action: data.action,
+    _operation: operation,
+    _options: options
   };
   wrappedData.action = function (params: TxnParams) {
     const { globalTracer } = require('opentracing');
-
     const tracer = globalTracer() as ContextualTracer;
-    const rootContext = tracer.extract(FORMAT_TEXT_MAP, params._parentContext);
 
-    setTraceContext(params._traceId, rootContext);
-    const result = params._action(params._params);
+    const { _parentContext, _action, _operation, _options, _params, _traceId } = params;
+    const rootContext = tracer.extract(FORMAT_TEXT_MAP, _parentContext);
+
+    setTraceContext(_traceId, rootContext);
+    const result = attachSpan(_action, _operation, _options).call(params, _params);
     clearTraceContext();
 
     return result;
@@ -408,7 +472,19 @@ export function executeTransaction(data: Transaction) {
   return db._executeTransaction(wrappedData);
 }
 
-export function executeTask(options: TaskOpts) {
+/**
+ * Registers a [task](https://www.arangodb.com/docs/3.6/appendix-java-script-modules-tasks.html) while
+ * ensuring that the trace context is correctly propagated over to the V8 context where the task is actually
+ * run. The function executed by the task is wrapped in a new span which carries the same trace context that
+ * was active at the time of registering the task.
+ *
+ * @param task The object describing the task.
+ * @param operation The operation name to be recorded in the span.
+ * @param options The
+ * optional [SpanOptions](https://opentracing-javascript.surge.sh/interfaces/spanoptions.html) object that
+ * describes the span.
+ */
+export function executeTask(task: TaskOpts, operation: string, options: SpanOptions = {}) {
   const tracer = globalTracer() as ContextualTracer;
 
   let spanContext = null;
@@ -417,27 +493,56 @@ export function executeTask(options: TaskOpts) {
     tracer.inject(tracer.currentContext, FORMAT_TEXT_MAP, spanContext);
   }
 
-  const wrappedOptions = omit(options, 'command', 'params') as TaskOpts;
+  const wrappedOptions = omit(task, 'command', 'params') as TaskOpts;
   wrappedOptions.params = {
     _traceId: tracer.currentTrace,
     _parentContext: spanContext,
-    _params: options.params,
-    _command: options.command
+    _params: task.params,
+    _command: task.command,
+    _operation: operation,
+    _options: options
   };
   wrappedOptions.command = function (params: TaskParams) {
     const { globalTracer } = require('opentracing');
-
     const tracer = globalTracer() as ContextualTracer;
-    const rootContext = tracer.extract(FORMAT_TEXT_MAP, params._parentContext);
 
-    setTraceContext(params._traceId, rootContext);
-    params._command(params._params);
+    const { _parentContext, _command, _operation, _options, _params, _traceId } = params;
+    const rootContext = tracer.extract(FORMAT_TEXT_MAP, _parentContext);
+
+    setTraceContext(_traceId, rootContext);
+    attachSpan(_command, _operation, _options).call(params, _params);
     clearTraceContext();
   }
 
   tasks.register(wrappedOptions);
 }
 
+/**
+ * Creates a wrapper around the input function that, when invoked, executes the given function inside a new
+ * span. When you don't need to manually alter the span before it is closed and reported, the success
+ * and error callbacks can be omitted. In this case, when the function ends, it either returns its result
+ * (or void) back to the caller or throws an error. In both cases, the span enclosing the function's
+ * execution is always properly closed and reported, enriched with additional error information, if
+ * applicable.
+ *
+ * On the other hand, when you need access to the span (at the end of the function) just before it is
+ * finalized, you can specify the success and error callbacks, within which you will have access to the span.
+ * You can now add your custom tags/logs to the span.
+ *
+ * **The span must be explicity closed in the body of both
+ * callbacks** by invoking its [finish](https://opentracing-javascript.surge.sh/classes/span.html#finish)
+ * method.
+ *
+ * @param fn The function to be wrapped in a span.
+ * @param operation The operation name to be recorded in the span.
+ * @param options The
+ * optional [SpanOptions](https://opentracing-javascript.surge.sh/interfaces/spanoptions.html) object that
+ * describes the span.
+ * @param onSuccess The optional success callback.
+ * @param onError The optional error callback.
+ *
+ * @return The wrapper function that accepts the same arguments as *fn*.
+ */
 export function attachSpan(
   fn: Function | FunctionConstructor, operation: string, options: SpanOptions = {},
   onSuccess?: (result: any, span: Span) => void, onError?: (err: Error, span: Span) => void
@@ -478,6 +583,22 @@ export function attachSpan(
   }
 }
 
+/**
+ * Executes the given query inside a new span and returns the resultant cursor. The enclosing span records
+ * query stats (available within the cursor object) in its logs.
+ *
+ * @param query The AQL
+ * [Query](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/bbc8c7c7b7e92ba094ea349d56977e00f6f7f42d/types/arangodb/index.d.ts#L771)
+ * to execute.
+ * @param operation The operation name to be recorded in the span.
+ * @param options The
+ * optional [SpanOptions](https://opentracing-javascript.surge.sh/interfaces/spanoptions.html) object that
+ * describes the span.
+ *
+ * @return The
+ * [Cursor](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/bbc8c7c7b7e92ba094ea349d56977e00f6f7f42d/types/arangodb/index.d.ts#L781)
+ * that is created as a result of running the query.
+ */
 export function instrumentedQuery(query: Query, operation: string, options: SpanOptions = {}) {
   const optsCopy = defaultsDeep({}, options, { tags: { service } });
   defaultsDeep(optsCopy, {

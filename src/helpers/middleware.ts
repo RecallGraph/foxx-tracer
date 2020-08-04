@@ -3,11 +3,10 @@
  * [endpoint](https://www.arangodb.com/docs/3.6/foxx-reference-routers-endpoints.html) for which traces are to
  * be recorded.
  *
- * **Usage:**
- * ```javascript
- * const { middleware } = require('foxx-tracer')
- * module.context.use(middleware)
- * ```
+ * **This module is re-exported as a top-level export.**
+ *
+ * See the [quickstart](../index.html#quickstart) for a primer on how
+ * to set up your application for tracing.
  * @packageDocumentation
  */
 

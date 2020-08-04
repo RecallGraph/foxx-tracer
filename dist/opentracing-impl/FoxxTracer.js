@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FoxxTracer = exports.ContextualTracer = void 0;
 const opentracing_1 = require("opentracing");
 const utils_1 = require("../helpers/utils");
 const __1 = require("..");

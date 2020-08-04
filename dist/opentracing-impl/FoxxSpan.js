@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FoxxSpan = void 0;
 const opentracing_1 = require("opentracing");
 const _arangodb_1 = require("@arangodb");
 const FoxxContext_1 = require("./FoxxContext");

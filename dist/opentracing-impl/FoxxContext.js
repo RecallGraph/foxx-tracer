@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FoxxContext = void 0;
 const opentracing_1 = require("opentracing");
 class FoxxContext extends opentracing_1.SpanContext {
     constructor(spanId, traceId, baggage = {}) {
