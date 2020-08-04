@@ -1,1 +1,0 @@
-{"version":3,"file":"ConsoleReporter.d.ts","sourceRoot":"","sources":["../../src/reporters/ConsoleReporter.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,YAAY,CAAC;AAClC,OAAO,QAAQ,MAAM,qBAAqB,CAAC;AAG3C,MAAM,CAAC,OAAO,OAAO,eAAgB,YAAW,QAAQ;IACtD,OAAO,CAAC,MAAM,CAAC,QAAQ,CAAC,cAAc,CAMpC;IAEF,MAAM,CAAC,MAAM,EAAE,QAAQ,EAAE,EAAE,GAAG,IAAI;CAGnC"}
