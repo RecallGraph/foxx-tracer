@@ -11,7 +11,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "rm -rf dist && tsc -p .",
     "docgen": "rm -rf docs && typedoc && touch docs/.nojekyll"
   },
   "keywords": [
