@@ -1,9 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class FoxxReporter {
+const Reporter_1 = require("./Reporter");
+class FoxxReporter extends Reporter_1.default {
+    constructor(namespace = 'foxx') {
+        super(namespace);
+    }
     report(traces) {
+        const collector = module.context.configuration[this.config.collector] || 'traceCollector';
         try {
-            module.context.dependencies.traceCollector.recordSpans(traces.flat());
+            module.context.dependencies[collector].recordSpans(traces.flat());
         }
         catch (e) {
             console.error(e.message, e.stack);

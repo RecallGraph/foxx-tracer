@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class NoopReporter {
+const Reporter_1 = require("./Reporter");
+class NoopReporter extends Reporter_1.default {
+    constructor(namespace = 'noop') {
+        super(namespace);
+    }
     report(traces) {
     }
 }
