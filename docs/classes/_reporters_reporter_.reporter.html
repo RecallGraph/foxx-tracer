@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Reporter | foxx-tracer - v0.0.1</title>
-	<meta name="description" content="Documentation for foxx-tracer - v0.0.1">
+	<title>Reporter | @recallgraph/foxx-tracer - v1.0.0</title>
+	<meta name="description" content="Documentation for @recallgraph/foxx-tracer - v1.0.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">foxx-tracer - v0.0.1</a>
+					<a href="../index.html" class="title">@recallgraph/foxx-tracer - v1.0.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -58,7 +58,7 @@
 					<a href="_reporters_reporter_.reporter.html">Reporter</a>
 				</li>
 			</ul>
-			<h1>Interface Reporter</h1>
+			<h1>Class Reporter</h1>
 		</div>
 	</div>
 </header>
@@ -70,16 +70,15 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">Reporter</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="_reporters_foxxreporter_.foxxreporter.html" class="tsd-signature-type">FoxxReporter</a>
+							</li>
+							<li>
+								<a href="_reporters_noopreporter_.noopreporter.html" class="tsd-signature-type">NoopReporter</a>
+							</li>
+						</ul>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/_reporters_consolereporter_.consolereporter.html" class="tsd-signature-type">ConsoleReporter</a></li>
-					<li><a href="../classes/_reporters_datadogreporter_.datadogreporter.html" class="tsd-signature-type">DatadogReporter</a></li>
-					<li><a href="../classes/_reporters_foxxreporter_.foxxreporter.html" class="tsd-signature-type">FoxxReporter</a></li>
-					<li><a href="../classes/_reporters_noopreporter_.noopreporter.html" class="tsd-signature-type">NoopReporter</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -87,27 +86,53 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_reporters_reporter_.reporter.html#config" class="tsd-kind-icon">config</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_reporters_reporter_.reporter.html#report" class="tsd-kind-icon">report</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_reporters_reporter_.reporter.html#report" class="tsd-kind-icon">report</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="config" class="tsd-anchor"></a>
+					<h3>config</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> config<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c6b7095/src/reporters/Reporter.ts#L12">reporters/Reporter.ts:12</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="report" class="tsd-anchor"></a>
-					<h3>report</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> report</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">report<span class="tsd-signature-symbol">(</span>traces<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SpanData</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/ffc493d/src/reporters/Reporter.ts#L4">reporters/Reporter.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c6b7095/src/reporters/Reporter.ts#L10">reporters/Reporter.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -135,12 +160,6 @@
 						<a href="../modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_reporters_consolereporter_.html">&quot;reporters/<wbr>Console<wbr>Reporter&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_reporters_datadogreporter_.html">&quot;reporters/<wbr>Datadog<wbr>Reporter&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
 						<a href="../modules/_reporters_foxxreporter_.html">&quot;reporters/<wbr>Foxx<wbr>Reporter&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -155,10 +174,13 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="_reporters_reporter_.reporter.html" class="tsd-kind-icon">Reporter</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_reporters_reporter_.reporter.html#config" class="tsd-kind-icon">config</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_reporters_reporter_.reporter.html#report" class="tsd-kind-icon">report</a>
 							</li>
 						</ul>
@@ -179,14 +201,14 @@
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 		</div>
 	</div>
