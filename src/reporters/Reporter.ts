@@ -4,7 +4,7 @@ export default abstract class Reporter {
   private readonly _config;
 
   protected constructor(namespace: string) {
-    this._config = module.context.configuration[`reporters:${namespace}`] || {};
+    this._config = module.context.configuration[`reporters-${namespace}`] || {};
   }
 
   get config() {
