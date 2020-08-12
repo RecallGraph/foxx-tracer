@@ -15,6 +15,7 @@ import Response = Foxx.Response;
 import NextFunction = Foxx.NextFunction;
 import { attachSpan, clearTraceContext, parseTraceHeaders, setTrace } from "./utils";
 import { HTTP_METHOD, HTTP_STATUS_CODE, SPAN_KIND } from "opentracing/lib/ext/tags";
+import { filter, identity } from 'lodash';
 
 /**
  * The middleware function that enables traces on endpoints to which it is attached.
@@ -26,13 +27,13 @@ export default function trace(req: Request, res: Response, next: NextFunction) {
   setTrace(traceHeaders);
 
   const options = {
-    tags: {
+    tags: filter({
       [HTTP_METHOD]: req.method,
       [SPAN_KIND]: 'server',
       path: req.path,
       pathParams: req.pathParams,
       queryParams: req.queryParams
-    }
+    }, identity)
   }
   attachSpan(next, `api${req.path}`, options,
     (result, span) => {
