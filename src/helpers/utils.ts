@@ -124,6 +124,7 @@ export const spanSchema: ObjectSchema = joi
     logs: joi
       .array()
       .items(logSchema.required())
+      .min(0)
       .required(),
     references: joi
       .array()

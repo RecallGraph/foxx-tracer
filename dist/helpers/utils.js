@@ -97,6 +97,7 @@ exports.spanSchema = joi
     logs: joi
         .array()
         .items(exports.logSchema.required())
+        .min(0)
         .required(),
     references: joi
         .array()
