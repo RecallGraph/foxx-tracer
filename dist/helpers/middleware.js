@@ -27,8 +27,8 @@ function trace(req, res, next) {
             [tags_1.HTTP_METHOD]: req.method,
             [tags_1.SPAN_KIND]: 'server',
             path: req.path,
-            pathParams: req.pathParams,
-            queryParams: req.queryParams
+            pathParams: JSON.stringify(req.pathParams),
+            queryParams: JSON.stringify(req.queryParams)
         })
     };
     utils_1.attachSpan(next, `api${req.path}`, options, (result, span) => {

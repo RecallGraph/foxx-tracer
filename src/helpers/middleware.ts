@@ -31,8 +31,8 @@ export default function trace(req: Request, res: Response, next: NextFunction) {
       [HTTP_METHOD]: req.method,
       [SPAN_KIND]: 'server',
       path: req.path,
-      pathParams: req.pathParams,
-      queryParams: req.queryParams
+      pathParams: JSON.stringify(req.pathParams),
+      queryParams: JSON.stringify(req.queryParams)
     })
   }
   attachSpan(next, `api${req.path}`, options,
