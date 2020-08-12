@@ -128,7 +128,8 @@ export const spanSchema: ObjectSchema = joi
       .required(),
     references: joi
       .array()
-      .items(referenceSchema.required())
+      .items(referenceSchema)
+      .min(0)
       .required()
   })
   .optionalKeys('tags', 'logs', 'references');

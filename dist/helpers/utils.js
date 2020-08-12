@@ -101,7 +101,8 @@ exports.spanSchema = joi
         .required(),
     references: joi
         .array()
-        .items(exports.referenceSchema.required())
+        .items(exports.referenceSchema)
+        .min(0)
         .required()
 })
     .optionalKeys('tags', 'logs', 'references');
