@@ -26,7 +26,7 @@ import {
   SpanOptions,
   Tracer
 } from 'opentracing';
-import { defaultsDeep, get, mapKeys, omit } from 'lodash';
+import { defaultsDeep, filter, get, identity, mapKeys, omit } from 'lodash';
 import { FoxxContext, FoxxSpan, FoxxTracer, SpanData } from '..';
 import { db } from '@arangodb';
 import { ERROR } from "opentracing/lib/ext/tags";
@@ -602,11 +602,11 @@ export function attachSpan(
 export function instrumentedQuery(query: Query, operation: string, options: SpanOptions = {}) {
   const optsCopy = defaultsDeep({}, options, { tags: { service } });
   defaultsDeep(optsCopy, {
-    tags: {
+    tags: filter({
       query: query.query,
       bindVars: JSON.stringify(query.bindVars),
       options: JSON.stringify(query.options)
-    }
+    }, identity)
   })
 
   const span = startSpan(operation, optsCopy);
