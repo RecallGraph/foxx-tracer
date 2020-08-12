@@ -604,8 +604,8 @@ export function instrumentedQuery(query: Query, operation: string, options: Span
   defaultsDeep(optsCopy, {
     tags: {
       query: query.query,
-      bindVars: query.bindVars,
-      options: query.options
+      bindVars: JSON.stringify(query.bindVars),
+      options: JSON.stringify(query.options)
     }
   })
 
