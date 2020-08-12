@@ -500,11 +500,11 @@ exports.attachSpan = attachSpan;
 function instrumentedQuery(query, operation, options = {}) {
     const optsCopy = lodash_1.defaultsDeep({}, options, { tags: { service } });
     lodash_1.defaultsDeep(optsCopy, {
-        tags: lodash_1.filter({
+        tags: lodash_1.pickBy({
             query: query.query,
             bindVars: JSON.stringify(query.bindVars),
             options: JSON.stringify(query.options)
-        }, lodash_1.identity)
+        })
     });
     const span = startSpan(operation, optsCopy);
     const cursor = _arangodb_1.db._query(query);

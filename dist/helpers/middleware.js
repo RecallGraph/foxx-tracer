@@ -23,13 +23,13 @@ function trace(req, res, next) {
     const traceHeaders = utils_1.parseTraceHeaders(req.headers);
     utils_1.setTrace(traceHeaders);
     const options = {
-        tags: lodash_1.filter({
+        tags: lodash_1.pickBy({
             [tags_1.HTTP_METHOD]: req.method,
             [tags_1.SPAN_KIND]: 'server',
             path: req.path,
             pathParams: req.pathParams,
             queryParams: req.queryParams
-        }, lodash_1.identity)
+        })
     };
     utils_1.attachSpan(next, `api${req.path}`, options, (result, span) => {
         span.setTag(tags_1.HTTP_STATUS_CODE, res.statusCode);
