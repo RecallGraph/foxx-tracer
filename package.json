@@ -1,6 +1,6 @@
 {
   "name": "@recallgraph/foxx-tracer",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "An OpenTracing implemenation for Foxx",
   "repository": {
     "type": "git",
