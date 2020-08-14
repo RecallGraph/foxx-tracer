@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;helpers/schemas&quot; | @recallgraph/foxx-tracer - v3.0.1</title>
-	<meta name="description" content="Documentation for @recallgraph/foxx-tracer - v3.0.1">
+	<title>&quot;helpers/schemas&quot; | @recallgraph/foxx-tracer - v3.1.0</title>
+	<meta content="Documentation for @recallgraph/foxx-tracer - v3.1.0" name="description">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -16,13 +16,13 @@
 				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
+						<input id="tsd-search-field" type="text"/>
 					</div>
 					<ul class="results">
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@recallgraph/foxx-tracer - v3.0.1</a>
+					<a class="title" href="../index.html">@recallgraph/foxx-tracer - v3.1.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -100,7 +100,9 @@
 					<div class="tsd-signature tsd-kind-icon">context<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = object().keys({trace_id: traceIdSchema.required(),span_id: spanIdSchema.required(),baggage: object().required()}).unknown(true).optionalKeys(&#x27;baggage&#x27;, &#x27;trace_id&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L33">src/helpers/schemas.ts:33</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L33">src/helpers/schemas.ts:33</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -115,7 +117,9 @@
 					<div class="tsd-signature tsd-kind-icon">log<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = object().keys({fields: object().pattern(/.+/, any()).required(),timestamp: number().required()}).optionalKeys(&#x27;timestamp&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L47">src/helpers/schemas.ts:47</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L47">src/helpers/schemas.ts:47</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -130,7 +134,9 @@
 					<div class="tsd-signature tsd-kind-icon">reference<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = object().keys({type: string().valid(REFERENCE_CHILD_OF, REFERENCE_FOLLOWS_FROM).required(),context: contextSchema.required()})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L57">src/helpers/schemas.ts:57</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L57">src/helpers/schemas.ts:57</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -145,7 +151,9 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>Arr<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ArraySchema</span><span class="tsd-signature-symbol"> = array().items(spanSchema.required()).min(1)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L77">src/helpers/schemas.ts:77</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L77">src/helpers/schemas.ts:77</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -160,7 +168,9 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>IdSchema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StringSchema</span><span class="tsd-signature-symbol"> = string().length(16)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L27">src/helpers/schemas.ts:27</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L27">src/helpers/schemas.ts:27</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -175,7 +185,9 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>Req<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AlternativesSchema</span><span class="tsd-signature-symbol"> = alternatives().try(spanSchema, spanArrSchema).required()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L83">src/helpers/schemas.ts:83</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L83">src/helpers/schemas.ts:83</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -191,7 +203,9 @@
 					<div class="tsd-signature tsd-kind-icon">span<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = object().keys({operation: string().required(),context: contextSchema.required(),startTimeMs: number().required(),finishTimeMs: number().required().min(ref(&#x27;startTimeMs&#x27;)),tags: tagsSchema.required(),logs: array().items(logSchema).min(0).required(),references: array().items(referenceSchema).min(0).required()}).optionalKeys(&#x27;tags&#x27;, &#x27;logs&#x27;, &#x27;references&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L64">src/helpers/schemas.ts:64</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L64">src/helpers/schemas.ts:64</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -206,7 +220,9 @@
 					<div class="tsd-signature tsd-kind-icon">tags<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ObjectSchema</span><span class="tsd-signature-symbol"> = object().pattern(/.+/, alternatives().try(string(), boolean(), number()).required())</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L43">src/helpers/schemas.ts:43</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L43">src/helpers/schemas.ts:43</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -221,7 +237,9 @@
 					<div class="tsd-signature tsd-kind-icon">trace<wbr>IdSchema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AlternativesSchema</span><span class="tsd-signature-symbol"> = alternatives().try(spanIdSchema, string().length(32))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d0a8519/src/helpers/schemas.ts#L30">src/helpers/schemas.ts:30</a></li>
+							<li>Defined in <a
+									href="https://github.com/RecallGraph/foxx-tracer/blob/422de0d/src/helpers/schemas.ts#L30">src/helpers/schemas.ts:30</a>
+							</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
