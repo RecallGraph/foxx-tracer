@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Reporter | @recallgraph/foxx-tracer - v1.0.0</title>
-	<meta name="description" content="Documentation for @recallgraph/foxx-tracer - v1.0.0">
+	<title>Reporter | @recallgraph/foxx-tracer - v2.0.12</title>
+	<meta name="description" content="Documentation for @recallgraph/foxx-tracer - v2.0.12">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@recallgraph/foxx-tracer - v1.0.0</a>
+					<a href="../index.html" class="title">@recallgraph/foxx-tracer - v2.0.12</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -65,19 +65,20 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The base class for all <em>reporters</em>. A subclass of this class can act as a reporter for the
+						<a href="https://github.com/RecallGraph/foxx-tracer-collector">foxx-tracer-collector</a> service.</p>
+					</div>
+					<p>A special implementation is used internally by <em>foxx-tracer</em> to report recorded spans to the collector.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">Reporter</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="_reporters_foxxreporter_.foxxreporter.html" class="tsd-signature-type">FoxxReporter</a>
-							</li>
-							<li>
-								<a href="_reporters_noopreporter_.noopreporter.html" class="tsd-signature-type">NoopReporter</a>
-							</li>
-						</ul>
 					</li>
 				</ul>
 			</section>
@@ -85,10 +86,16 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-private-protected">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-protected"><a href="_reporters_reporter_.reporter.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_reporters_reporter_.reporter.html#config" class="tsd-kind-icon">config</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected"><a href="_reporters_reporter_.reporter.html#config" class="tsd-kind-icon">config</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -100,22 +107,72 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="config" class="tsd-anchor"></a>
-					<h3>config</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> config<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-protected">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Reporter<span class="tsd-signature-symbol">(</span>namespace<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_reporters_reporter_.reporter.html" class="tsd-signature-type">Reporter</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c6b7095/src/reporters/Reporter.ts#L12">reporters/Reporter.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d285162/src/reporters/Reporter.ts#L12">reporters/Reporter.ts:12</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The base constructor that sets a pointer to the reporter implementation&#39;s namespaced configuration.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>namespace: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>A key used to uniquely identify a reporter implementation to the collector&#39;s list
+												of registered reporters and also to locate its configuration in the collector&#39;s <code>manifest.json</code>. See
+												<a href="https://github.com/RecallGraph/foxx-tracer-collector">collector docs</a> for more information on
+											namespaces.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_reporters_reporter_.reporter.html" class="tsd-signature-type">Reporter</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
+					<a name="config" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> config</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> config<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d285162/src/reporters/Reporter.ts#L30">reporters/Reporter.ts:30</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the configuration object present in <code>manifest.json</code>, or a blank object. The configuration
+									object to pick is identified by the <code>namespace</code> param passed to the reporter&#39;s contructor.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{}</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-index-signature">
+									<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -126,19 +183,32 @@
 					<a name="report" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> report</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">report<span class="tsd-signature-symbol">(</span>traces<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SpanData</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">report<span class="tsd-signature-symbol">(</span>traces<span class="tsd-signature-symbol">: </span><a href="../interfaces/_helpers_spandata_.spandata.html" class="tsd-signature-type">SpanData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/c6b7095/src/reporters/Reporter.ts#L10">reporters/Reporter.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d285162/src/reporters/Reporter.ts#L44">reporters/Reporter.ts:44</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Reports the provided traces to the reporter&#39;s configured endpoint. This method <strong>MUST</strong> be
+										implemented by all concrete sub-classes. See the
+										<a href="https://github.com/RecallGraph/foxx-tracer-reporter-console/blob/master/src/ConsoleReporter.ts">ConsoleReporter</a>
+										and the
+										<a href="https://github.com/RecallGraph/foxx-tracer-reporter-datadog/blob/master/src/DatadogReporter.ts">Datadog reporter</a>
+									for reference implementations.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>traces: <span class="tsd-signature-type">SpanData</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>traces: <a href="../interfaces/_helpers_spandata_.spandata.html" class="tsd-signature-type">SpanData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An array of traces (each trace being an array of <a href="../interfaces/_helpers_spandata_.spandata.html">SpanData</a>).</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -154,16 +224,13 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/_helpers_spandata_.html">&quot;helpers/<wbr>Span<wbr>Data&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/_helpers_middleware_.html">&quot;helpers/middleware&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_reporters_foxxreporter_.html">&quot;reporters/<wbr>Foxx<wbr>Reporter&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_reporters_noopreporter_.html">&quot;reporters/<wbr>Noop<wbr>Reporter&quot;</a>
 					</li>
 					<li class="current tsd-kind-module">
 						<a href="../modules/_reporters_reporter_.html">&quot;reporters/<wbr>Reporter&quot;</a>
@@ -177,7 +244,10 @@
 					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="_reporters_reporter_.reporter.html" class="tsd-kind-icon">Reporter</a>
 						<ul>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-protected">
+								<a href="_reporters_reporter_.reporter.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
 								<a href="_reporters_reporter_.reporter.html#config" class="tsd-kind-icon">config</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -197,15 +267,12 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>

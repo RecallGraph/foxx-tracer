@@ -1,6 +1,7 @@
 import { Span, SpanContext, SpanOptions, Tracer } from "opentracing";
 import Reporter from "../reporters/Reporter";
-import { FoxxContext, SpanData } from "..";
+import { default as SpanData } from "../helpers/SpanData";
+import FoxxContext from "./FoxxContext";
 export declare abstract class ContextualTracer extends Tracer {
     abstract currentContext: SpanContext;
     abstract currentTrace: string;

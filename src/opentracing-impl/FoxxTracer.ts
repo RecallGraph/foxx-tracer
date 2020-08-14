@@ -1,7 +1,9 @@
 import { FORMAT_HTTP_HEADERS, FORMAT_TEXT_MAP, Span, SpanContext, SpanOptions, Tracer } from "opentracing";
 import Reporter from "../reporters/Reporter";
 import { TRACE_HEADER_KEYS, TraceHeaders } from "../helpers/utils";
-import { Context, FoxxContext, FoxxSpan, SpanData } from "..";
+import { Context, default as SpanData } from "../helpers/SpanData";
+import FoxxContext from "./FoxxContext";
+import FoxxSpan from "./FoxxSpan";
 import { isObjectLike } from 'lodash';
 
 export abstract class ContextualTracer extends Tracer {

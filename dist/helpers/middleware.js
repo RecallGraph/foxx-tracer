@@ -12,7 +12,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("./utils");
-const tags_1 = require("opentracing/lib/ext/tags");
+const opentracing_1 = require("opentracing");
 const lodash_1 = require("lodash");
 /**
  * The middleware function that enables traces on endpoints to which it is attached.
@@ -24,21 +24,21 @@ function trace(req, res, next) {
     utils_1.setTrace(traceHeaders);
     const options = {
         tags: lodash_1.pickBy({
-            [tags_1.HTTP_METHOD]: req.method,
-            [tags_1.SPAN_KIND]: 'server',
+            [opentracing_1.Tags.HTTP_METHOD]: req.method,
+            [opentracing_1.Tags.SPAN_KIND]: 'server',
             path: req.path,
             pathParams: JSON.stringify(req.pathParams),
             queryParams: JSON.stringify(req.queryParams)
         })
     };
     utils_1.attachSpan(next, `api${req.path}`, options, (result, span) => {
-        span.setTag(tags_1.HTTP_STATUS_CODE, res.statusCode);
+        span.setTag(opentracing_1.Tags.HTTP_STATUS_CODE, res.statusCode);
         span.log({
             size: res.body ? res.body.toString().length : 0
         });
         span.finish();
     }, (err, span) => {
-        span.setTag(tags_1.HTTP_STATUS_CODE, res.statusCode);
+        span.setTag(opentracing_1.Tags.HTTP_STATUS_CODE, res.statusCode);
         span.finish();
         throw err;
     })();

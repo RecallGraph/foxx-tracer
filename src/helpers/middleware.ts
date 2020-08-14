@@ -14,7 +14,7 @@ import Request = Foxx.Request;
 import Response = Foxx.Response;
 import NextFunction = Foxx.NextFunction;
 import { attachSpan, clearTraceContext, parseTraceHeaders, setTrace } from "./utils";
-import { HTTP_METHOD, HTTP_STATUS_CODE, SPAN_KIND } from "opentracing/lib/ext/tags";
+import { Tags } from "opentracing";
 import { pickBy } from 'lodash';
 
 /**
@@ -28,8 +28,8 @@ export default function trace(req: Request, res: Response, next: NextFunction) {
 
   const options = {
     tags: pickBy({
-      [HTTP_METHOD]: req.method,
-      [SPAN_KIND]: 'server',
+      [Tags.HTTP_METHOD]: req.method,
+      [Tags.SPAN_KIND]: 'server',
       path: req.path,
       pathParams: JSON.stringify(req.pathParams),
       queryParams: JSON.stringify(req.queryParams)
@@ -37,13 +37,13 @@ export default function trace(req: Request, res: Response, next: NextFunction) {
   }
   attachSpan(next, `api${req.path}`, options,
     (result, span) => {
-      span.setTag(HTTP_STATUS_CODE, res.statusCode);
+      span.setTag(Tags.HTTP_STATUS_CODE, res.statusCode);
       span.log({
         size: res.body ? res.body.toString().length : 0
       });
       span.finish();
     }, (err, span) => {
-      span.setTag(HTTP_STATUS_CODE, res.statusCode);
+      span.setTag(Tags.HTTP_STATUS_CODE, res.statusCode);
       span.finish();
 
       throw err;

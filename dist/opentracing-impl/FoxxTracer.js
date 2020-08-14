@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FoxxTracer = exports.ContextualTracer = void 0;
 const opentracing_1 = require("opentracing");
 const utils_1 = require("../helpers/utils");
-const __1 = require("..");
+const FoxxContext_1 = require("./FoxxContext");
+const FoxxSpan_1 = require("./FoxxSpan");
 const lodash_1 = require("lodash");
 class ContextualTracer extends opentracing_1.Tracer {
 }
@@ -24,7 +25,7 @@ class FoxxTracer extends ContextualTracer {
         return !!(c && c.span_id);
     }
     static _allocSpan() {
-        return new __1.FoxxSpan();
+        return new FoxxSpan_1.default();
     }
     get currentContext() {
         return this._currentContext;
@@ -65,7 +66,7 @@ class FoxxTracer extends ContextualTracer {
                 const spanId = c[PARENT_SPAN_ID];
                 const traceId = c[TRACE_ID];
                 const baggage = c[BAGGAGE];
-                return new __1.FoxxContext(spanId, traceId, baggage);
+                return new FoxxContext_1.default(spanId, traceId, baggage);
             }
             else {
                 return null;
@@ -73,7 +74,7 @@ class FoxxTracer extends ContextualTracer {
         }
         else if (format === opentracing_1.FORMAT_TEXT_MAP && FoxxTracer.isContext(carrier)) {
             const c = carrier;
-            return new __1.FoxxContext(c.span_id, c.trace_id, c.baggage);
+            return new FoxxContext_1.default(c.span_id, c.trace_id, c.baggage);
         }
         return null;
     }

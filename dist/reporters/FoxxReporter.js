@@ -4,11 +4,11 @@ const Reporter_1 = require("./Reporter");
 class FoxxReporter extends Reporter_1.default {
     constructor(namespace = 'foxx') {
         super(namespace);
+        this.collector = module.context.configuration[this.config.collector] || 'traceCollector';
     }
     report(traces) {
-        const collector = module.context.configuration[this.config.collector] || 'traceCollector';
         try {
-            module.context.dependencies[collector].recordSpans(traces.flat());
+            module.context.dependencies[this.collector].recordSpans(traces.flat());
         }
         catch (e) {
             console.error(e.message, e.stack);

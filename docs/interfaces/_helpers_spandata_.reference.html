@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TaskOpts | @recallgraph/foxx-tracer - v2.0.12</title>
+	<title>Reference | @recallgraph/foxx-tracer - v2.0.12</title>
 	<meta name="description" content="Documentation for @recallgraph/foxx-tracer - v2.0.12">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,24 +52,32 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
+					<a href="../modules/_helpers_spandata_.html">&quot;helpers/SpanData&quot;</a>
 				</li>
 				<li>
-					<a href="_helpers_utils_.taskopts.html">TaskOpts</a>
+					<a href="_helpers_spandata_.reference.html">Reference</a>
 				</li>
 			</ul>
-			<h1>Interface TaskOpts</h1>
+			<h1>Interface Reference</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Schema for representing a JSON-serialized
+						<a href="https://opentracing-javascript.surge.sh/classes/reference.html">Reference</a>.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">TaskOpts</span>
+						<span class="target">Reference</span>
 					</li>
 				</ul>
 			</section>
@@ -80,8 +88,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_helpers_utils_.taskopts.html#command" class="tsd-kind-icon">command</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_helpers_utils_.taskopts.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_helpers_spandata_.reference.html#context" class="tsd-kind-icon">context</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_helpers_spandata_.reference.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,22 +98,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="command" class="tsd-anchor"></a>
-					<h3>command</h3>
-					<div class="tsd-signature tsd-kind-icon">command<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
+					<a name="context" class="tsd-anchor"></a>
+					<h3>context</h3>
+					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <a href="_helpers_spandata_.context.html" class="tsd-signature-type">Context</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d285162/src/helpers/utils.ts#L96">helpers/utils.ts:96</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d285162/src/helpers/SpanData.ts#L41">helpers/SpanData.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="params" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d285162/src/helpers/utils.ts#L97">helpers/utils.ts:97</a></li>
+							<li>Defined in <a href="https://github.com/RecallGraph/foxx-tracer/blob/d285162/src/helpers/SpanData.ts#L40">helpers/SpanData.ts:40</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -117,13 +125,13 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_helpers_spandata_.html">&quot;helpers/<wbr>Span<wbr>Data&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_helpers_middleware_.html">&quot;helpers/middleware&quot;</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -133,41 +141,35 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="_helpers_spandata_.context.html" class="tsd-kind-icon">Context</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="_helpers_spandata_.log.html" class="tsd-kind-icon">Log</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="_helpers_utils_.taskopts.html" class="tsd-kind-icon">Task<wbr>Opts</a>
+						<a href="_helpers_spandata_.reference.html" class="tsd-kind-icon">Reference</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_helpers_utils_.taskopts.html#command" class="tsd-kind-icon">command</a>
+								<a href="_helpers_spandata_.reference.html#context" class="tsd-kind-icon">context</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_helpers_utils_.taskopts.html#params" class="tsd-kind-icon">params</a>
+								<a href="_helpers_spandata_.reference.html#type" class="tsd-kind-icon">type</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_helpers_utils_.html#attachspan" class="tsd-kind-icon">attach<wbr>Span</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="_helpers_spandata_.spandata.html" class="tsd-kind-icon">Span<wbr>Data</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_helpers_utils_.html#cleartracecontext" class="tsd-kind-icon">clear<wbr>Trace<wbr>Context</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="_helpers_spandata_.tags.html" class="tsd-kind-icon">Tags</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_helpers_utils_.html#executetask" class="tsd-kind-icon">execute<wbr>Task</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_helpers_utils_.html#executetransaction" class="tsd-kind-icon">execute<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_helpers_utils_.html#inittracer" class="tsd-kind-icon">init<wbr>Tracer</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_helpers_utils_.html#instrumentedquery" class="tsd-kind-icon">instrumented<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_helpers_utils_.html#startspan" class="tsd-kind-icon">start<wbr>Span</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/_helpers_spandata_.html#tagvalue" class="tsd-kind-icon">Tag<wbr>Value</a>
 					</li>
 				</ul>
 			</nav>

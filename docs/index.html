@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@recallgraph/foxx-tracer - v1.0.0</title>
-	<meta name="description" content="Documentation for @recallgraph/foxx-tracer - v1.0.0">
+	<title>@recallgraph/foxx-tracer - v2.0.12</title>
+	<meta name="description" content="Documentation for @recallgraph/foxx-tracer - v2.0.12">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@recallgraph/foxx-tracer - v1.0.0</a>
+					<a href="index.html" class="title">@recallgraph/foxx-tracer - v2.0.12</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1>@recallgraph/foxx-tracer - v1.0.0</h1>
+			<h1>@recallgraph/foxx-tracer - v2.0.12</h1>
 		</div>
 	</div>
 </header>
@@ -70,8 +70,8 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 				<a href="#why-foxx-tracer" id="why-foxx-tracer" style="color: inherit; text-decoration: none;">
 					<h2>Why foxx-tracer</h2>
 				</a>
-				<p>Most tracing libraries in the <em>nodeverse</em> are asynchronous, meaning they do not work in the synchronous V8 runtime that <a href="https://www.arangodb.com/docs/stable/foxx.html#compatibility-caveats">ArangoDB uses</a> to run its Foxx services. <em>foxx-tracer</em> bridges this gap by being a 100% synchronous, dedicated module built for the Foxx runtime.</p>
-				<p>However, as a consequence, it relies on a number of features only available in a Foxx environment. It also depends on a <a href="https://github.com/RecallGraph/foxx-tracer-collector">companion collector service</a> which itself is a Foxx microservice. These dependencies make this module <strong>incompatible with Node.js and browser-based runtimes</strong>, despite being delivered as an <em>npm</em> package.</p>
+				<p>Most tracing libraries in the <em>nodeverse</em> are asynchronous, and so do not work in the synchronous V8 runtime that <a href="https://www.arangodb.com/docs/stable/foxx.html#compatibility-caveats">ArangoDB uses</a> to run its Foxx services. <em>foxx-tracer</em> bridges this gap by being a 100% synchronous, dedicated module built for the Foxx runtime.</p>
+				<p>As a result, it relies on a number of features only available in a Foxx environment. It also depends on a <a href="https://github.com/RecallGraph/foxx-tracer-collector">companion collector service</a> which itself is a Foxx microservice. These dependencies make this module <strong>incompatible with Node.js and browser-based runtimes</strong>.</p>
 				<a href="#quickstart" id="quickstart" style="color: inherit; text-decoration: none;">
 					<h2>Quickstart</h2>
 				</a>
@@ -81,7 +81,7 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 					</li>
 					<li><p>Install the <a href="https://github.com/RecallGraph/foxx-tracer-collector">collector service</a> and follow its setup instructions.</p>
 					</li>
-					<li><p>In your service, before mounting any trace-enabled routes, you need to initialize the tracer, trace headers and middleware. This is best done in your service&#39;s startup module (usually <code>main.js</code>).</p>
+					<li><p>In your service, before mounting any trace-enabled routes, you need to initialize the tracer, trace headers and middleware. This is best done in your service&#39;s startup script (usually <code>main.js</code>).</p>
 						<pre><code class="language-javascript"> <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { setEndpointTraceHeaders, initTracer }, middleware } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  <span class="hljs-comment">// Initialize the tracer</span>
@@ -122,7 +122,38 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 
  executeTask({<span class="hljs-comment">/* task options */</span>})</code></pre>
 					</li>
+					<li><p>Finally, you need to <a href="https://trello.com/b/AGrGVmb8/recallgraph">assign the collector dependency</a> so that <em>foxx-tracer</em> knows where to send the recorded traces. The <code>manifest.json</code> file should have a <code>dependencies</code> object containing the following:</p>
+						<pre><code class="language-json"> {
+     <span class="hljs-attr">&quot;dependencies&quot;</span>: {
+         <span class="hljs-attr">&quot;traceCollector&quot;</span>: {
+             <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;@RecallGraph/foxx-tracer-collector&quot;</span>,
+             <span class="hljs-attr">&quot;version&quot;</span>: <span class="hljs-string">&quot;^0.0.5&quot;</span>,
+             <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;Opentrace-compatible collector to send span records to.&quot;</span>,
+             <span class="hljs-attr">&quot;required&quot;</span>: <span class="hljs-literal">false</span>,
+             <span class="hljs-attr">&quot;multiple&quot;</span>: <span class="hljs-literal">false</span>
+         }
+     }
+ }</code></pre>
+						<p><strong>Optional:</strong>
+						If, for some reason, you cannot name your dependency as <code>traceCollector</code> (in the unlikely case that it clashes with another dependency key), you can rename it to any other valid manifest key. But then, additional configuration is required to tell the tracer where to find the collector. The <code>manifest.json</code> should now have an additonal setting in <code>configuration</code>, containing the following:</p>
+						<pre><code class="language-json"> {
+     <span class="hljs-attr">&quot;configuration&quot;</span>: {
+         <span class="hljs-attr">&quot;reporters-foxx&quot;</span>: {
+             <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;json&quot;</span>,
+             <span class="hljs-attr">&quot;required&quot;</span>: <span class="hljs-literal">true</span>,
+             <span class="hljs-attr">&quot;default&quot;</span>: {
+                 <span class="hljs-attr">&quot;collector&quot;</span>: <span class="hljs-string">&quot;customCollectorDependencyKey&quot;</span>
+             },
+             <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;Settings for the foxx reporter.&quot;</span>
+         }
+     }
+ }</code></pre>
+					</li>
 				</ol>
+				<a href="#reference-implementation" id="reference-implementation" style="color: inherit; text-decoration: none;">
+					<h2>Reference Implementation</h2>
+				</a>
+				<p>To get a better idea of how to instrument your Foxx service using <em>foxx-tracer</em>, take a look at the source of the <a href="https://github.com/RecallGraph/RecallGraph">RecallGraph</a> project.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -132,16 +163,13 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="modules/_helpers_spandata_.html">&quot;helpers/<wbr>Span<wbr>Data&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="modules/_helpers_middleware_.html">&quot;helpers/middleware&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_reporters_foxxreporter_.html">&quot;reporters/<wbr>Foxx<wbr>Reporter&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_reporters_noopreporter_.html">&quot;reporters/<wbr>Noop<wbr>Reporter&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_reporters_reporter_.html">&quot;reporters/<wbr>Reporter&quot;</a>
@@ -160,11 +188,8 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>

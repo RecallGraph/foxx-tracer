@@ -9,7 +9,8 @@
     "module": "commonjs",
     "target": "es2019",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "stripInternal": true
   },
   "exclude": [
     "node_modules"
@@ -22,14 +23,16 @@
     "out": "docs",
     "excludeNotExported": true,
     "excludePrivate": true,
-    "excludeProtected": true,
+    "excludeProtected": false,
     "excludeExternals": true,
     "stripInternal": true,
     "includeVersion": true,
     "readme": "README.md",
     "exclude": [
+      "src/**/index.ts",
+      "src/helpers/schemas.ts",
       "src/opentracing-impl",
-      "src/helpers/SpanData.ts"
+      "src/reporters/{Foxx,Noop}Reporter.ts"
     ]
   }
 }

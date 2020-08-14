@@ -8,120 +8,28 @@
  *
  * See the [quickstart](../index.html#quickstart) for a primer on how
  * to set up your application for tracing.
+ *
  * @packageDocumentation
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.instrumentedQuery = exports.attachSpan = exports.executeTask = exports.executeTransaction = exports.initTracer = exports.reportSpan = exports.startSpan = exports.clearTraceContext = exports.setTraceContext = exports.getParent = exports.setTrace = exports.parseTraceHeaders = exports.setEndpointTraceHeaders = exports.TRACE_HEADER_KEYS = exports.forceSampleSchema = exports.spanReqSchema = exports.spanArrSchema = exports.spanSchema = exports.referenceSchema = exports.logSchema = exports.tagsSchema = exports.contextSchema = exports.baggageSchema = exports.traceIdSchema = exports.spanIdSchema = void 0;
+exports.instrumentedQuery = exports.attachSpan = exports.executeTask = exports.executeTransaction = exports.initTracer = exports.reportSpan = exports.startSpan = exports.clearTraceContext = exports.setTraceContext = exports.getParent = exports.setTrace = exports.parseTraceHeaders = exports.setEndpointTraceHeaders = exports.TRACE_HEADER_KEYS = void 0;
+const dd = require("dedent");
 const opentracing_1 = require("opentracing");
 const lodash_1 = require("lodash");
-const __1 = require("..");
+const opentracing_impl_1 = require("../opentracing-impl");
 const _arangodb_1 = require("@arangodb");
-const tags_1 = require("opentracing/lib/ext/tags");
 const reporters_1 = require("../reporters");
-const joi = require('joi');
+const schemas_1 = require("./schemas");
+const joi_1 = require("joi");
 const tasks = require('@arangodb/tasks');
 const noopTracer = new opentracing_1.Tracer();
-const { name, version } = module.context.manifest;
-const service = `${name}-${version}`;
-/** A 16 character string representing a span ID. */
-exports.spanIdSchema = joi
-    .string()
-    .length(16);
-/** A 16 or 32 character string representing a trace ID. */
-exports.traceIdSchema = joi
-    .alternatives()
-    .try(exports.spanIdSchema, joi
-    .string()
-    .length(32));
-/** A valid JSON object. */
-exports.baggageSchema = joi.object();
-/** A JSON object encoding a [span context](https://opentracing.io/specification/#spancontext). */
-exports.contextSchema = joi
-    .object()
-    .keys({
-    trace_id: exports.traceIdSchema.required(),
-    span_id: exports.spanIdSchema.required(),
-    baggage: exports.baggageSchema.required()
-})
-    .unknown(true)
-    .optionalKeys('baggage', 'trace_id');
-/** A JSON object representing a [span tag](https://opentracing.io/specification/#set-a-span-tag). */
-exports.tagsSchema = joi
-    .object()
-    .pattern(/.+/, joi
-    .alternatives()
-    .try(joi.string(), joi.boolean(), joi.number())
-    .required());
-/** A JSON object representing a [span log](https://opentracing.io/specification/#log-structured-data). */
-exports.logSchema = joi
-    .object()
-    .keys({
-    fields: joi
-        .object()
-        .pattern(/.+/, joi.any())
-        .required(),
-    timestamp: joi
-        .number()
-        .required()
-})
-    .optionalKeys('timestamp');
+const { manifest: { name, version }, baseUrl } = module.context;
+const service = `${name}-${version} (${baseUrl})`;
 /**
- * A JSON object representing a
- * [span reference](https://opentracing.io/specification/#references-between-spans).
+ * The HTTP header keys that are used to control tracing behaviour and for setting trace context.
+ *
+ * @internal
  */
-exports.referenceSchema = joi
-    .object()
-    .keys({
-    type: joi
-        .string()
-        .valid(opentracing_1.REFERENCE_CHILD_OF, opentracing_1.REFERENCE_FOLLOWS_FROM)
-        .required(),
-    context: exports.contextSchema.required()
-});
-/** A JSON object representing a [span](https://opentracing.io/specification/#the-opentracing-data-model). */
-exports.spanSchema = joi
-    .object()
-    .keys({
-    operation: joi
-        .string()
-        .required(),
-    context: exports.contextSchema.required(),
-    startTimeMs: joi
-        .number()
-        .required(),
-    finishTimeMs: joi
-        .number()
-        .required()
-        .min(joi.ref('startTimeMs')),
-    tags: exports.tagsSchema.required(),
-    logs: joi
-        .array()
-        .items(exports.logSchema)
-        .min(0)
-        .required(),
-    references: joi
-        .array()
-        .items(exports.referenceSchema)
-        .min(0)
-        .required()
-})
-    .optionalKeys('tags', 'logs', 'references');
-/** An array of span objects, each adhering to the [[spanSchema | span schema]]. */
-exports.spanArrSchema = joi
-    .array()
-    .items(exports.spanSchema.required())
-    .min(1);
-/**
- * A single span or an array of spans, adhering to the [[spanSchema | span schema]] or the
- * [[spanArrSchema | span array schema]] respectively.
- */
-exports.spanReqSchema = joi
-    .alternatives()
-    .try(exports.spanSchema, exports.spanArrSchema)
-    .required();
-/** A boolean representing whether to force record or force suppress a trace. */
-exports.forceSampleSchema = joi.boolean();
-/** The HTTP header keys that are used to control tracing behaviour and for setting trace context. */
 var TRACE_HEADER_KEYS;
 (function (TRACE_HEADER_KEYS) {
     /**
@@ -154,19 +62,22 @@ var TRACE_HEADER_KEYS;
 })(TRACE_HEADER_KEYS = exports.TRACE_HEADER_KEYS || (exports.TRACE_HEADER_KEYS = {}));
 const TRACE_HEADER_SCHEMAS = Object.freeze({
     [TRACE_HEADER_KEYS.TRACE_ID]: {
-        schema: exports.traceIdSchema,
+        schema: schemas_1.traceIdSchema,
         description: '64 or 128 bit trace id to use for creating spans.'
     },
     [TRACE_HEADER_KEYS.PARENT_SPAN_ID]: {
-        schema: exports.spanIdSchema,
-        description: '64 bit parent span id to use for creating spans.'
+        schema: schemas_1.spanIdSchema,
+        description: dd `
+      64 bit parent span id to use for creating spans.
+      Must be accompanied by a ${TRACE_HEADER_KEYS.TRACE_ID}.
+    `
     },
     [TRACE_HEADER_KEYS.BAGGAGE]: {
-        schema: exports.baggageSchema,
-        description: 'Context baggage.'
+        schema: schemas_1.baggageSchema,
+        description: 'Context baggage. Must be a valid JSON object.'
     },
     [TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
-        schema: exports.forceSampleSchema,
+        schema: schemas_1.forceSampleSchema,
         description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
     }
 });
@@ -188,7 +99,7 @@ function parseTraceHeaders(headers) {
     for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
         const headerVal = lodash_1.get(headers, key);
         if (headerVal) {
-            traceHeaders[key] = joi.validate(headerVal, value.schema).value;
+            traceHeaders[key] = joi_1.validate(headerVal, value.schema).value;
         }
     }
     const { PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
@@ -222,7 +133,7 @@ exports.setTrace = setTrace;
 function setTraceContextFromHeaders(headers) {
     const tracer = opentracing_1.globalTracer();
     const { TRACE_ID } = TRACE_HEADER_KEYS;
-    const traceId = headers[TRACE_ID] || __1.FoxxSpan.generateUUID();
+    const traceId = headers[TRACE_ID] || opentracing_impl_1.FoxxSpan.generateUUID();
     headers[TRACE_ID] = traceId;
     const rootContext = tracer.extract(opentracing_1.FORMAT_HTTP_HEADERS, headers);
     setTraceContext(traceId, rootContext);
@@ -234,6 +145,8 @@ function setTraceContextFromHeaders(headers) {
  *
  * @return The [SpanContext](https://opentracing-javascript.surge.sh/classes/spancontext.html) of the
  * reference representing the parent, if found, `null` otherwise.
+ *
+ * @internal
  */
 function getParent(refs) {
     const parent = refs ? refs.find(ref => ref.type() === opentracing_1.REFERENCE_CHILD_OF) : null;
@@ -300,7 +213,7 @@ exports.reportSpan = reportSpan;
  */
 function initTracer() {
     const reporter = new reporters_1.FoxxReporter();
-    const tracer = new __1.FoxxTracer(reporter);
+    const tracer = new opentracing_impl_1.FoxxTracer(reporter);
     opentracing_1.initGlobalTracer(tracer);
     const gTracer = opentracing_1.globalTracer();
     Object.defineProperty(gTracer, 'currentContext', {
@@ -430,9 +343,7 @@ exports.executeTask = executeTask;
  *
  * On the other hand, when you need access to the span (at the end of the function) just before it is
  * finalized, you can specify the success and error callbacks, within which you will have access to the span.
- * You can now add your custom tags/logs to the span.
- *
- * **The span must be explicity closed in the body of both
+ * You can now add your custom tags/logs to the span. **The span must be explicity closed in the body of both
  * callbacks** by invoking its [finish](https://opentracing-javascript.surge.sh/classes/span.html#finish)
  * method.
  *
@@ -441,8 +352,16 @@ exports.executeTask = executeTask;
  * @param options The
  * optional [SpanOptions](https://opentracing-javascript.surge.sh/interfaces/spanoptions.html) object that
  * describes the span.
- * @param onSuccess The optional success callback.
- * @param onError The optional error callback.
+ * @param onSuccess The optional success callback. It is called with two parameters:
+ * 1. `result` - containing the result of invoking `fn`.
+ * 1. `span` - the [Span](https://opentracing-javascript.surge.sh/classes/span.html) object that was used to
+ * instrument `fn`.
+ * @param onError The optional error callback. It is called with two parameters:
+ * 1. `err` - the
+ * [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+ * that occurred when invoking `fn`.
+ * 1. `span` - the [Span](https://opentracing-javascript.surge.sh/classes/span.html) object that was used to
+ * instrument `fn`.
  *
  * @return The wrapper function that accepts the same arguments as *fn*.
  */
@@ -467,7 +386,7 @@ function attachSpan(fn, operation, options = {}, onSuccess, onError) {
             }
         }
         catch (e) {
-            span.setTag(tags_1.ERROR, true);
+            span.setTag(opentracing_1.Tags.ERROR, true);
             span.log({
                 errorMessage: e.message
             });
