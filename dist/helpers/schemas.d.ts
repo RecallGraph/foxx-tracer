@@ -1,3 +1,11 @@
+/**
+ * This module exports a number of validation schemas that are used internally as well as by the collector
+ * to validate incoming [[SpanData]].
+ *
+ * **This module is re-exported as a top-level export.**
+ *
+ * @packageDocumentation
+ */
 import { AlternativesSchema, ArraySchema, ObjectSchema, StringSchema } from 'joi';
 /** A validation schema for a 16 character string representing a span ID. */
 export declare const spanIdSchema: StringSchema;

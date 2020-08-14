@@ -1,4 +1,12 @@
 "use strict";
+/**
+ * This module exports a number of validation schemas that are used internally as well as by the collector
+ * to validate incoming [[SpanData]].
+ *
+ * **This module is re-exported as a top-level export.**
+ *
+ * @packageDocumentation
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.spanReqSchema = exports.spanArrSchema = exports.spanSchema = exports.referenceSchema = exports.logSchema = exports.tagsSchema = exports.contextSchema = exports.traceIdSchema = exports.spanIdSchema = void 0;
 const joi_1 = require("joi");

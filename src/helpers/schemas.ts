@@ -1,3 +1,12 @@
+/**
+ * This module exports a number of validation schemas that are used internally as well as by the collector
+ * to validate incoming [[SpanData]].
+ *
+ * **This module is re-exported as a top-level export.**
+ *
+ * @packageDocumentation
+ */
+
 import {
   alternatives,
   AlternativesSchema,
