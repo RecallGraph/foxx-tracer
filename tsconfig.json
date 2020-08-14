@@ -13,7 +13,9 @@
     "stripInternal": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    "docs"
   ],
   "typedocOptions": {
     "inputFiles": [

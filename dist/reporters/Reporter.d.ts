@@ -1,4 +1,4 @@
-import SpanData from '../helpers/SpanData';
+import { SpanData } from '../helpers/types';
 /**
  * The base class for all *reporters*. A subclass of this class can act as a reporter for the
  * [foxx-tracer-collector](https://github.com/RecallGraph/foxx-tracer-collector) service.

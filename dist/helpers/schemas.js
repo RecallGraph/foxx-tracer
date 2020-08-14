@@ -8,9 +8,11 @@
  * @packageDocumentation
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.spanReqSchema = exports.spanArrSchema = exports.spanSchema = exports.referenceSchema = exports.logSchema = exports.tagsSchema = exports.contextSchema = exports.traceIdSchema = exports.spanIdSchema = void 0;
+exports.TRACE_HEADER_SCHEMAS = exports.spanReqSchema = exports.spanArrSchema = exports.spanSchema = exports.referenceSchema = exports.logSchema = exports.tagsSchema = exports.contextSchema = exports.traceIdSchema = exports.spanIdSchema = void 0;
+const dd = require("dedent");
 const joi_1 = require("joi");
 const opentracing_1 = require("opentracing");
+const types_1 = require("./types");
 /** A validation schema for a 16 character string representing a span ID. */
 exports.spanIdSchema = joi_1.string().length(16);
 /** A validation schema for a 16 or 32 character string representing a trace ID. */
@@ -61,4 +63,28 @@ exports.spanArrSchema = joi_1.array().items(exports.spanSchema.required()).min(1
  * or the [[spanArrSchema | span array schema]] respectively.
  */
 exports.spanReqSchema = joi_1.alternatives().try(exports.spanSchema, exports.spanArrSchema).required();
+/**
+ * @internal
+ */
+exports.TRACE_HEADER_SCHEMAS = Object.freeze({
+    [types_1.TRACE_HEADER_KEYS.TRACE_ID]: {
+        schema: exports.traceIdSchema,
+        description: '64 or 128 bit trace id to use for creating spans.'
+    },
+    [types_1.TRACE_HEADER_KEYS.PARENT_SPAN_ID]: {
+        schema: exports.spanIdSchema,
+        description: dd `
+      64 bit parent span id to use for creating spans.
+      Must be accompanied by a ${types_1.TRACE_HEADER_KEYS.TRACE_ID}.
+    `
+    },
+    [types_1.TRACE_HEADER_KEYS.BAGGAGE]: {
+        schema: joi_1.object(),
+        description: 'Context baggage. Must be a valid JSON object.'
+    },
+    [types_1.TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
+        schema: joi_1.boolean(),
+        description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
+    }
+});
 //# sourceMappingURL=schemas.js.map

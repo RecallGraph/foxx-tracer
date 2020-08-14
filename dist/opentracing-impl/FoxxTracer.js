@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContextualTracer = void 0;
 const opentracing_1 = require("opentracing");
-const utils_1 = require("../helpers/utils");
+const types_1 = require("../helpers/types");
 const FoxxContext_1 = require("./FoxxContext");
 const FoxxSpan_1 = require("./FoxxSpan");
 const lodash_1 = require("lodash");
@@ -19,7 +19,7 @@ class FoxxTracer extends ContextualTracer {
     }
     static isTraceHeaders(carrier) {
         const c = carrier;
-        const { TRACE_ID } = utils_1.TRACE_HEADER_KEYS;
+        const { TRACE_ID } = types_1.TRACE_HEADER_KEYS;
         return !!c[TRACE_ID];
     }
     static isContext(carrier) {
@@ -63,7 +63,7 @@ class FoxxTracer extends ContextualTracer {
     _extract(format, carrier) {
         if (format === opentracing_1.FORMAT_HTTP_HEADERS && FoxxTracer.isTraceHeaders(carrier)) {
             const c = carrier;
-            const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = utils_1.TRACE_HEADER_KEYS;
+            const { PARENT_SPAN_ID, TRACE_ID, BAGGAGE } = types_1.TRACE_HEADER_KEYS;
             if (c[PARENT_SPAN_ID]) {
                 const spanId = c[PARENT_SPAN_ID];
                 const traceId = c[TRACE_ID];

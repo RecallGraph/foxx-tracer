@@ -1,16 +1,11 @@
-import { Context, default as SpanData, Log, Reference, Tags, TagValue } from './helpers/SpanData';
+import * as types from './helpers/types';
 import * as utils from './helpers/utils';
 import middleware from './helpers/middleware';
 import * as reporters from './reporters';
-import * as schemas from './helpers/schemas'
+import * as schemas from './helpers/schemas';
 
 export {
-  SpanData,
-  Context,
-  Reference,
-  Tags,
-  TagValue,
-  Log,
+  types,
   utils,
   middleware,
   reporters,

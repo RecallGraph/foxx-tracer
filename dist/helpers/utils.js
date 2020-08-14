@@ -12,11 +12,11 @@
  * @packageDocumentation
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateUUID = exports.instrumentedQuery = exports.attachSpan = exports.executeTask = exports.executeTransaction = exports.initTracer = exports.reportSpan = exports.startSpan = exports.clearTraceContext = exports.setTraceContext = exports.getParent = exports.setTrace = exports.parseTraceHeaders = exports.setEndpointTraceHeaders = exports.TRACE_HEADER_KEYS = void 0;
-const dd = require("dedent");
+exports.generateUUID = exports.instrumentedQuery = exports.attachSpan = exports.executeTask = exports.executeTransaction = exports.initTracer = exports.reportSpan = exports.startSpan = exports.clearTraceContext = exports.setTraceContext = exports.getParent = exports.setTrace = exports.parseTraceHeaders = exports.setEndpointTraceHeaders = void 0;
 const opentracing_1 = require("opentracing");
 const lodash_1 = require("lodash");
 const opentracing_impl_1 = require("../opentracing-impl");
+const types_1 = require("./types");
 const _arangodb_1 = require("@arangodb");
 const FoxxReporter_1 = require("../reporters/FoxxReporter");
 const schemas_1 = require("./schemas");
@@ -25,67 +25,19 @@ const tasks = require('@arangodb/tasks');
 const noopTracer = new opentracing_1.Tracer();
 const { manifest: { name, version }, baseUrl } = module.context;
 const service = `${name}-${version} (${baseUrl})`;
-/**
- * The HTTP header keys that are used to control tracing behaviour and for setting trace context.
- *
- * @internal
- */
-var TRACE_HEADER_KEYS;
-(function (TRACE_HEADER_KEYS) {
-    /**
-     * The trace ID under which to record all new spans. If unspecified, a new trace is started and is
-     * assigned a randomly generated [[generateUUID | UUID]].
-     *
-     * Note that if a new trace is started by *foxx-tracer*, the subsequent root span's span ID will **not**
-     * be same as the generated trace ID.
-     */
-    TRACE_HEADER_KEYS["TRACE_ID"] = "x-trace-id";
-    /**
-     * A span ID (belonging to an ongoing trace) under which to create the top level span of the traced request.
-     * This header **must be accompanied** by a non-emtpy [[TRACE_HEADER_KEYS.TRACE_ID | TRACE_ID]] header.
-     * All spans generated with the application will now have this span ID as an ancestor.
-     */
-    TRACE_HEADER_KEYS["PARENT_SPAN_ID"] = "x-parent-span-id";
-    /**
-     * A JSON object containing key-value pairs that will set as the
-     * [baggage](https://opentracing.io/specification/#set-a-baggage-item) for all spans recorded for this
-     * request.
-     */
-    TRACE_HEADER_KEYS["BAGGAGE"] = "x-baggage";
-    /**
-     * An optional boolean that control whether the decision to record a trace should be forced,
-     * suppressed or be left to the application to decide. If `true` a sample is forced. If `false` no sample
-     * is taken. If left blank, the application decides based on the `sampling-probability` configuration
-     * parameter (TODO: Add link to param docs).
-     */
-    TRACE_HEADER_KEYS["FORCE_SAMPLE"] = "x-force-sample";
-})(TRACE_HEADER_KEYS = exports.TRACE_HEADER_KEYS || (exports.TRACE_HEADER_KEYS = {}));
-const TRACE_HEADER_SCHEMAS = Object.freeze({
-    [TRACE_HEADER_KEYS.TRACE_ID]: {
-        schema: schemas_1.traceIdSchema,
-        description: '64 or 128 bit trace id to use for creating spans.'
-    },
-    [TRACE_HEADER_KEYS.PARENT_SPAN_ID]: {
-        schema: schemas_1.spanIdSchema,
-        description: dd `
-      64 bit parent span id to use for creating spans.
-      Must be accompanied by a ${TRACE_HEADER_KEYS.TRACE_ID}.
-    `
-    },
-    [TRACE_HEADER_KEYS.BAGGAGE]: {
-        schema: joi_1.object(),
-        description: 'Context baggage. Must be a valid JSON object.'
-    },
-    [TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
-        schema: joi_1.boolean(),
-        description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
-    }
-});
+function setTraceContextFromHeaders(headers) {
+    const tracer = opentracing_1.globalTracer();
+    const { TRACE_ID } = types_1.TRACE_HEADER_KEYS;
+    const traceId = headers[TRACE_ID] || generateUUID();
+    headers[TRACE_ID] = traceId;
+    const rootContext = tracer.extract(opentracing_1.FORMAT_HTTP_HEADERS, headers);
+    setTraceContext(traceId, rootContext);
+}
 /**
  * @internal
  */
 function setEndpointTraceHeaders(endpoint) {
-    for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
+    for (const [key, value] of Object.entries(schemas_1.TRACE_HEADER_SCHEMAS)) {
         endpoint.header(key, value.schema, value.description);
     }
 }
@@ -96,13 +48,13 @@ exports.setEndpointTraceHeaders = setEndpointTraceHeaders;
 function parseTraceHeaders(headers) {
     headers = lodash_1.mapKeys(headers, (v, k) => k.toLowerCase());
     const traceHeaders = {};
-    for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
+    for (const [key, value] of Object.entries(schemas_1.TRACE_HEADER_SCHEMAS)) {
         const headerVal = lodash_1.get(headers, key);
         if (headerVal) {
             traceHeaders[key] = joi_1.validate(headerVal, value.schema).value;
         }
     }
-    const { PARENT_SPAN_ID, TRACE_ID } = TRACE_HEADER_KEYS;
+    const { PARENT_SPAN_ID, TRACE_ID } = types_1.TRACE_HEADER_KEYS;
     if (traceHeaders[PARENT_SPAN_ID] && !traceHeaders[TRACE_ID]) {
         throw new Error('Parent span received without associated trace ID.');
     }
@@ -113,7 +65,7 @@ exports.parseTraceHeaders = parseTraceHeaders;
  * @internal
  */
 function setTrace(headers) {
-    const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
+    const { FORCE_SAMPLE } = types_1.TRACE_HEADER_KEYS;
     const forceSample = headers[FORCE_SAMPLE];
     if (forceSample === false) {
         return;
@@ -130,14 +82,6 @@ function setTrace(headers) {
     }
 }
 exports.setTrace = setTrace;
-function setTraceContextFromHeaders(headers) {
-    const tracer = opentracing_1.globalTracer();
-    const { TRACE_ID } = TRACE_HEADER_KEYS;
-    const traceId = headers[TRACE_ID] || generateUUID();
-    headers[TRACE_ID] = traceId;
-    const rootContext = tracer.extract(opentracing_1.FORMAT_HTTP_HEADERS, headers);
-    setTraceContext(traceId, rootContext);
-}
 /**
  * Returns a parent context (if found) from the input array of references.
  *

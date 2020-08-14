@@ -1,7 +1,7 @@
 import { Reference, Span, SpanContext } from 'opentracing';
 import { time } from '@arangodb';
 import FoxxContext from './FoxxContext';
-import SpanData from '../helpers/SpanData';
+import { SpanData } from '../helpers/types';
 import { generateUUID, getParent, reportSpan, setTraceContext } from '../helpers/utils'
 
 /** @internal */

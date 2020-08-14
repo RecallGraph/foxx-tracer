@@ -1,5 +1,5 @@
 import { SpanContext } from "opentracing";
-import { Context } from '../helpers/SpanData'
+import { Context } from '../helpers/types'
 
 /** @internal */
 export default class FoxxContext extends SpanContext {

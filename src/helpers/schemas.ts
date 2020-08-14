@@ -7,6 +7,7 @@
  * @packageDocumentation
  */
 
+import dd = require('dedent');
 import {
   alternatives,
   AlternativesSchema,
@@ -22,6 +23,7 @@ import {
   StringSchema
 } from 'joi';
 import { REFERENCE_CHILD_OF, REFERENCE_FOLLOWS_FROM } from 'opentracing';
+import { TRACE_HEADER_KEYS } from "./types";
 
 /** A validation schema for a 16 character string representing a span ID. */
 export const spanIdSchema: StringSchema = string().length(16);
@@ -81,3 +83,28 @@ export const spanArrSchema: ArraySchema = array().items(spanSchema.required()).m
  * or the [[spanArrSchema | span array schema]] respectively.
  */
 export const spanReqSchema: AlternativesSchema = alternatives().try(spanSchema, spanArrSchema).required();
+
+/**
+ * @internal
+ */
+export const TRACE_HEADER_SCHEMAS = Object.freeze({
+  [TRACE_HEADER_KEYS.TRACE_ID]: {
+    schema: traceIdSchema,
+    description: '64 or 128 bit trace id to use for creating spans.'
+  },
+  [TRACE_HEADER_KEYS.PARENT_SPAN_ID]: {
+    schema: spanIdSchema,
+    description: dd`
+      64 bit parent span id to use for creating spans.
+      Must be accompanied by a ${TRACE_HEADER_KEYS.TRACE_ID}.
+    `
+  },
+  [TRACE_HEADER_KEYS.BAGGAGE]: {
+    schema: object(),
+    description: 'Context baggage. Must be a valid JSON object.'
+  },
+  [TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
+    schema: boolean(),
+    description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
+  }
+});

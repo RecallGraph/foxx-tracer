@@ -1,5 +1,5 @@
 import Reporter from './Reporter';
-import SpanData from '../helpers/SpanData';
+import { SpanData } from '../helpers/types';
 
 /** @internal */
 export default class FoxxReporter extends Reporter {

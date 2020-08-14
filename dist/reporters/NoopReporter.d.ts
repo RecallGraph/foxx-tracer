@@ -1,4 +1,4 @@
-import SpanData from "../helpers/SpanData";
+import { SpanData } from "../helpers/types";
 import Reporter from "./Reporter";
 /** @ignore */
 export default class NoopReporter extends Reporter {

@@ -14,10 +14,7 @@
 import Transaction = ArangoDB.Transaction;
 import Query = ArangoDB.Query;
 import { Span, SpanOptions } from 'opentracing';
-export interface TaskOpts {
-    command: Function;
-    params?: any;
-}
+import { TaskOpts } from './types';
 /**
  * Clears the global tracer's memory of all trace and span context. Useful when it is desired to manually
  * start a fresh trace. Normally required only in test suite runs.
