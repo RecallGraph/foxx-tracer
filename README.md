@@ -40,26 +40,26 @@ As a result, it relies on a number of features only available in a Foxx environm
     // Attach trace headers to the endpoint
     setEndpointTraceHeaders(endpoint)
     ```
-1. To wrap a function in a new [span](modules/_opentracing_impl_foxxspan_.html), use [`attachSpan`](modules/_helpers_utils_.html#attachspan).
+1. To wrap a function in a new [span](https://opentracing-javascript.surge.sh/classes/span.html), use [`attachSpan`](https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#attachspan).
     ```javascript
     const { utils: { attachSpan } } = require('foxx-tracer')
    
     attachSpan(function() {}, 'opName', {/* options */}, onSuccess /* optional */, onError /* optional */)
     ```
-1. To instrument a [db query](https://www.arangodb.com/docs/stable/aql/invocation-with-arangosh.html#with-db_query) (with query stats collection and reporting), use [`instrumentedQuery`](modules/_helpers_utils_.html#instrumentedquery).
+1. To instrument a [db query](https://www.arangodb.com/docs/stable/aql/invocation-with-arangosh.html#with-db_query) (with query stats collection and reporting), use [`instrumentedQuery`](https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#instrumentedquery).
     ```javascript
      const { utils: { instrumentedQuery } } = require('foxx-tracer')
    
     const query = aql.query(/* query */)
     const cursor = instrumentedQuery(query, 'queryName', {/* options */})
     ```
-1. To correctly propagate the current [span context](https://opentracing.io/specification/#spancontext) across [transaction](https://www.arangodb.com/docs/3.6/transactions-transaction-invocation.html) boundaries, use [`executeTransaction`](modules/_helpers_utils_.html#executetransaction).
+1. To correctly propagate the current [span context](https://opentracing.io/specification/#spancontext) across [transaction](https://www.arangodb.com/docs/3.6/transactions-transaction-invocation.html) boundaries, use [`executeTransaction`](https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#executetransaction).
     ```javascript
      const { utils: { executeTransaction } } = require('foxx-tracer')
    
     const result = executeTransaction({/* transaction specification */})
     ```
-1. To correctly propagate the current [span context](https://opentracing.io/specification/#spancontext) across [task](https://www.arangodb.com/docs/3.6/appendix-java-script-modules-tasks.html) invocations, use [`executeTask`](modules/_helpers_utils_.html#executetask).
+1. To correctly propagate the current [span context](https://opentracing.io/specification/#spancontext) across [task](https://www.arangodb.com/docs/3.6/appendix-java-script-modules-tasks.html) invocations, use [`executeTask`](https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#executetask).
     ```javascript
      const { utils: { executeTask } } = require('foxx-tracer')
    
