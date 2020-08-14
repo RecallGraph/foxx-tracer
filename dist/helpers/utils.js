@@ -34,7 +34,7 @@ var TRACE_HEADER_KEYS;
 (function (TRACE_HEADER_KEYS) {
     /**
      * The trace ID under which to record all new spans. If unspecified, a new trace is started and is
-     * assigned a randomly generated [[FoxxSpan.generateUUID | UUID]].
+     * assigned a randomly generated [[generateUUID | UUID]].
      *
      * Note that if a new trace is started by *foxx-tracer*, the subsequent root span's span ID will **not**
      * be same as the generated trace ID.
@@ -73,11 +73,11 @@ const TRACE_HEADER_SCHEMAS = Object.freeze({
     `
     },
     [TRACE_HEADER_KEYS.BAGGAGE]: {
-        schema: schemas_1.baggageSchema,
+        schema: joi_1.object(),
         description: 'Context baggage. Must be a valid JSON object.'
     },
     [TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
-        schema: schemas_1.forceSampleSchema,
+        schema: joi_1.boolean(),
         description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
     }
 });

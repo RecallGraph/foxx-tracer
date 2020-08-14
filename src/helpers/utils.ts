@@ -34,8 +34,8 @@ import SpanData from './SpanData';
 import { db } from '@arangodb';
 import { FoxxReporter } from '../reporters';
 import { ContextualTracer } from '../opentracing-impl/FoxxTracer';
-import { baggageSchema, forceSampleSchema, spanIdSchema, traceIdSchema } from './schemas';
-import { validate } from 'joi';
+import { spanIdSchema, traceIdSchema } from './schemas';
+import { boolean, object, validate } from 'joi';
 
 const tasks = require('@arangodb/tasks');
 
@@ -51,7 +51,7 @@ const service = `${name}-${version} (${baseUrl})`;
 export enum TRACE_HEADER_KEYS {
   /**
    * The trace ID under which to record all new spans. If unspecified, a new trace is started and is
-   * assigned a randomly generated [[FoxxSpan.generateUUID | UUID]].
+   * assigned a randomly generated [[generateUUID | UUID]].
    *
    * Note that if a new trace is started by *foxx-tracer*, the subsequent root span's span ID will **not**
    * be same as the generated trace ID.
@@ -110,11 +110,11 @@ const TRACE_HEADER_SCHEMAS = Object.freeze({
     `
   },
   [TRACE_HEADER_KEYS.BAGGAGE]: {
-    schema: baggageSchema,
+    schema: object(),
     description: 'Context baggage. Must be a valid JSON object.'
   },
   [TRACE_HEADER_KEYS.FORCE_SAMPLE]: {
-    schema: forceSampleSchema,
+    schema: boolean(),
     description: 'Boolean flag to force sampling on or off. Leave blank to let the tracer decide.'
   }
 });

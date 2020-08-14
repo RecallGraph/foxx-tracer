@@ -1,7 +1,7 @@
 {
   "name": "@recallgraph/foxx-tracer",
-  "version": "3.0.0",
-  "description": "An OpenTracing implemenation for Foxx",
+  "version": "3.0.1",
+  "description": "An OpenTracing implemenation for ArangoDB's Foxx Microservices.",
   "repository": {
     "type": "git",
     "url": "https://github.com/RecallGraph/foxx-tracer"
