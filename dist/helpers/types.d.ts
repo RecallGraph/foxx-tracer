@@ -90,4 +90,11 @@ export declare enum TRACE_HEADER_KEYS {
      */
     FORCE_SAMPLE = "x-force-sample"
 }
+/**
+ * @ignore
+ */
+export interface TaskOpts {
+    command: Function;
+    params?: any;
+}
 //# sourceMappingURL=types.d.ts.map

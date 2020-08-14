@@ -113,7 +113,7 @@ export interface TraceHeaders {
 }
 
 /**
- * @internal
+ * @ignore
  */
 export interface TaskOpts {
   command: Function;
