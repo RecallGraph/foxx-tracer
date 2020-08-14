@@ -19,7 +19,7 @@ const lodash_1 = require("lodash");
  *
  * **Not meant to be explicitly invoked.**
  *
- * @internal
+ * @ignore
  */
 function trace(req, res, next) {
     const traceHeaders = utils_1.parseTraceHeaders(req.headers);

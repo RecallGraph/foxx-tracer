@@ -22,7 +22,7 @@ import { pickBy } from 'lodash';
  *
  * **Not meant to be explicitly invoked.**
  *
- * @internal
+ * @ignore
  */
 export default function trace(req: Request, res: Response, next: NextFunction) {
   const traceHeaders = parseTraceHeaders(req.headers)

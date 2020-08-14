@@ -18,7 +18,7 @@ const opentracing_1 = require("opentracing");
 const lodash_1 = require("lodash");
 const opentracing_impl_1 = require("../opentracing-impl");
 const _arangodb_1 = require("@arangodb");
-const reporters_1 = require("../reporters");
+const FoxxReporter_1 = require("../reporters/FoxxReporter");
 const schemas_1 = require("./schemas");
 const joi_1 = require("joi");
 const tasks = require('@arangodb/tasks');
@@ -212,7 +212,7 @@ exports.reportSpan = reportSpan;
  * once) when application starts.
  */
 function initTracer() {
-    const reporter = new reporters_1.FoxxReporter();
+    const reporter = new FoxxReporter_1.default();
     const tracer = new opentracing_impl_1.FoxxTracer(reporter);
     opentracing_1.initGlobalTracer(tracer);
     const gTracer = opentracing_1.globalTracer();

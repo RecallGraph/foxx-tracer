@@ -32,7 +32,7 @@ import { defaultsDeep, get, mapKeys, omit, pickBy } from 'lodash';
 import { FoxxContext, FoxxTracer } from '../opentracing-impl';
 import SpanData from './SpanData';
 import { db } from '@arangodb';
-import { FoxxReporter } from '../reporters';
+import FoxxReporter from '../reporters/FoxxReporter';
 import { ContextualTracer } from '../opentracing-impl/FoxxTracer';
 import { spanIdSchema, traceIdSchema } from './schemas';
 import { boolean, object, validate } from 'joi';

@@ -9,5 +9,16 @@
  * to set up your application for tracing.
  * @packageDocumentation
  */
-export {};
+/// <reference types="arangodb" />
+import Request = Foxx.Request;
+import Response = Foxx.Response;
+import NextFunction = Foxx.NextFunction;
+/**
+ * The middleware function that enables traces on endpoints to which it is attached.
+ *
+ * **Not meant to be explicitly invoked.**
+ *
+ * @ignore
+ */
+export default function trace(req: Request, res: Response, next: NextFunction): void;
 //# sourceMappingURL=middleware.d.ts.map
