@@ -2,9 +2,10 @@ import { Reference, Span, SpanContext } from 'opentracing';
 import { time } from '@arangodb';
 import FoxxContext from './FoxxContext';
 import SpanData from '../helpers/SpanData';
-import { getParent, reportSpan, setTraceContext } from '../helpers/utils'
+import { generateUUID, getParent, reportSpan, setTraceContext } from '../helpers/utils'
 
-export class FoxxSpan extends Span {
+/** @internal */
+export default class FoxxSpan extends Span {
   private readonly _spanData: SpanData;
   private readonly _refs: Reference[];
   private _foxxContext: FoxxContext;
@@ -14,7 +15,7 @@ export class FoxxSpan extends Span {
     this._refs = [];
     this._spanData = {
       context: {
-        span_id: FoxxSpan.generateUUID()
+        span_id: generateUUID()
       },
       finishTimeMs: 0,
       operation: '',
@@ -29,16 +30,9 @@ export class FoxxSpan extends Span {
     return this._spanData;
   }
 
-  static generateUUID(): string {
-    const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-    const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
-
-    return `${p0}${p1}`;
-  }
-
   initContext(traceId: string) {
     const parent = this.getParent();
-    traceId = traceId || (parent ? parent.toTraceId() : FoxxSpan.generateUUID());
+    traceId = traceId || (parent ? parent.toTraceId() : generateUUID());
 
     this._foxxContext = new FoxxContext(this._spanData.context.span_id, traceId);
     this._spanData.context.trace_id = traceId;
@@ -99,5 +93,3 @@ export class FoxxSpan extends Span {
     return getParent(this._refs);
   }
 }
-
-export default FoxxSpan;

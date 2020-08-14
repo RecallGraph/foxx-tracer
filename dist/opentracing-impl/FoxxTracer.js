@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FoxxTracer = exports.ContextualTracer = void 0;
+exports.ContextualTracer = void 0;
 const opentracing_1 = require("opentracing");
 const utils_1 = require("../helpers/utils");
 const FoxxContext_1 = require("./FoxxContext");
 const FoxxSpan_1 = require("./FoxxSpan");
 const lodash_1 = require("lodash");
+/** @internal */
 class ContextualTracer extends opentracing_1.Tracer {
 }
 exports.ContextualTracer = ContextualTracer;
+/** @internal */
 class FoxxTracer extends ContextualTracer {
     constructor(reporter) {
         super();
@@ -103,6 +105,5 @@ class FoxxTracer extends ContextualTracer {
         return span;
     }
 }
-exports.FoxxTracer = FoxxTracer;
 exports.default = FoxxTracer;
 //# sourceMappingURL=FoxxTracer.js.map

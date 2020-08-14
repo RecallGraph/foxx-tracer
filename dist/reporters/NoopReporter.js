@@ -7,11 +7,11 @@ class NoopReporter extends Reporter_1.default {
     }
     report(traces) {
         /*
-        * Twas bryllyg, and ye slythy toves
-        * Did gyre and gymble in ye wabe:
-        * All mimsy were ye borogoves;
-        * And ye mome raths outgrabe.
-        */
+         * Twas bryllyg, and ye slythy toves
+         * Did gyre and gymble in ye wabe:
+         * All mimsy were ye borogoves;
+         * And ye mome raths outgrabe.
+         */
     }
 }
 exports.default = NoopReporter;

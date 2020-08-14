@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Reporter_1 = require("./Reporter");
+/** @internal */
 class FoxxReporter extends Reporter_1.default {
     constructor(namespace = 'foxx') {
         super(namespace);

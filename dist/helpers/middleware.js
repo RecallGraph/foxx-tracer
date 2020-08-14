@@ -18,6 +18,8 @@ const lodash_1 = require("lodash");
  * The middleware function that enables traces on endpoints to which it is attached.
  *
  * **Not meant to be explicitly invoked.**
+ *
+ * @internal
  */
 function trace(req, res, next) {
     const traceHeaders = utils_1.parseTraceHeaders(req.headers);

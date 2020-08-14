@@ -1,1 +1,1 @@
-{"version":3,"file":"FoxxContext.d.ts","sourceRoot":"","sources":["../../src/opentracing-impl/FoxxContext.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,MAAM,aAAa,CAAC;AAG1C,qBAAa,WAAY,SAAQ,WAAW;IAC1C,OAAO,CAAC,QAAQ,CAAC,OAAO,CAAU;gBAEtB,MAAM,EAAE,MAAM,EAAE,OAAO,CAAC,EAAE,MAAM,EAAE,OAAO,GAAE,MAAW;IAUlE,SAAS,IAAI,MAAM;IAInB,QAAQ,IAAI,MAAM;IAIlB,OAAO;CAGR;AAED,eAAe,WAAW,CAAC"}
+{"version":3,"file":"FoxxContext.d.ts","sourceRoot":"","sources":["../../src/opentracing-impl/FoxxContext.ts"],"names":[],"mappings":""}

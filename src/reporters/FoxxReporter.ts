@@ -1,6 +1,7 @@
 import Reporter from './Reporter';
 import SpanData from '../helpers/SpanData';
 
+/** @internal */
 export default class FoxxReporter extends Reporter {
   private readonly collector: string;
 

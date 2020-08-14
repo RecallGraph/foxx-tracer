@@ -29,7 +29,7 @@ import {
   Tracer
 } from 'opentracing';
 import { defaultsDeep, get, mapKeys, omit, pickBy } from 'lodash';
-import { FoxxContext, FoxxSpan, FoxxTracer } from '../opentracing-impl';
+import { FoxxContext, FoxxTracer } from '../opentracing-impl';
 import SpanData from './SpanData';
 import { db } from '@arangodb';
 import { FoxxReporter } from '../reporters';
@@ -82,7 +82,7 @@ export enum TRACE_HEADER_KEYS {
 }
 
 /**
- * @ignore
+ * @internal
  */
 export interface TraceHeaders {
   [TRACE_HEADER_KEYS.TRACE_ID]?: string;
@@ -120,7 +120,7 @@ const TRACE_HEADER_SCHEMAS = Object.freeze({
 });
 
 /**
- * @ignore
+ * @internal
  */
 export function setEndpointTraceHeaders(endpoint: Endpoint): void {
   for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
@@ -129,7 +129,7 @@ export function setEndpointTraceHeaders(endpoint: Endpoint): void {
 }
 
 /**
- * @ignore
+ * @internal
  */
 export function parseTraceHeaders(headers: { [key: string]: string | undefined }): TraceHeaders {
   headers = mapKeys(headers, (v, k) => k.toLowerCase());
@@ -151,7 +151,7 @@ export function parseTraceHeaders(headers: { [key: string]: string | undefined }
 }
 
 /**
- * @ignore
+ * @internal
  */
 export function setTrace(headers: TraceHeaders): void {
   const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
@@ -175,7 +175,7 @@ function setTraceContextFromHeaders(headers: TraceHeaders) {
   const tracer = globalTracer() as ContextualTracer;
   const { TRACE_ID } = TRACE_HEADER_KEYS;
 
-  const traceId = headers[TRACE_ID] || FoxxSpan.generateUUID();
+  const traceId = headers[TRACE_ID] || generateUUID();
   headers[TRACE_ID] = traceId;
 
   const rootContext = tracer.extract(FORMAT_HTTP_HEADERS, headers);
@@ -199,7 +199,7 @@ export function getParent(refs: Reference[]): SpanContext {
 }
 
 /**
- * @ignore
+ * @internal
  */
 export function setTraceContext(traceID?: string, context?: SpanContext) {
   const tracer = globalTracer() as ContextualTracer;
@@ -252,7 +252,7 @@ export function startSpan(name: string, options: SpanOptions = {}): Span {
 }
 
 /**
- * @ignore
+ * @internal
  */
 export function reportSpan(spanData: SpanData) {
   const tracer = globalTracer() as ContextualTracer;
@@ -524,4 +524,16 @@ export function instrumentedQuery(query: Query, operation: string, options: Span
   span.finish()
 
   return cursor;
+}
+
+/**
+ * Generates a 64-bit UUID string.
+ *
+ * @return The generated UUID string.
+ */
+export function generateUUID(): string {
+  const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+  const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+
+  return `${p0}${p1}`;
 }

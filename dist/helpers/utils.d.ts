@@ -13,40 +13,11 @@
 /// <reference types="arangodb" />
 import Transaction = ArangoDB.Transaction;
 import Query = ArangoDB.Query;
-import Endpoint = Foxx.Endpoint;
-import { Span, SpanContext, SpanOptions } from 'opentracing';
-import SpanData from './SpanData';
-/**
- * @ignore
- */
-export interface TraceHeaders {
-    [TRACE_HEADER_KEYS.TRACE_ID]?: string;
-    [TRACE_HEADER_KEYS.PARENT_SPAN_ID]?: string;
-    [TRACE_HEADER_KEYS.BAGGAGE]?: object;
-    [TRACE_HEADER_KEYS.FORCE_SAMPLE]?: boolean;
-}
+import { Span, SpanOptions } from 'opentracing';
 export interface TaskOpts {
     command: Function;
     params?: any;
 }
-/**
- * @ignore
- */
-export declare function setEndpointTraceHeaders(endpoint: Endpoint): void;
-/**
- * @ignore
- */
-export declare function parseTraceHeaders(headers: {
-    [key: string]: string | undefined;
-}): TraceHeaders;
-/**
- * @ignore
- */
-export declare function setTrace(headers: TraceHeaders): void;
-/**
- * @ignore
- */
-export declare function setTraceContext(traceID?: string, context?: SpanContext): void;
 /**
  * Clears the global tracer's memory of all trace and span context. Useful when it is desired to manually
  * start a fresh trace. Normally required only in test suite runs.
@@ -64,10 +35,6 @@ export declare function clearTraceContext(): void;
  * @return The created [Span](https://opentracing-javascript.surge.sh/classes/span.html).
  */
 export declare function startSpan(name: string, options?: SpanOptions): Span;
-/**
- * @ignore
- */
-export declare function reportSpan(spanData: SpanData): void;
 /**
  * Initializes the global tracer at application startup. This should be called as early as possible (and only
  * once) when application starts.
@@ -151,4 +118,10 @@ export declare function attachSpan(fn: Function | FunctionConstructor, operation
  * that is created as a result of running the query.
  */
 export declare function instrumentedQuery(query: Query, operation: string, options?: SpanOptions): ArangoDB.Cursor<any>;
+/**
+ * Generates a 64-bit UUID string.
+ *
+ * @return The generated UUID string.
+ */
+export declare function generateUUID(): string;
 //# sourceMappingURL=utils.d.ts.map

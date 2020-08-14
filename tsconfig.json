@@ -29,10 +29,7 @@
     "includeVersion": true,
     "readme": "README.md",
     "exclude": [
-      "src/**/index.ts",
-      "src/helpers/schemas.ts",
-      "src/opentracing-impl",
-      "src/reporters/{Foxx,Noop}Reporter.ts"
+      "src/**/index.ts"
     ]
   }
 }

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FoxxContext = void 0;
 const opentracing_1 = require("opentracing");
+/** @internal */
 class FoxxContext extends opentracing_1.SpanContext {
     constructor(spanId, traceId, baggage = {}) {
         super();
@@ -21,6 +21,5 @@ class FoxxContext extends opentracing_1.SpanContext {
         return this.context.baggage;
     }
 }
-exports.FoxxContext = FoxxContext;
 exports.default = FoxxContext;
 //# sourceMappingURL=FoxxContext.js.map

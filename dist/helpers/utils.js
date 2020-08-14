@@ -12,7 +12,7 @@
  * @packageDocumentation
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.instrumentedQuery = exports.attachSpan = exports.executeTask = exports.executeTransaction = exports.initTracer = exports.reportSpan = exports.startSpan = exports.clearTraceContext = exports.setTraceContext = exports.getParent = exports.setTrace = exports.parseTraceHeaders = exports.setEndpointTraceHeaders = exports.TRACE_HEADER_KEYS = void 0;
+exports.generateUUID = exports.instrumentedQuery = exports.attachSpan = exports.executeTask = exports.executeTransaction = exports.initTracer = exports.reportSpan = exports.startSpan = exports.clearTraceContext = exports.setTraceContext = exports.getParent = exports.setTrace = exports.parseTraceHeaders = exports.setEndpointTraceHeaders = exports.TRACE_HEADER_KEYS = void 0;
 const dd = require("dedent");
 const opentracing_1 = require("opentracing");
 const lodash_1 = require("lodash");
@@ -82,7 +82,7 @@ const TRACE_HEADER_SCHEMAS = Object.freeze({
     }
 });
 /**
- * @ignore
+ * @internal
  */
 function setEndpointTraceHeaders(endpoint) {
     for (const [key, value] of Object.entries(TRACE_HEADER_SCHEMAS)) {
@@ -91,7 +91,7 @@ function setEndpointTraceHeaders(endpoint) {
 }
 exports.setEndpointTraceHeaders = setEndpointTraceHeaders;
 /**
- * @ignore
+ * @internal
  */
 function parseTraceHeaders(headers) {
     headers = lodash_1.mapKeys(headers, (v, k) => k.toLowerCase());
@@ -110,7 +110,7 @@ function parseTraceHeaders(headers) {
 }
 exports.parseTraceHeaders = parseTraceHeaders;
 /**
- * @ignore
+ * @internal
  */
 function setTrace(headers) {
     const { FORCE_SAMPLE } = TRACE_HEADER_KEYS;
@@ -133,7 +133,7 @@ exports.setTrace = setTrace;
 function setTraceContextFromHeaders(headers) {
     const tracer = opentracing_1.globalTracer();
     const { TRACE_ID } = TRACE_HEADER_KEYS;
-    const traceId = headers[TRACE_ID] || opentracing_impl_1.FoxxSpan.generateUUID();
+    const traceId = headers[TRACE_ID] || generateUUID();
     headers[TRACE_ID] = traceId;
     const rootContext = tracer.extract(opentracing_1.FORMAT_HTTP_HEADERS, headers);
     setTraceContext(traceId, rootContext);
@@ -154,7 +154,7 @@ function getParent(refs) {
 }
 exports.getParent = getParent;
 /**
- * @ignore
+ * @internal
  */
 function setTraceContext(traceID, context) {
     const tracer = opentracing_1.globalTracer();
@@ -200,7 +200,7 @@ function startSpan(name, options = {}) {
 }
 exports.startSpan = startSpan;
 /**
- * @ignore
+ * @internal
  */
 function reportSpan(spanData) {
     const tracer = opentracing_1.globalTracer();
@@ -433,4 +433,15 @@ function instrumentedQuery(query, operation, options = {}) {
     return cursor;
 }
 exports.instrumentedQuery = instrumentedQuery;
+/**
+ * Generates a 64-bit UUID string.
+ *
+ * @return The generated UUID string.
+ */
+function generateUUID() {
+    const p0 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+    const p1 = `00000000${Math.abs((Math.random() * 0xFFFFFFFF) | 0).toString(16)}`.substr(-8);
+    return `${p0}${p1}`;
+}
+exports.generateUUID = generateUUID;
 //# sourceMappingURL=utils.js.map

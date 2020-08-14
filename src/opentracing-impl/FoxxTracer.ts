@@ -6,6 +6,7 @@ import FoxxContext from "./FoxxContext";
 import FoxxSpan from "./FoxxSpan";
 import { isObjectLike } from 'lodash';
 
+/** @internal */
 export abstract class ContextualTracer extends Tracer {
   abstract currentContext: SpanContext;
 
@@ -16,7 +17,8 @@ export abstract class ContextualTracer extends Tracer {
   abstract flush(traceId?: string);
 }
 
-export class FoxxTracer extends ContextualTracer {
+/** @internal */
+export default class FoxxTracer extends ContextualTracer {
   private _finishedSpans: { [key: string]: SpanData[] } = {};
   private _currentContext: SpanContext;
   private _currentTrace: string;
@@ -135,5 +137,3 @@ export class FoxxTracer extends ContextualTracer {
     return span;
   }
 }
-
-export default FoxxTracer;

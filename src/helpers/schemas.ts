@@ -15,16 +15,28 @@ import {
 } from 'joi';
 import { REFERENCE_CHILD_OF, REFERENCE_FOLLOWS_FROM } from 'opentracing';
 
-/** A 16 character string representing a span ID. */
+/** A 16 character string representing a span ID.
+ *
+ * @internal
+ */
 export const spanIdSchema: StringSchema = string().length(16);
 
-/** A 16 or 32 character string representing a trace ID. */
+/** A 16 or 32 character string representing a trace ID.
+ *
+ * @internal
+ */
 export const traceIdSchema: AlternativesSchema = alternatives().try(spanIdSchema, string().length(32));
 
-/** A valid JSON object. */
+/** A valid JSON object.
+ *
+ * @internal
+ */
 export const baggageSchema = object();
 
-/** A JSON object encoding a [span context](https://opentracing.io/specification/#spancontext). */
+/** A JSON object encoding a [span context](https://opentracing.io/specification/#spancontext).
+ *
+ * @internal
+ */
 export const contextSchema: ObjectSchema = object()
   .keys({
     trace_id: traceIdSchema.required(),
@@ -34,11 +46,17 @@ export const contextSchema: ObjectSchema = object()
   .unknown(true)
   .optionalKeys('baggage', 'trace_id');
 
-/** A JSON object representing a [span tag](https://opentracing.io/specification/#set-a-span-tag). */
+/** A JSON object representing a [span tag](https://opentracing.io/specification/#set-a-span-tag).
+ *
+ * @internal
+ */
 export const tagsSchema: ObjectSchema = object()
   .pattern(/.+/, alternatives().try(string(), boolean(), number()).required());
 
-/** A JSON object representing a [span log](https://opentracing.io/specification/#log-structured-data). */
+/** A JSON object representing a [span log](https://opentracing.io/specification/#log-structured-data).
+ *
+ * @internal
+ */
 export const logSchema: ObjectSchema = object()
   .keys({
     fields: object().pattern(/.+/, any()).required(),
@@ -49,6 +67,8 @@ export const logSchema: ObjectSchema = object()
 /**
  * A JSON object representing a
  * [span reference](https://opentracing.io/specification/#references-between-spans).
+ *
+ * @internal
  */
 export const referenceSchema: ObjectSchema = object()
   .keys({
@@ -56,7 +76,10 @@ export const referenceSchema: ObjectSchema = object()
     context: contextSchema.required()
   });
 
-/** A JSON object representing a [span](https://opentracing.io/specification/#the-opentracing-data-model). */
+/** A JSON object representing a [span](https://opentracing.io/specification/#the-opentracing-data-model).
+ *
+ * @internal
+ */
 export const spanSchema: ObjectSchema = object()
   .keys({
     operation: string().required(),
@@ -69,14 +92,22 @@ export const spanSchema: ObjectSchema = object()
   })
   .optionalKeys('tags', 'logs', 'references');
 
-/** An array of span objects, each adhering to the [[spanSchema | span schema]]. */
+/** An array of span objects, each adhering to the [[spanSchema | span schema]].
+ *
+ * @internal
+ */
 export const spanArrSchema: ArraySchema = array().items(spanSchema.required()).min(1);
 
 /**
  * A single span or an array of spans, adhering to the [[spanSchema | span schema]] or the
  * [[spanArrSchema | span array schema]] respectively.
+ *
+ * @internal
  */
 export const spanReqSchema: AlternativesSchema = alternatives().try(spanSchema, spanArrSchema).required();
 
-/** A boolean representing whether to force record or force suppress a trace. */
+/** A boolean representing whether to force record or force suppress a trace.
+ *
+ * @internal
+ */
 export const forceSampleSchema: BooleanSchema = boolean();

@@ -21,6 +21,8 @@ import { pickBy } from 'lodash';
  * The middleware function that enables traces on endpoints to which it is attached.
  *
  * **Not meant to be explicitly invoked.**
+ *
+ * @internal
  */
 export default function trace(req: Request, res: Response, next: NextFunction) {
   const traceHeaders = parseTraceHeaders(req.headers)

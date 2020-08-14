@@ -101,23 +101,23 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
  <span class="hljs-comment">// Attach trace headers to the endpoint</span>
  setEndpointTraceHeaders(endpoint)</code></pre>
 					</li>
-					<li><p>To wrap a function in a new <a href="modules/_opentracing_impl_foxxspan_.html">span</a>, use <a href="modules/_helpers_utils_.html#attachspan"><code>attachSpan</code></a>.</p>
+					<li><p>To wrap a function in a new <a href="https://opentracing-javascript.surge.sh/classes/span.html">span</a>, use <a href="https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#attachspan"><code>attachSpan</code></a>.</p>
 						<pre><code class="language-javascript"> <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { attachSpan } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  attachSpan(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{}, <span class="hljs-string">&#x27;opName&#x27;</span>, {<span class="hljs-comment">/* options */</span>}, onSuccess <span class="hljs-comment">/* optional */</span>, onError <span class="hljs-comment">/* optional */</span>)</code></pre>
 					</li>
-					<li><p>To instrument a <a href="https://www.arangodb.com/docs/stable/aql/invocation-with-arangosh.html#with-db_query">db query</a> (with query stats collection and reporting), use <a href="modules/_helpers_utils_.html#instrumentedquery"><code>instrumentedQuery</code></a>.</p>
+					<li><p>To instrument a <a href="https://www.arangodb.com/docs/stable/aql/invocation-with-arangosh.html#with-db_query">db query</a> (with query stats collection and reporting), use <a href="https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#instrumentedquery"><code>instrumentedQuery</code></a>.</p>
 						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { instrumentedQuery } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  <span class="hljs-keyword">const</span> query = aql.query(<span class="hljs-comment">/* query */</span>)
  <span class="hljs-keyword">const</span> cursor = instrumentedQuery(query, <span class="hljs-string">&#x27;queryName&#x27;</span>, {<span class="hljs-comment">/* options */</span>})</code></pre>
 					</li>
-					<li><p>To correctly propagate the current <a href="https://opentracing.io/specification/#spancontext">span context</a> across <a href="https://www.arangodb.com/docs/3.6/transactions-transaction-invocation.html">transaction</a> boundaries, use <a href="modules/_helpers_utils_.html#executetransaction"><code>executeTransaction</code></a>.</p>
+					<li><p>To correctly propagate the current <a href="https://opentracing.io/specification/#spancontext">span context</a> across <a href="https://www.arangodb.com/docs/3.6/transactions-transaction-invocation.html">transaction</a> boundaries, use <a href="https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#executetransaction"><code>executeTransaction</code></a>.</p>
 						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { executeTransaction } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  <span class="hljs-keyword">const</span> result = executeTransaction({<span class="hljs-comment">/* transaction specification */</span>})</code></pre>
 					</li>
-					<li><p>To correctly propagate the current <a href="https://opentracing.io/specification/#spancontext">span context</a> across <a href="https://www.arangodb.com/docs/3.6/appendix-java-script-modules-tasks.html">task</a> invocations, use <a href="modules/_helpers_utils_.html#executetask"><code>executeTask</code></a>.</p>
+					<li><p>To correctly propagate the current <a href="https://opentracing.io/specification/#spancontext">span context</a> across <a href="https://www.arangodb.com/docs/3.6/appendix-java-script-modules-tasks.html">task</a> invocations, use <a href="https://recallgraph.github.io/foxx-tracer/modules/_helpers_utils_.html#executetask"><code>executeTask</code></a>.</p>
 						<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">utils</span>: { executeTask } } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;foxx-tracer&#x27;</span>)
 
  executeTask({<span class="hljs-comment">/* task options */</span>})</code></pre>
@@ -164,9 +164,6 @@ npm install --save @recallgraph/foxx-tracer</code></pre>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_helpers_spandata_.html">&quot;helpers/<wbr>Span<wbr>Data&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_helpers_middleware_.html">&quot;helpers/middleware&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>

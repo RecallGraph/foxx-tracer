@@ -1,7 +1,8 @@
 import { SpanContext } from "opentracing";
 import { Context } from '../helpers/SpanData'
 
-export class FoxxContext extends SpanContext {
+/** @internal */
+export default class FoxxContext extends SpanContext {
   private readonly context: Context;
 
   constructor(spanId: string, traceId?: string, baggage: object = {}) {
@@ -26,5 +27,3 @@ export class FoxxContext extends SpanContext {
     return this.context.baggage;
   }
 }
-
-export default FoxxContext;
