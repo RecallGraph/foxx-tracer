@@ -14,11 +14,11 @@ Most tracing libraries in the _nodeverse_ are asynchronous, and so do not work i
 As a result, it relies on a number of features only available in a Foxx environment. It also depends on a [companion collector service](https://github.com/RecallGraph/foxx-tracer-collector) which itself is a Foxx microservice. These dependencies make this module **incompatible with Node.js and browser-based runtimes**.
 
 ## Quickstart
+### Instrument Your Code 
 1. Add _foxx-tracer_ as a dependency of the service for which you want to enable tracing.
     ```bash
     npm install --save @recallgraph/foxx-tracer
     ```
-1. Install the [collector service](https://github.com/RecallGraph/foxx-tracer-collector) and follow its setup instructions.
 1. In your service, before mounting any trace-enabled routes, you need to initialize the tracer, trace headers and middleware. This is best done in your service's startup script (usually `main.js`).
     ```javascript
     const { utils: { setEndpointTraceHeaders, initTracer }, middleware } = require('foxx-tracer')
@@ -65,7 +65,13 @@ As a result, it relies on a number of features only available in a Foxx environm
    
     executeTask({/* task options */})
     ```
-1. Finally, you need to [assign the collector dependency](https://trello.com/b/AGrGVmb8/recallgraph) so that *foxx-tracer* knows where to send the recorded traces. The `manifest.json` file should have a `dependencies` object containing the following:
+
+### Runtime Setup
+1. Install the [collector service](https://github.com/RecallGraph/foxx-tracer-collector) and follow its setup instructions. **Add any reporter plugins that you need.**
+1. In your application's settings, there is a param named `sampling-probability`. You can set this to a value between 0 and 1 (both inclusive) to tell the tracer how often to record a trace for incoming requests. For example, if  `sampling-probability = 0.1`, then roughly 1 out of 10 requests will be traced.
+
+    Regardless of this param's value, a trace can be **force-recorded or force-suppressed** using the [`x-force-sample`](https://recallgraph.github.io/foxx-tracer/enums/_helpers_types_.trace_header_keys.html#force_sample) header parameter. See [Recording Traces](#recording-traces) for details.
+1. Finally, you need to [assign the collector dependency](https://www.arangodb.com/docs/stable/foxx-guides-dependencies.html#assigning-dependencies) so that *foxx-tracer* knows where to send the recorded traces. The `manifest.json` file should have a `dependencies` object containing the following:
     ```json
     {
         "dependencies": {
@@ -95,6 +101,12 @@ As a result, it relies on a number of features only available in a Foxx environm
         }
     }
     ```
+### Recording Traces
+For the endpoints to which the trace middleware was attached, there are 4 trace-specific headers available that can be used for the following:
+1. Propagate a running trace from the client to your application.
+1. Force the application to record or suppress a trace for the request, regardless of the `sampling-probability` setting.
+
+See the [Trace Header documentation](https://recallgraph.github.io/foxx-tracer/enums/_helpers_types_.trace_header_keys.html) for details.
 
 ## Reference Implementation
 To get a better idea of how to instrument your Foxx service using *foxx-tracer*, take a look at the source of the [RecallGraph](https://github.com/RecallGraph/RecallGraph) project.
