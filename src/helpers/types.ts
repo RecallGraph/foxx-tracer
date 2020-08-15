@@ -97,7 +97,7 @@ export enum TRACE_HEADER_KEYS {
    * An optional boolean that control whether the decision to record a trace should be forced,
    * suppressed or be left to the application to decide. If `true` a sample is forced. If `false` no sample
    * is taken. If left blank, the application decides based on the `sampling-probability` configuration
-   * parameter (TODO: Add link to param docs).
+   * parameter.
    */
   FORCE_SAMPLE = 'x-force-sample'
 }
